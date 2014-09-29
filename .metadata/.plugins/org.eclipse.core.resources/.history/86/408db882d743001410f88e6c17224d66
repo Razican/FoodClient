@@ -1,0 +1,23 @@
+import java.awt.Dimension;
+
+import javax.swing.JFrame;
+
+
+public class Frame extends JFrame {
+	
+	public Frame()
+	{
+		
+	}
+
+	
+	public static void main (String [] args)
+	{
+		JFrame frame = new Frame();
+		frame.setVisible(true);
+		frame.setSize(new Dimension(465, 234));
+		RegistryPanel panel = new RegistryPanel();
+		frame.add(panel);
+		
+	}
+}
