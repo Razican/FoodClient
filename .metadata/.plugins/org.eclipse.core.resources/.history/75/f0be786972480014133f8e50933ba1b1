@@ -1,0 +1,35 @@
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+
+
+public class UserPasswordResetPanel {
+	
+	
+	
+	private JButton backButton;
+	private JLabel headerTitle;
+	private JLabel connectionStatus;
+	private JLabel lEmail;
+	private JTextField tfEmail;
+	private JTextField tfQuestion;
+	private JCheckBox cbUsername;
+	private JCheckBox cbPassword;
+	private JButton bReset;
+	
+	
+	public UserPasswordResetPanel()
+	{
+		initializeVartiables();
+		
+		
+	}
+	
+	
+	public void initializeVartiables()
+	{
+		
+	}
+
+}

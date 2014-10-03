@@ -1,0 +1,89 @@
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.SpringLayout;
+import javax.swing.SwingConstants;
+
+import Utilities.SpringUtilities;
+
+
+public class LoginPanel extends JPanel implements ActionListener {
+	
+	
+	private JLabel lUsername;
+	private JLabel lPassword;
+	private JTextField tfUsername;
+	private JPasswordField tfPassword;
+	private JButton bUserPasswordReset;
+	private JButton bLogin;
+	private JButton bNewUser;
+	private JLabel lHeader;
+	private JLabel connectionStatus;
+	private JPanel header;
+	
+	
+	public LoginPanel()
+	{
+		initializeVariables();
+		
+		
+		
+		header.setLayout(new SpringLayout());
+		placeHeaderComponents();
+		SpringUtilities.makeCompactGrid(this, 1, 2, ((Frame.frame.getWidth()/2)-70), 1, Frame.frame.getWidth()/4, 0);
+		
+	
+		
+		
+		this.setLayout(new FlowLayout());
+		this.add(header);
+		
+		
+		
+	}
+	
+	public void initializeVariables()
+	{
+		header=new JPanel();
+		lHeader=new JLabel("PRODUCT FINDER");
+		connectionStatus= new JLabel(new ImageIcon(getClass().getResource("/Resources/Base Green Deep.png")));
+		
+		
+		
+		
+	}
+	
+	public void placeHeaderComponents()
+	{
+		
+		header.add(lHeader);
+		header.add(connectionStatus);
+		
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+
+}

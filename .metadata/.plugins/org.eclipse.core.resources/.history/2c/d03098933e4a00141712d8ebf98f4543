@@ -1,0 +1,144 @@
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.SpringLayout;
+import javax.swing.SwingConstants;
+
+import Utilities.SpringUtilities;
+
+
+public class LoginPanel extends JPanel implements ActionListener {
+	
+	
+	private JLabel lUsername;
+	private JLabel lPassword;
+	private JTextField tfUsername;
+	private JPasswordField tfPassword;
+	private JButton bUserPasswordReset;
+	private JButton bLogin;
+	private JButton bNewUser;
+	private JLabel lHeader;
+	private JLabel connectionStatus;
+	private JPanel header;
+	private JPanel textPanel;
+	private FlowLayout flowLayout;
+	private JPanel buttonPanel;
+	
+	
+	public LoginPanel()
+	{
+		initializeVariables();
+		
+		
+		
+		header.setLayout(new SpringLayout());
+		placeHeaderComponents();
+		SpringUtilities.makeCompactGrid(header, 1, 2, ((Frame.frame.getWidth()/2)+25), 1, Frame.frame.getWidth()/4, 0);
+		
+		textPanel.setLayout(new SpringLayout());
+		placeTextComponents();
+		SpringUtilities.makeCompactGrid(textPanel, 2, 2, 6, 6, 6, 6);
+		
+		buttonPanel.setLayout(new FlowLayout());
+		placeButtons();
+		
+		
+		
+		this.setLayout(flowLayout);
+		this.add(header);
+		this.add(Box.createVerticalStrut(40));
+		this.add(textPanel);
+		this.add(Box.createVerticalStrut(40));
+		this.add(buttonPanel);
+		
+		
+		
+		
+	}
+	
+	public void initializeVariables()
+	{
+		header=new JPanel();
+		lHeader=new JLabel("PRODUCT FINDER");
+		connectionStatus= new JLabel(new ImageIcon(getClass().getResource("/Resources/Base Green Deep.png")));
+		textPanel=new JPanel();
+		lUsername = new JLabel("Username:");
+		tfUsername = new JTextField(20);
+		tfUsername.setText("Example:Peio");
+		tfUsername.addActionListener(this);
+		lPassword = new JLabel("Password:");
+		tfPassword = new JPasswordField(20);
+		tfPassword.setEchoChar((char)0);
+		tfPassword.setText("Example:1234");
+		tfPassword.addActionListener(this);
+		flowLayout=new FlowLayout();
+		flowLayout.setVgap(Frame.frame.getHeight()/10);
+		buttonPanel = new JPanel();
+		bUserPasswordReset= new JButton();
+		bUserPasswordReset.setIcon(new ImageIcon(getClass().getResource("/Resources/Question.png")));
+		bUserPasswordReset.setText("Forgotten User/Password");
+		bLogin= new JButton();
+		bLogin.setIcon(new ImageIcon(getClass().getResource("/Resources/086817-simple-red-glossy-icon-business-key7.png")));
+		bLogin.setText("Login");
+		bNewUser = new JButton();
+		bNewUser.setIcon(new ImageIcon(getClass().getResource("/Resources/form_icon_25603.png")));
+		bNewUser.setText("New User");
+		
+		
+		
+		
+	}
+	
+	public void placeHeaderComponents()
+	{
+		
+		header.add(lHeader);
+		header.add(connectionStatus);
+			
+	}
+	
+	public void placeTextComponents()
+	{
+		textPanel.add(lUsername);
+		textPanel.add(tfUsername);
+		textPanel.add(lPassword);
+		textPanel.add(tfPassword); 
+	}
+	
+	public void placeButtons()
+	{
+		buttonPanel.add(bUserPasswordReset);
+		buttonPanel.add(bLogin);
+		buttonPanel.add(bNewUser);
+	}
+	
+	
+	
+	
+	
+	
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+		if(e.getSource()==tfUsername)
+		{
+			System.out.println("Tocado");
+		}
+		
+		
+	}
+	
+	
+
+}

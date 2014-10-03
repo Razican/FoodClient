@@ -2,7 +2,7 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="textFieldPanel" key="selection"/>
+		<item value="container" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
@@ -12,6 +12,7 @@
 			<item value="textPanel"/>
 		</list>
 		<list key="replacehistory">
+			<item value="container"/>
 			<item value="textFieldPanel"/>
 			<item value="this"/>
 		</list>

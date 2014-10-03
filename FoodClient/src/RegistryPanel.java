@@ -3,8 +3,11 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.GroupLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
@@ -13,6 +16,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 
+import Utilities.GUIUtilities;
 import Utilities.SpringUtilities;
 
 
@@ -40,11 +44,20 @@ public class RegistryPanel extends JPanel implements ActionListener {
 	private JPanel checkBoxIssuePanel;
 	private JPanel checkBoxIssuePanel1;
 	private JPanel checkBoxIssuePanel2;
-//	private JButton boton = new JButton("Click");
+	private JPanel headerPanel;
+	private JButton backButton;
+	private JLabel headerTitle;
+	private JLabel connectionStatus;
+	private JButton registerButton ;
+	private JPanel container;
 	
 	public RegistryPanel()
 	{
 		initializeVariables();
+		
+		headerPanel.setLayout(new SpringLayout());
+		placeHeaderComponents();
+		SpringUtilities.makeCompactGrid(headerPanel,1,3,30,1,70,1); 
 	
 		textFieldPanel.setLayout(new SpringLayout());
 		placeComponentsText();
@@ -63,11 +76,17 @@ public class RegistryPanel extends JPanel implements ActionListener {
 		SpringUtilities.makeCompactGrid(checkBoxIssuePanel, 1, 2, 6,6,6,6);
 		
 		
-		this.setLayout(new SpringLayout());
-		this.add(textFieldPanel);
-		this.add(checkBoxIssuePanel);
-		//this.add(checkBoxIssuePanel2);
-		SpringUtilities.makeCompactGrid(this,2,1,6,6,6,6);
+		container.setLayout(new SpringLayout());
+		container.add(headerPanel);
+		container.add(textFieldPanel);
+		container.add(checkBoxIssuePanel);
+		SpringUtilities.makeCompactGrid(container,3,1,6,6,6,6);
+		
+		
+	this.setLayout(new FlowLayout());
+	this.add(container);
+	this.add(registerButton);
+	this.setSize(new Dimension(460,480));
 		
 		
 		
@@ -80,11 +99,232 @@ public class RegistryPanel extends JPanel implements ActionListener {
 		checkBoxIssuePanel1 = new JPanel();
 		checkBoxIssuePanel2 = new JPanel();
 		tfName=new JTextField(20);
+		tfName.setText("Example:Patxi");
+		tfName.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				if(tfName.getText().equals("Example:Patxi"))
+				{
+					tfName.setText("");	
+				}
+				
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		tfLastName=new JTextField(20);
+		tfLastName.setText("Example:Lopez");
+		tfLastName.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				if(tfLastName.getText().equals("Example:Lopez"))
+				{
+					tfLastName.setText("");
+				}
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		tfEmail=new JTextField(20);
+		tfEmail.setText("Example:alvaro@gmail.com");
+		tfEmail.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				if(tfEmail.getText().equals("Example:alvaro@gmail.com"))
+				{
+					tfEmail.setText("");
+				}
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		tfUsername=new JTextField(20);
+		tfUsername.setText("Example:Peio");
+		tfUsername.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				if(tfUsername.getText().equals("Example:Peio"))
+				{
+					tfUsername.setText("");
+				}
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		tfPassword=new JPasswordField(20);
+		tfPassword.setText("Example:1234");
+		tfPassword.setEchoChar((char)0);
+		tfPassword.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				if(tfPassword.getText().equals("Example:1234"))
+				{
+					tfPassword.setText("");
+					tfPassword.setEchoChar('*');
+				}
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		tfPassword2=new JPasswordField(20);
+		tfPassword2.setText("Example:1234");
+		tfPassword2.setEchoChar((char)0);
+		tfPassword2.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				if(tfPassword2.getText().equals("Example:1234"))
+				{
+					tfPassword2.setText("");
+					tfPassword2.setEchoChar('*');
+				}
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		cbGluten=new JCheckBox("Gluten");
 		cbDiabetes=new JCheckBox("Diabetes");
 		cbVegetables=new JCheckBox("Vegetables");
@@ -97,10 +337,29 @@ public class RegistryPanel extends JPanel implements ActionListener {
 		lPassword2=new JLabel("Repeat Password:");
 		lHealthIssues=new JLabel("Health Issues:");
 		bRegister=new JButton("Register");
-	//	boton.addActionListener(this);
+		headerPanel=new JPanel();
+		backButton=new JButton(new ImageIcon(getClass().getResource("/Resources/back-icon.png")));
+		backButton.addActionListener(this);
+		headerTitle = new JLabel("REGISTER");
+		connectionStatus= new JLabel(new ImageIcon(getClass().getResource("/Resources/Base Green Deep.png")));
+		container=new JPanel();
+		registerButton= new JButton();
+		registerButton.setIcon(new ImageIcon(getClass().getResource("/Resources/form_icon_25603.png")));
+		registerButton.setText("Register");
+		registerButton.addActionListener(this);
 		
 	}
-	//frame.setSize(new Dimension(465, 234));
+	
+	public void placeHeaderComponents()
+	{
+		headerPanel.add(backButton);
+		headerPanel.add(headerTitle);
+		headerPanel.add(connectionStatus);
+	}
+	
+	
+	
+	//frame.setSize(new Dimension(460, 480));
 	public void placeComponentsText()
 	{
 		textFieldPanel.add(lName);
@@ -135,11 +394,21 @@ public class RegistryPanel extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		/*if(e.getSource()==boton)
+		if(e.getSource()==registerButton)
 		{
 			System.out.println("heigth:"+this.getSize().height+" Width"+ this.getSize().width);	
 		}
-		*/
+		if(e.getSource()==backButton)
+		{
+			Frame window = (Frame) GUIUtilities.getPrincipalContainer(container);
+			window.getContentPane().remove(0);
+			window.getContentPane().add(new LoginPanel());
+			window.pack();
+			window.repaint();
+			window.setSize(600, 400);
+			GUIUtilities.CenterWindow(window);
+		}
+		
 	}
 	
 	}
