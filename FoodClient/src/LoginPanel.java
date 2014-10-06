@@ -18,7 +18,6 @@ import Utilities.SpringUtilities;
 
 public class LoginPanel extends JPanel implements ActionListener {
 
-	
 	/**
 	 * 
 	 */
@@ -64,7 +63,7 @@ public class LoginPanel extends JPanel implements ActionListener {
 	}
 
 	public void initializeVariables() {
-		thisContainer=this;
+		thisContainer = this;
 		header = new JPanel();
 		lHeader = new JLabel("PRODUCT FINDER");
 		connectionStatus = new JLabel(new ImageIcon(getClass().getResource(
@@ -84,11 +83,10 @@ public class LoginPanel extends JPanel implements ActionListener {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
-				if(tfUsername.getText().equals("Example:Peio"))
-				{
+				if (tfUsername.getText().equals("Example:Peio")) {
 					tfUsername.setText("");
 				}
-				
+
 			}
 
 			@Override
@@ -124,12 +122,11 @@ public class LoginPanel extends JPanel implements ActionListener {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
-				if(tfPassword.getText().equals("Example:1234"))
-				{
+				if (tfPassword.getText().equals("Example:1234")) {
 					tfPassword.setText("");
-					tfPassword.setEchoChar('*');	
+					tfPassword.setEchoChar('*');
 				}
-				
+
 			}
 
 			@Override
@@ -167,7 +164,6 @@ public class LoginPanel extends JPanel implements ActionListener {
 				"/Resources/form_icon_25603.png")));
 		bNewUser.setText("New User");
 		bNewUser.addActionListener(this);
-		
 
 	}
 
@@ -196,37 +192,40 @@ public class LoginPanel extends JPanel implements ActionListener {
 		// TODO Auto-generated method stub
 
 		if (e.getSource() == bUserPasswordReset) {
-			Frame window = (Frame) GUIUtilities.getPrincipalContainer(thisContainer);
+			Frame window = (Frame) GUIUtilities
+					.getPrincipalContainer(thisContainer);
 			window.getContentPane().remove(0);
 			window.getContentPane().add(new UserPasswordResetPanel());
 			window.pack();
 			window.repaint();
 			window.setSize(560, 400);
 			GUIUtilities.CenterWindow(window);
-			
+
 		}
-		
-		if(e.getSource() == bLogin){
-			/*Frame window = (Frame) GUIUtilities.getPrincipalContainer(thisContainer);
+
+		if (e.getSource() == bLogin) {
+
+			Frame window = (Frame) GUIUtilities
+					.getPrincipalContainer(thisContainer);
 			window.getContentPane().remove(0);
-			window.getContentPane().add(new UserPasswordResetPanel());
+			window.getContentPane().add(new SearchPanel());
 			window.pack();
 			window.repaint();
-			GUIUtilities.CenterWindow(window);*/
-			
-			
+			window.setSize(600, 710);
+			GUIUtilities.CenterWindow(window);
+
 		}
-		
-		if(e.getSource() == bNewUser){
-			Frame window = (Frame) GUIUtilities.getPrincipalContainer(thisContainer);
+
+		if (e.getSource() == bNewUser) {
+			Frame window = (Frame) GUIUtilities
+					.getPrincipalContainer(thisContainer);
 			window.getContentPane().remove(0);
 			window.getContentPane().add(new RegistryPanel());
 			window.pack();
 			window.repaint();
 			window.setSize(480, 470);
 			GUIUtilities.CenterWindow(window);
-			
-			
+
 		}
 
 	}

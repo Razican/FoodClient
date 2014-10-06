@@ -9,7 +9,6 @@ import javax.swing.JFrame;
 
 public class GUIUtilities {
 
-	
 	public static Container getPrincipalContainer(Component c) {
 		if (c == null)
 			return null;
@@ -21,7 +20,6 @@ public class GUIUtilities {
 		return (Container) c;
 	}
 
-	
 	public static void CenterWindow(JFrame a) {
 		Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
 		Dimension window = a.getSize();
