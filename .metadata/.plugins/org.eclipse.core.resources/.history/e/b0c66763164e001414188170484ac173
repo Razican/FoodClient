@@ -16,13 +16,13 @@ public class Frame extends JFrame {
 
 	public static void main(String[] args) {
 		frame = new Frame();
-		 for(UIManager.LookAndFeelInfo laf:UIManager.getInstalledLookAndFeels()){
-	            if("Nimbus".equals(laf.getName()))
-	                try {
-	                UIManager.setLookAndFeel(laf.getClassName());
-	            } catch (Exception ex) {
-	            }
-	        }
+		try {
+			UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+		} catch (ClassNotFoundException | InstantiationException
+				| IllegalAccessException | UnsupportedLookAndFeelException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		frame.setSize(new Dimension(560, 420));
 		// RegistryPanel panel = new RegistryPanel();
 		// UserPasswordResetPanel panel = new UserPasswordResetPanel();
