@@ -1,9 +1,10 @@
 package gui;
+
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 import javax.swing.Box;
 import javax.swing.ImageIcon;
@@ -20,7 +21,7 @@ import utilities.SpringUtilities;
 public class LoginPanel extends JPanel implements ActionListener {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 	private JLabel lUsername;
@@ -43,9 +44,7 @@ public class LoginPanel extends JPanel implements ActionListener {
 
 		header.setLayout(new SpringLayout());
 		placeHeaderComponents();
-		SpringUtilities.makeCompactGrid(header, 1, 2,
-				((Frame.frame.getWidth() / 2) + 25), 1,
-				Frame.frame.getWidth() / 4, 0);
+		SpringUtilities.makeCompactGrid(header, 1, 2, ((Frame.frame.getWidth() / 2) + 25), 1, Frame.frame.getWidth() / 4, 0);
 
 		textPanel.setLayout(new SpringLayout());
 		placeTextComponents();
@@ -67,102 +66,47 @@ public class LoginPanel extends JPanel implements ActionListener {
 		thisContainer = this;
 		header = new JPanel();
 		lHeader = new JLabel("PRODUCT FINDER");
-		connectionStatus = new JLabel(new ImageIcon(getClass().getResource(
-				"/resources/Base Green Deep.png")));
+		connectionStatus = new JLabel(new ImageIcon(getClass().getResource("/resources/Base Green Deep.png")));
 		textPanel = new JPanel();
 		lUsername = new JLabel("Username:");
 		tfUsername = new JTextField(20);
 		tfUsername.setText("Example:Peio");
-		tfUsername.addMouseListener(new MouseListener() {
-
+		tfUsername.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
+			public void mousePressed(final MouseEvent e) {
 				if (tfUsername.getText().equals("Example:Peio")) {
 					tfUsername.setText("");
 				}
-
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-
 			}
 		});
 		lPassword = new JLabel("Password:");
 		tfPassword = new JPasswordField(20);
 		tfPassword.setEchoChar((char) 0);
 		tfPassword.setText("Example:1234");
-		tfPassword.addMouseListener(new MouseListener() {
+		tfPassword.addMouseListener(new MouseAdapter() {
 
+			@SuppressWarnings("deprecation")
 			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
+			public void mousePressed(final MouseEvent e) {
 				if (tfPassword.getText().equals("Example:1234")) {
 					tfPassword.setText("");
 					tfPassword.setEchoChar('*');
 				}
-
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-
 			}
 		});
 		flowLayout = new FlowLayout();
 		flowLayout.setVgap(Frame.frame.getHeight() / 10);
 		buttonPanel = new JPanel();
 		bUserPasswordReset = new JButton();
-		bUserPasswordReset.setIcon(new ImageIcon(getClass().getResource(
-				"/resources/Question.png")));
+		bUserPasswordReset.setIcon(new ImageIcon(getClass().getResource("/resources/Question.png")));
 		bUserPasswordReset.setText("Forgotten User/Password");
 		bUserPasswordReset.addActionListener(this);
 		bLogin = new JButton();
-		bLogin.setIcon(new ImageIcon(getClass().getResource(
-				"/resources/086817-simple-red-glossy-icon-business-key7.png")));
+		bLogin.setIcon(new ImageIcon(getClass().getResource("/resources/086817-simple-red-glossy-icon-business-key7.png")));
 		bLogin.setText("Login");
 		bLogin.addActionListener(this);
 		bNewUser = new JButton();
-		bNewUser.setIcon(new ImageIcon(getClass().getResource(
-				"/resources/form_icon_25603.png")));
+		bNewUser.setIcon(new ImageIcon(getClass().getResource("/resources/form_icon_25603.png")));
 		bNewUser.setText("New User");
 		bNewUser.addActionListener(this);
 
@@ -189,46 +133,36 @@ public class LoginPanel extends JPanel implements ActionListener {
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-
+	public void actionPerformed(final ActionEvent e) {
 		if (e.getSource() == bUserPasswordReset) {
-			Frame window = (Frame) GUIUtilities
-					.getPrincipalContainer(thisContainer);
+			final Frame window = (Frame) GUIUtilities.getPrincipalContainer(thisContainer);
 			window.getContentPane().remove(0);
 			window.getContentPane().add(new UserPasswordResetPanel());
 			window.pack();
 			window.repaint();
 			window.setSize(560, 400);
 			GUIUtilities.CenterWindow(window);
-
 		}
 
 		if (e.getSource() == bLogin) {
 
-			Frame window = (Frame) GUIUtilities
-					.getPrincipalContainer(thisContainer);
+			final Frame window = (Frame) GUIUtilities.getPrincipalContainer(thisContainer);
 			window.getContentPane().remove(0);
 			window.getContentPane().add(new SearchPanel());
 			window.pack();
 			window.repaint();
 			window.setSize(600, 710);
 			GUIUtilities.CenterWindow(window);
-
 		}
 
 		if (e.getSource() == bNewUser) {
-			Frame window = (Frame) GUIUtilities
-					.getPrincipalContainer(thisContainer);
+			final Frame window = (Frame) GUIUtilities.getPrincipalContainer(thisContainer);
 			window.getContentPane().remove(0);
 			window.getContentPane().add(new RegistryPanel());
 			window.pack();
 			window.repaint();
 			window.setSize(480, 470);
 			GUIUtilities.CenterWindow(window);
-
 		}
-
 	}
-
 }
