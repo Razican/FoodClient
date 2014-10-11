@@ -357,6 +357,7 @@ public class RegistryPanel extends JPanel implements ActionListener {
 			window.getContentPane().add(new LoginPanel());
 			window.pack();
 			window.repaint();
+			window.setMinimumSize(new Dimension(560, 420));
 			window.setSize(560, 420);
 			GUIUtilities.CenterWindow(window);
 		}

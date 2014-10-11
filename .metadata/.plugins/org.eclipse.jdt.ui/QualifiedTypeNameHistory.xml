@@ -24,7 +24,6 @@
 <fullyQualifiedTypeName name="Frame"/>
 <fullyQualifiedTypeName name="javax.swing.JTable"/>
 <fullyQualifiedTypeName name="javax.swing.table.DefaultTableModel"/>
-<fullyQualifiedTypeName name="javax.swing.JPanel"/>
 <fullyQualifiedTypeName name="javax.swing.JButton"/>
 <fullyQualifiedTypeName name="java.awt.FlowLayout"/>
 <fullyQualifiedTypeName name="javax.swing.SwingConstants"/>
@@ -39,9 +38,15 @@
 <fullyQualifiedTypeName name="java.awt.BorderLayout"/>
 <fullyQualifiedTypeName name="javax.swing.SpringLayout"/>
 <fullyQualifiedTypeName name="utilities.SpringUtilities"/>
-<fullyQualifiedTypeName name="java.awt.Dimension"/>
-<fullyQualifiedTypeName name="java.awt.event.FocusListener"/>
-<fullyQualifiedTypeName name="javax.swing.BoxLayout"/>
-<fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
 <fullyQualifiedTypeName name="javax.swing.ImageIcon"/>
+<fullyQualifiedTypeName name="razican.utils.StringUtils"/>
+<fullyQualifiedTypeName name="api.Api"/>
+<fullyQualifiedTypeName name="api.JSONObject"/>
+<fullyQualifiedTypeName name="org.apache.commons.validator.EmailValidator"/>
+<fullyQualifiedTypeName name="javax.swing.BoxLayout"/>
+<fullyQualifiedTypeName name="javax.swing.JPanel"/>
+<fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
+<fullyQualifiedTypeName name="java.awt.event.MouseAdapter"/>
+<fullyQualifiedTypeName name="java.awt.event.FocusListener"/>
+<fullyQualifiedTypeName name="java.awt.Dimension"/>
 </qualifiedTypeNameHistroy>

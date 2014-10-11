@@ -24,13 +24,13 @@ public class Frame extends JFrame {
 				} catch (final Exception ex) {
 				}
 		}
-		frame.setSize(new Dimension(480, 470));
-		frame.setMinimumSize(new Dimension(480, 470));
+		frame.setSize(new Dimension(560, 680));
+		// frame.setMinimumSize(new Dimension(480, 470));
 		frame.setMaximumSize(new Dimension(900, 700));
-		final RegistryPanel panel = new RegistryPanel();
-		// UserPasswordResetPanel panel = new UserPasswordResetPanel();
+		// final RegistryPanel panel = new RegistryPanel();
+		// final UserPasswordResetPanel panel = new UserPasswordResetPanel();
 		// final LoginPanel panel = new LoginPanel();
-		// SearchPanel panel = new SearchPanel();
+		final SearchPanel panel = new SearchPanel();
 		frame.add(panel);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(EXIT_ON_CLOSE);

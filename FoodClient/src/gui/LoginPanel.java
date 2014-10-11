@@ -206,6 +206,7 @@ public class LoginPanel extends JPanel implements ActionListener {
 				window.getContentPane().add(new SearchPanel());
 				window.pack();
 				window.repaint();
+				window.setMinimumSize(new Dimension(600, 710));
 				window.setSize(600, 710);
 				GUIUtilities.CenterWindow(window);
 			}
@@ -220,6 +221,7 @@ public class LoginPanel extends JPanel implements ActionListener {
 			window.getContentPane().add(new RegistryPanel());
 			window.pack();
 			window.repaint();
+			window.setMinimumSize(new Dimension(480, 470));
 			window.setSize(480, 470);
 			GUIUtilities.CenterWindow(window);
 		}
