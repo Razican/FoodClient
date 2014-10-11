@@ -292,7 +292,6 @@ public class RegistryPanel extends JPanel implements ActionListener {
 		backButton.addActionListener(this);
 		headerTitle = new JLabel("REGISTER");
 		connectionStatus = new JLabel(new ImageIcon(getClass().getResource("/resources/Base Green Deep.png")));
-		connectionStatus.setToolTipText("Connection Status:OK");
 		container = new JPanel();
 		registerButton = new JButton();
 		registerButton.setIcon(new ImageIcon(getClass().getResource("/resources/form_icon_25603.png")));

@@ -13,13 +13,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
-
-import org.apache.commons.validator.EmailValidator;
 
 import utilities.GUIUtilities;
 import utilities.SpringUtilities;
@@ -292,7 +289,6 @@ public class RegistryPanel extends JPanel implements ActionListener {
 		backButton.addActionListener(this);
 		headerTitle = new JLabel("REGISTER");
 		connectionStatus = new JLabel(new ImageIcon(getClass().getResource("/resources/Base Green Deep.png")));
-		connectionStatus.setToolTipText("Connection Status:OK");
 		container = new JPanel();
 		registerButton = new JButton();
 		registerButton.setIcon(new ImageIcon(getClass().getResource("/resources/form_icon_25603.png")));
@@ -336,20 +332,10 @@ public class RegistryPanel extends JPanel implements ActionListener {
 		checkBoxIssuePanel2.add(cbMilk);
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void actionPerformed(final ActionEvent e) {
 		if (e.getSource() == registerButton) {
-			if (tfName.equals("") || tfLastName.equals("") || tfEmail.getText().equals("") || tfPassword.getText().equals("") || tfPassword2.getText().equals("") || tfUsername.getText().equals("")) {
-				JOptionPane.showMessageDialog(null, "You must fill all the fields..", "", JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass().getResource("/resources/errorIcon.png")));
-
-			} else if (!tfPassword.equals(tfPassword2)) {
-				JOptionPane.showMessageDialog(null, "Passwords don't match.", "", JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass().getResource("/resources/errorIcon.png")));
-
-			} else if (!EmailValidator.getInstance().isValid(tfEmail.getText())) {
-				JOptionPane.showMessageDialog(null, "You must provide a valid email.", "", JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass().getResource("/resources/errorIcon.png")));
-			}
-			// TODO Username exists or email exist validation missing.
+			System.out.println("heigth:" + this.getSize().height + " Width" + this.getSize().width);
 		}
 		if (e.getSource() == backButton) {
 			final Frame window = (Frame) GUIUtilities.getPrincipalContainer(container);
