@@ -97,7 +97,6 @@ public class SearchPanel extends JPanel implements ActionListener {
 		blogout.setText("Logout");
 		lHeader = new JLabel("SEARCH");
 		lConnectionStatus = new JLabel(new ImageIcon(getClass().getResource("/resources/Base Green Deep.png")));
-		lConnectionStatus.setToolTipText("Connection Status:OK");
 		headerPanel = new JPanel();
 		fieldPanel = new JPanel();
 		fieldContainer = new JPanel();

@@ -89,6 +89,7 @@ public class UserPasswordResetPanel extends JPanel implements ActionListener {
 		backButton.addActionListener(this);
 		headerTitle = new JLabel("USER/PASSWORD RESET");
 		connectionStatus = new JLabel(new ImageIcon(getClass().getResource("/resources/Base Green Deep.png")));
+		connectionStatus.setText("Connection Status:OK");
 		lEmail = new JLabel("Email:");
 		tfEmail = new JTextField(15);
 		tfEmail.setText("Example:alvaro@gmail.com");

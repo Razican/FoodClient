@@ -4,24 +4,30 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.SwingConstants;
+
+import org.apache.commons.validator.EmailValidator;
 
 import utilities.GUIUtilities;
 import utilities.SpringUtilities;
 
 public class UserPasswordResetPanel extends JPanel implements ActionListener {
 
+	private static final long serialVersionUID = 1L;
 	private JButton backButton;
 	private JLabel headerTitle;
 	private JLabel connectionStatus;
@@ -53,7 +59,6 @@ public class UserPasswordResetPanel extends JPanel implements ActionListener {
 		SpringUtilities.makeCompactGrid(checkBoxPanel, 1, 2, 125, 6, 50, 6);
 
 		container.setLayout(new SpringLayout());
-		// container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
 		container.add(headerPanel);
 		container.add(Box.createVerticalStrut(20));
 		container.add(textPanel);
@@ -87,13 +92,7 @@ public class UserPasswordResetPanel extends JPanel implements ActionListener {
 		lEmail = new JLabel("Email:");
 		tfEmail = new JTextField(15);
 		tfEmail.setText("Example:alvaro@gmail.com");
-		tfEmail.addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseReleased(final MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
+		tfEmail.addMouseListener(new MouseAdapter() {
 
 			@Override
 			public void mousePressed(final MouseEvent e) {
@@ -102,23 +101,20 @@ public class UserPasswordResetPanel extends JPanel implements ActionListener {
 				{
 					tfEmail.setText("");
 				}
+			}
+		});
+		tfEmail.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusLost(final FocusEvent e) {
+				if (tfEmail.getText().equals("")) {
+					tfEmail.setText("Example:alvaro@gmail.com");
+				}
 
 			}
 
 			@Override
-			public void mouseExited(final MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseEntered(final MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseClicked(final MouseEvent e) {
+			public void focusGained(final FocusEvent e) {
 				// TODO Auto-generated method stub
 
 			}
@@ -149,18 +145,47 @@ public class UserPasswordResetPanel extends JPanel implements ActionListener {
 		checkBoxPanel.add(cbPassword);
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void actionPerformed(final ActionEvent e) {
 		if (e.getSource() == bReset) {
-			System.out.println(this.getSize().toString());
+			if (tfEmail.getText().equals("") || tfEmail.getText().equals("Example:alvaro@gmail.com")) {
+
+				JOptionPane.showMessageDialog(null, "Insert the email address.", "", JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass().getResource("/resources/errorIcon.png")));
+
+			} else if (!cbPassword.isSelected() && !cbUsername.isSelected()) {
+				JOptionPane.showMessageDialog(null, "Select what you want to reset.", "", JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass().getResource("/resources/errorIcon.png")));
+			}
+
+			else if (!EmailValidator.getInstance().isValid(tfEmail.getText())) {
+				JOptionPane.showMessageDialog(null, "Incorrect Email.", "", JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass().getResource("/resources/errorIcon.png")));
+			} else {
+
+				final int optionType = JOptionPane.DEFAULT_OPTION;
+				final int messageType = JOptionPane.QUESTION_MESSAGE;
+				final ImageIcon icon = new ImageIcon(getClass().getResource("/resources/nothing.png"));
+				final Object[] selValues = { "No", "Yes" };
+				final int selection = JOptionPane.showOptionDialog(null, "Are you sure you want to reset user/password?", "", optionType, messageType, icon, selValues, selValues[0]);
+				if (selection == 1) {
+					final Frame window = (Frame) GUIUtilities.getPrincipalContainer(container);
+					window.getContentPane().remove(0);
+					window.getContentPane().add(new LoginPanel());
+					window.pack();
+					window.repaint();
+					window.setMinimumSize(new Dimension(560, 400));
+					window.setSize(560, 400);
+					GUIUtilities.CenterWindow(window);
+				}
+			}
 		}
+
 		if (e.getSource() == backButton) {
 			final Frame window = (Frame) GUIUtilities.getPrincipalContainer(container);
 			window.getContentPane().remove(0);
 			window.getContentPane().add(new LoginPanel());
 			window.pack();
-			window.repaint();
-			window.setSize(600, 400);
+			window.setMinimumSize(new Dimension(560, 400));
+			window.setSize(560, 400);
 			GUIUtilities.CenterWindow(window);
 		}
 
