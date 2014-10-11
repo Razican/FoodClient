@@ -19,11 +19,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 
-import razican.utils.StringUtils;
 import utilities.GUIUtilities;
 import utilities.SpringUtilities;
-import api.Api;
-import api.JSONObject;
 
 public class LoginPanel extends JPanel implements ActionListener {
 
@@ -191,16 +188,15 @@ public class LoginPanel extends JPanel implements ActionListener {
 
 		if (e.getSource() == bLogin) {
 
-			final JSONObject loginResponse = Api.login(tfUsername.getText(), StringUtils.sha1(tfPassword.getPassword()));
-
+			// final JSONObject loginResponse = Api.login(tfUsername.getText(),
+			// StringUtils.sha1(tfPassword.getPassword()));
+			// if (loginResponse.get("status").equals("OK")) {
 			if (tfUsername.getText().equals("") || tfPassword.getText().equals("") || tfUsername.getText().equals("Example:Peio") || tfPassword.getText().equals("Example:1234")) {
 				JOptionPane.showMessageDialog(null, "Insert username or password.", "", JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass().getResource("/resources/errorIcon.png")));
-			}
-
-			else if (loginResponse.get("status").equals("OK")) {
+			} else {
 
 				welcomeMessage = "Welcome " + user + "!";
-				JOptionPane.showMessageDialog(null, welcomeMessage, "", JOptionPane.INFORMATION_MESSAGE, new ImageIcon(getClass().getResource("/resources/nothing.png")));
+				JOptionPane.showMessageDialog(null, welcomeMessage, "", JOptionPane.PLAIN_MESSAGE, null);
 				final Frame window = (Frame) GUIUtilities.getPrincipalContainer(thisContainer);
 				window.getContentPane().remove(0);
 				window.getContentPane().add(new SearchPanel());
@@ -209,9 +205,9 @@ public class LoginPanel extends JPanel implements ActionListener {
 				window.setSize(600, 710);
 				GUIUtilities.CenterWindow(window);
 			}
-		} else {
+			// } else {
 			// TODO Show error in loginResponse.get("error")
-			JOptionPane.showMessageDialog(null, "Incorrect username or password.", "", JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass().getResource("/resources/errorIcon.png")));
+			// }
 		}
 
 		if (e.getSource() == bNewUser) {
