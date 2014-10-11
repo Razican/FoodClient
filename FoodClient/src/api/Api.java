@@ -18,7 +18,7 @@ public class Api {
 	private Api() {
 	}
 
-	public JSONObject login(final String username, final String password) {
+	public static JSONObject login(final String username, final String password) {
 		final HashMap<String, String> params = new HashMap<>();
 		params.put("username", username);
 		params.put("password", password);

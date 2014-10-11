@@ -15,8 +15,11 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 
+import razican.utils.StringUtils;
 import utilities.GUIUtilities;
 import utilities.SpringUtilities;
+import api.Api;
+import api.JSONObject;
 
 public class LoginPanel extends JPanel implements ActionListener {
 
@@ -146,13 +149,18 @@ public class LoginPanel extends JPanel implements ActionListener {
 
 		if (e.getSource() == bLogin) {
 
-			final Frame window = (Frame) GUIUtilities.getPrincipalContainer(thisContainer);
-			window.getContentPane().remove(0);
-			window.getContentPane().add(new SearchPanel());
-			window.pack();
-			window.repaint();
-			window.setSize(600, 710);
-			GUIUtilities.CenterWindow(window);
+			final JSONObject loginResponse = Api.login(tfUsername.getText(), StringUtils.sha1(tfPassword.getPassword()));
+			if (loginResponse.get("status").equals("OK")) {
+				final Frame window = (Frame) GUIUtilities.getPrincipalContainer(thisContainer);
+				window.getContentPane().remove(0);
+				window.getContentPane().add(new SearchPanel());
+				window.pack();
+				window.repaint();
+				window.setSize(600, 710);
+				GUIUtilities.CenterWindow(window);
+			} else {
+				// TODO Show error in loginResponse.get("error")
+			}
 		}
 
 		if (e.getSource() == bNewUser) {
