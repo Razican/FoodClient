@@ -2,6 +2,7 @@
 
 # Package Files #
 *.jar
+!/FoodClient/lib/*.jar
 *.war
 *.ear
 /doc
