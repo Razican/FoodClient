@@ -1,10 +1,11 @@
+package gui;
 import java.awt.Dimension;
 
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import Utilities.GUIUtilities;
+import utilities.GUIUtilities;
 
 public class Frame extends JFrame {
 

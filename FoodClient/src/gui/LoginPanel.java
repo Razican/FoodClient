@@ -1,3 +1,4 @@
+package gui;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,8 +14,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 
-import Utilities.GUIUtilities;
-import Utilities.SpringUtilities;
+import utilities.GUIUtilities;
+import utilities.SpringUtilities;
 
 public class LoginPanel extends JPanel implements ActionListener {
 
@@ -67,7 +68,7 @@ public class LoginPanel extends JPanel implements ActionListener {
 		header = new JPanel();
 		lHeader = new JLabel("PRODUCT FINDER");
 		connectionStatus = new JLabel(new ImageIcon(getClass().getResource(
-				"/Resources/Base Green Deep.png")));
+				"/resources/Base Green Deep.png")));
 		textPanel = new JPanel();
 		lUsername = new JLabel("Username:");
 		tfUsername = new JTextField(20);
@@ -151,17 +152,17 @@ public class LoginPanel extends JPanel implements ActionListener {
 		buttonPanel = new JPanel();
 		bUserPasswordReset = new JButton();
 		bUserPasswordReset.setIcon(new ImageIcon(getClass().getResource(
-				"/Resources/Question.png")));
+				"/resources/Question.png")));
 		bUserPasswordReset.setText("Forgotten User/Password");
 		bUserPasswordReset.addActionListener(this);
 		bLogin = new JButton();
 		bLogin.setIcon(new ImageIcon(getClass().getResource(
-				"/Resources/086817-simple-red-glossy-icon-business-key7.png")));
+				"/resources/086817-simple-red-glossy-icon-business-key7.png")));
 		bLogin.setText("Login");
 		bLogin.addActionListener(this);
 		bNewUser = new JButton();
 		bNewUser.setIcon(new ImageIcon(getClass().getResource(
-				"/Resources/form_icon_25603.png")));
+				"/resources/form_icon_25603.png")));
 		bNewUser.setText("New User");
 		bNewUser.addActionListener(this);
 

@@ -1,4 +1,4 @@
-package Utilities;
+package utilities;
 
 import java.awt.Component;
 import java.awt.Container;

@@ -1,3 +1,4 @@
+package gui;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.TextField;
@@ -21,8 +22,8 @@ import javax.swing.SpringLayout;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
-import Utilities.GUIUtilities;
-import Utilities.SpringUtilities;
+import utilities.GUIUtilities;
+import utilities.SpringUtilities;
 
 public class SearchPanel extends JPanel implements ActionListener {
 
@@ -88,12 +89,12 @@ public class SearchPanel extends JPanel implements ActionListener {
 	public void InitializeVariables() {
 		blogout = new JButton();
 		blogout.setIcon(new ImageIcon(getClass().getResource(
-				"/Resources/logout.png")));
+				"/resources/logout.png")));
 		blogout.addActionListener(this);
 		blogout.setText("Logout");
 		lHeader = new JLabel("SEARCH");
 		lConnectionStatus = new JLabel(new ImageIcon(getClass().getResource(
-				"/Resources/Base Green Deep.png")));
+				"/resources/Base Green Deep.png")));
 		headerPanel = new JPanel();
 		fieldPanel = new JPanel();
 		fieldContainer = new JPanel();
@@ -101,7 +102,7 @@ public class SearchPanel extends JPanel implements ActionListener {
 		bSearch = new JButton();
 		bSearch.setLayout(new SpringLayout());
 		JLabel searchImage = new JLabel(new ImageIcon(getClass().getResource(
-				"/Resources/search.png")));
+				"/resources/search.png")));
 		bSearch.add(searchImage);
 		bSearch.add(new JLabel("Search"));
 		SpringUtilities.makeCompactGrid(bSearch, 2, 1, 6, 6, 6, 6);
@@ -264,7 +265,7 @@ public class SearchPanel extends JPanel implements ActionListener {
 		lDesc = new JLabel("Desc:");
 		lDescInfo = new JLabel("______");
 		lImageInfo = new JLabel(new ImageIcon(getClass().getResource(
-				"/Resources/pictographs-information-inv.png")));
+				"/resources/pictographs-information-inv.png")));
 		lName1 = new JLabel("Name:");
 		lType1 = new JLabel("Type:");
 		lBrand1 = new JLabel("Brand:");
@@ -277,7 +278,7 @@ public class SearchPanel extends JPanel implements ActionListener {
 		resultsTable = new JTable(modeloTabla);
 		resultsTable.setEnabled(true);
 		lSupermarketMap = new JLabel(new ImageIcon(getClass().getResource(
-				"/Resources/Supermarket.jpg")));
+				"/resources/Supermarket.jpg")));
 
 	}
 

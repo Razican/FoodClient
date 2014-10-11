@@ -1,3 +1,4 @@
+package gui;
 import java.awt.Checkbox;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -18,8 +19,8 @@ import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.SwingConstants;
 
-import Utilities.GUIUtilities;
-import Utilities.SpringUtilities;
+import utilities.GUIUtilities;
+import utilities.SpringUtilities;
 
 public class UserPasswordResetPanel extends JPanel implements ActionListener {
 
@@ -79,11 +80,11 @@ public class UserPasswordResetPanel extends JPanel implements ActionListener {
 		checkBoxPanel = new JPanel();
 		container = new JPanel();
 		backButton = new JButton(new ImageIcon(getClass().getResource(
-				"/Resources/back-icon.png")));
+				"/resources/back-icon.png")));
 		backButton.addActionListener(this);
 		headerTitle = new JLabel("USER/PASSWORD RESET");
 		connectionStatus = new JLabel(new ImageIcon(getClass().getResource(
-				"/Resources/Base Green Deep.png")));
+				"/resources/Base Green Deep.png")));
 		lEmail = new JLabel("Email:");
 		tfEmail = new JTextField(15);
 		tfEmail.setText("Example:alvaro@gmail.com");
@@ -129,7 +130,7 @@ public class UserPasswordResetPanel extends JPanel implements ActionListener {
 		bReset = new JButton();
 		bReset.setText(" Reset ");
 		bReset.setIcon(new ImageIcon(getClass().getResource(
-				"/Resources/images.jpeg")));
+				"/resources/images.jpeg")));
 		bReset.addActionListener(this);
 
 	}

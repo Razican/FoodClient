@@ -1,3 +1,4 @@
+package gui;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -16,8 +17,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 
-import Utilities.GUIUtilities;
-import Utilities.SpringUtilities;
+import utilities.GUIUtilities;
+import utilities.SpringUtilities;
 
 public class RegistryPanel extends JPanel implements ActionListener {
 
@@ -327,15 +328,15 @@ public class RegistryPanel extends JPanel implements ActionListener {
 		bRegister = new JButton("Register");
 		headerPanel = new JPanel();
 		backButton = new JButton(new ImageIcon(getClass().getResource(
-				"/Resources/back-icon.png")));
+				"/resources/back-icon.png")));
 		backButton.addActionListener(this);
 		headerTitle = new JLabel("REGISTER");
 		connectionStatus = new JLabel(new ImageIcon(getClass().getResource(
-				"/Resources/Base Green Deep.png")));
+				"/resources/Base Green Deep.png")));
 		container = new JPanel();
 		registerButton = new JButton();
 		registerButton.setIcon(new ImageIcon(getClass().getResource(
-				"/Resources/form_icon_25603.png")));
+				"/resources/form_icon_25603.png")));
 		registerButton.setText("Register");
 		registerButton.addActionListener(this);
 
