@@ -183,8 +183,9 @@ public class UserPasswordResetPanel extends JPanel implements ActionListener {
 		}
 
 	}
-
-	public void reset() {
+	
+	public void reset()
+	{
 		if (tfEmail.getText().equals("") || tfEmail.getText().equals("Example:alvaro@gmail.com")) {
 
 			JOptionPane.showMessageDialog(null, "Insert the email address.", "", JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass().getResource("/resources/errorIcon.png")));

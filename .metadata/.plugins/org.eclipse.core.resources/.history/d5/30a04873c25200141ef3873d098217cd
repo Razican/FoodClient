@@ -347,8 +347,9 @@ public class SearchPanel extends JPanel implements ActionListener {
 		}
 
 	}
-
-	public void search() {
+	
+	public void search()
+	{
 		final Frame window = (Frame) GUIUtilities.getPrincipalContainer(tablePanel);
 		System.out.println(window.getSize().toString());
 	}

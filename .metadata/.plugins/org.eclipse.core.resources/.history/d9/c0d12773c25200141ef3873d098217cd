@@ -6,8 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -93,15 +91,6 @@ public class SearchPanel extends JPanel implements ActionListener {
 	}
 
 	public void InitializeVariables() {
-		this.setFocusable(true);
-		this.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(final KeyEvent e) {
-				final int key = e.getKeyCode();
-				if (key == KeyEvent.VK_ENTER)
-					search();
-			}
-		});
 		blogout = new JButton();
 		blogout.setIcon(new ImageIcon(getClass().getResource("/resources/logout.png")));
 		blogout.addActionListener(this);
@@ -343,14 +332,10 @@ public class SearchPanel extends JPanel implements ActionListener {
 			GUIUtilities.CenterWindow(window);
 		}
 		if (e.getSource() == bSearch) {
-			search();
+			final Frame window = (Frame) GUIUtilities.getPrincipalContainer(tablePanel);
+			System.out.println(window.getSize().toString());
 		}
 
-	}
-
-	public void search() {
-		final Frame window = (Frame) GUIUtilities.getPrincipalContainer(tablePanel);
-		System.out.println(window.getSize().toString());
 	}
 
 }
