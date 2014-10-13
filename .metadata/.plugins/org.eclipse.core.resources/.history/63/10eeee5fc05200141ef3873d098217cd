@@ -30,7 +30,7 @@ public class Frame extends JFrame {
 		// final RegistryPanel panel = new RegistryPanel();
 		// final UserPasswordResetPanel panel = new UserPasswordResetPanel();
 		final LoginPanel panel = new LoginPanel();
-		// final SearchPanel panel = new SearchPanel();
+		//final SearchPanel panel = new SearchPanel();
 		frame.add(panel);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(EXIT_ON_CLOSE);

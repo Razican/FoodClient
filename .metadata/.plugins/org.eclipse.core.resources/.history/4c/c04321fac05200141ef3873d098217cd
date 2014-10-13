@@ -86,7 +86,7 @@ public class LoginPanel extends JPanel implements ActionListener {
 			public void keyPressed(final KeyEvent e) {
 				final int key = e.getKeyCode();
 				if (key == KeyEvent.VK_ENTER)
-					login();
+					System.out.println("ENTER pressed");
 			}
 		});
 		thisContainer.setPreferredSize(new Dimension(560, 420));
@@ -104,14 +104,6 @@ public class LoginPanel extends JPanel implements ActionListener {
 				if (tfUsername.getText().equals("Example:Peio")) {
 					tfUsername.setText("");
 				}
-			}
-		});
-		tfUsername.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(final KeyEvent e) {
-				final int key = e.getKeyCode();
-				if (key == KeyEvent.VK_ENTER)
-					login();
 			}
 		});
 		tfUsername.addFocusListener(new FocusListener() {
@@ -141,14 +133,6 @@ public class LoginPanel extends JPanel implements ActionListener {
 					tfPassword.setText("");
 					tfPassword.setEchoChar('*');
 				}
-			}
-		});
-		tfPassword.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(final KeyEvent e) {
-				final int key = e.getKeyCode();
-				if (key == KeyEvent.VK_ENTER)
-					login();
 			}
 		});
 		tfPassword.addFocusListener(new FocusListener() {

@@ -8,6 +8,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -76,19 +77,16 @@ public class LoginPanel extends JPanel implements ActionListener {
 	}
 
 	public void initializeVariables() {
-
+		this.addKeyListener(new KeyAdapter() {
+			public void keyPressed(KeyEvent e) {
+		           int key = e.getKeyCode();
+		           if (key == KeyEvent.VK_ENTER)  
+		              System.out.println("ENTER pressed");
+		              }
+		});
 		user = "Usuario";
 		thisContainer = new JPanel();
 		container2 = this;
-		container2.setFocusable(true);
-		container2.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(final KeyEvent e) {
-				final int key = e.getKeyCode();
-				if (key == KeyEvent.VK_ENTER)
-					login();
-			}
-		});
 		thisContainer.setPreferredSize(new Dimension(560, 420));
 		header = new JPanel();
 		lHeader = new JLabel("PRODUCT FINDER");
@@ -104,14 +102,6 @@ public class LoginPanel extends JPanel implements ActionListener {
 				if (tfUsername.getText().equals("Example:Peio")) {
 					tfUsername.setText("");
 				}
-			}
-		});
-		tfUsername.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(final KeyEvent e) {
-				final int key = e.getKeyCode();
-				if (key == KeyEvent.VK_ENTER)
-					login();
 			}
 		});
 		tfUsername.addFocusListener(new FocusListener() {
@@ -141,14 +131,6 @@ public class LoginPanel extends JPanel implements ActionListener {
 					tfPassword.setText("");
 					tfPassword.setEchoChar('*');
 				}
-			}
-		});
-		tfPassword.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(final KeyEvent e) {
-				final int key = e.getKeyCode();
-				if (key == KeyEvent.VK_ENTER)
-					login();
 			}
 		});
 		tfPassword.addFocusListener(new FocusListener() {

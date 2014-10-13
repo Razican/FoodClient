@@ -106,14 +106,6 @@ public class LoginPanel extends JPanel implements ActionListener {
 				}
 			}
 		});
-		tfUsername.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(final KeyEvent e) {
-				final int key = e.getKeyCode();
-				if (key == KeyEvent.VK_ENTER)
-					login();
-			}
-		});
 		tfUsername.addFocusListener(new FocusListener() {
 			@Override
 			public void focusLost(final FocusEvent e) {
@@ -141,14 +133,6 @@ public class LoginPanel extends JPanel implements ActionListener {
 					tfPassword.setText("");
 					tfPassword.setEchoChar('*');
 				}
-			}
-		});
-		tfPassword.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(final KeyEvent e) {
-				final int key = e.getKeyCode();
-				if (key == KeyEvent.VK_ENTER)
-					login();
 			}
 		});
 		tfPassword.addFocusListener(new FocusListener() {

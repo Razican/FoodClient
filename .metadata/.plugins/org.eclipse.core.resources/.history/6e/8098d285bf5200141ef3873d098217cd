@@ -6,8 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -76,19 +74,9 @@ public class LoginPanel extends JPanel implements ActionListener {
 	}
 
 	public void initializeVariables() {
-
 		user = "Usuario";
 		thisContainer = new JPanel();
 		container2 = this;
-		container2.setFocusable(true);
-		container2.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(final KeyEvent e) {
-				final int key = e.getKeyCode();
-				if (key == KeyEvent.VK_ENTER)
-					login();
-			}
-		});
 		thisContainer.setPreferredSize(new Dimension(560, 420));
 		header = new JPanel();
 		lHeader = new JLabel("PRODUCT FINDER");
@@ -104,14 +92,6 @@ public class LoginPanel extends JPanel implements ActionListener {
 				if (tfUsername.getText().equals("Example:Peio")) {
 					tfUsername.setText("");
 				}
-			}
-		});
-		tfUsername.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(final KeyEvent e) {
-				final int key = e.getKeyCode();
-				if (key == KeyEvent.VK_ENTER)
-					login();
 			}
 		});
 		tfUsername.addFocusListener(new FocusListener() {
@@ -141,14 +121,6 @@ public class LoginPanel extends JPanel implements ActionListener {
 					tfPassword.setText("");
 					tfPassword.setEchoChar('*');
 				}
-			}
-		});
-		tfPassword.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(final KeyEvent e) {
-				final int key = e.getKeyCode();
-				if (key == KeyEvent.VK_ENTER)
-					login();
 			}
 		});
 		tfPassword.addFocusListener(new FocusListener() {
@@ -219,7 +191,28 @@ public class LoginPanel extends JPanel implements ActionListener {
 
 		if (e.getSource() == bLogin) {
 
-			login();
+			final JSONObject loginResponse = Api.login(tfUsername.getText(), StringUtils.sha1(tfPassword.getPassword()));
+
+			if (tfUsername.getText().equals("") || tfPassword.getText().equals("") || tfUsername.getText().equals("Example:Peio") || tfPassword.getText().equals("Example:1234")) {
+				JOptionPane.showMessageDialog(null, "Insert username or password.", "", JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass().getResource("/resources/errorIcon.png")));
+			}
+
+			else if (loginResponse.get("status").equals("OK")) {
+
+				welcomeMessage = "Welcome " + user + "!";
+				JOptionPane.showMessageDialog(null, welcomeMessage, "", JOptionPane.INFORMATION_MESSAGE, new ImageIcon(getClass().getResource("/resources/nothing.png")));
+				final Frame window = (Frame) GUIUtilities.getPrincipalContainer(thisContainer);
+				window.getContentPane().remove(0);
+				window.getContentPane().add(new SearchPanel());
+				window.pack();
+				window.repaint();
+				window.setMinimumSize(new Dimension(600, 710));
+				window.setSize(600, 710);
+				GUIUtilities.CenterWindow(window);
+			}
+		} else {
+			// TODO Show error in loginResponse.get("error")
+			JOptionPane.showMessageDialog(null, "Incorrect username or password.", "", JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass().getResource("/resources/errorIcon.png")));
 		}
 
 		if (e.getSource() == bNewUser) {
@@ -233,30 +226,4 @@ public class LoginPanel extends JPanel implements ActionListener {
 			GUIUtilities.CenterWindow(window);
 		}
 	}
-
-	public void login() {
-		final JSONObject loginResponse = Api.login(tfUsername.getText(), StringUtils.sha1(tfPassword.getPassword()));
-
-		if (tfUsername.getText().equals("") || tfPassword.getText().equals("") || tfUsername.getText().equals("Example:Peio") || tfPassword.getText().equals("Example:1234")) {
-			JOptionPane.showMessageDialog(null, "Insert username or password.", "", JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass().getResource("/resources/errorIcon.png")));
-		}
-
-		else if (loginResponse.get("status").equals("OK")) {
-
-			welcomeMessage = "Welcome " + user + "!";
-			JOptionPane.showMessageDialog(null, welcomeMessage, "", JOptionPane.INFORMATION_MESSAGE, new ImageIcon(getClass().getResource("/resources/nothing.png")));
-			final Frame window = (Frame) GUIUtilities.getPrincipalContainer(thisContainer);
-			window.getContentPane().remove(0);
-			window.getContentPane().add(new SearchPanel());
-			window.pack();
-			window.repaint();
-			window.setMinimumSize(new Dimension(600, 710));
-			window.setSize(600, 710);
-			GUIUtilities.CenterWindow(window);
-		} else {
-			// TODO Show error in loginResponse.get("error")
-			JOptionPane.showMessageDialog(null, "Incorrect username or password.", "", JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass().getResource("/resources/errorIcon.png")));
-		}
-	}
-
 }
