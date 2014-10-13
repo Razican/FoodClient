@@ -6,8 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -95,15 +93,6 @@ public class RegistryPanel extends JPanel implements ActionListener {
 	}
 
 	public void initializeVariables() {
-		this.setFocusable(true);
-		this.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(final KeyEvent e) {
-				final int key = e.getKeyCode();
-				if (key == KeyEvent.VK_ENTER)
-					register();
-			}
-		});
 		container2 = new JPanel();
 		container2.setPreferredSize(new Dimension(480, 470));
 		textFieldPanel = new JPanel();
@@ -123,14 +112,6 @@ public class RegistryPanel extends JPanel implements ActionListener {
 
 			}
 
-		});
-		tfName.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(final KeyEvent e) {
-				final int key = e.getKeyCode();
-				if (key == KeyEvent.VK_ENTER)
-					register();
-			}
 		});
 		tfName.addFocusListener(new FocusListener() {
 
@@ -158,14 +139,6 @@ public class RegistryPanel extends JPanel implements ActionListener {
 				if (tfLastName.getText().equals("Example:Lopez")) {
 					tfLastName.setText("");
 				}
-			}
-		});
-		tfLastName.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(final KeyEvent e) {
-				final int key = e.getKeyCode();
-				if (key == KeyEvent.VK_ENTER)
-					register();
 			}
 		});
 		tfLastName.addFocusListener(new FocusListener() {
@@ -196,14 +169,6 @@ public class RegistryPanel extends JPanel implements ActionListener {
 
 			}
 		});
-		tfEmail.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(final KeyEvent e) {
-				final int key = e.getKeyCode();
-				if (key == KeyEvent.VK_ENTER)
-					register();
-			}
-		});
 		tfEmail.addFocusListener(new FocusListener() {
 
 			@Override
@@ -229,14 +194,6 @@ public class RegistryPanel extends JPanel implements ActionListener {
 				if (tfUsername.getText().equals("Example:Peio")) {
 					tfUsername.setText("");
 				}
-			}
-		});
-		tfUsername.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(final KeyEvent e) {
-				final int key = e.getKeyCode();
-				if (key == KeyEvent.VK_ENTER)
-					register();
 			}
 		});
 		tfUsername.addFocusListener(new FocusListener() {
@@ -270,14 +227,6 @@ public class RegistryPanel extends JPanel implements ActionListener {
 			}
 
 		});
-		tfPassword.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(final KeyEvent e) {
-				final int key = e.getKeyCode();
-				if (key == KeyEvent.VK_ENTER)
-					register();
-			}
-		});
 		tfPassword.addFocusListener(new FocusListener() {
 
 			@Override
@@ -307,14 +256,6 @@ public class RegistryPanel extends JPanel implements ActionListener {
 					tfPassword2.setEchoChar('*');
 				}
 
-			}
-		});
-		tfPassword2.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(final KeyEvent e) {
-				final int key = e.getKeyCode();
-				if (key == KeyEvent.VK_ENTER)
-					register();
 			}
 		});
 		tfPassword2.addFocusListener(new FocusListener() {
@@ -399,7 +340,16 @@ public class RegistryPanel extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(final ActionEvent e) {
 		if (e.getSource() == registerButton) {
-			register();
+			if (tfName.equals("") || tfLastName.equals("") || tfEmail.getText().equals("") || tfPassword.getText().equals("") || tfPassword2.getText().equals("") || tfUsername.getText().equals("")) {
+				JOptionPane.showMessageDialog(null, "You must fill all the fields..", "", JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass().getResource("/resources/errorIcon.png")));
+
+			} else if (!tfPassword.equals(tfPassword2)) {
+				JOptionPane.showMessageDialog(null, "Passwords don't match.", "", JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass().getResource("/resources/errorIcon.png")));
+
+			} else if (!EmailValidator.getInstance().isValid(tfEmail.getText())) {
+				JOptionPane.showMessageDialog(null, "You must provide a valid email.", "", JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass().getResource("/resources/errorIcon.png")));
+			}
+			// TODO Username exists or email exist validation missing.
 		}
 		if (e.getSource() == backButton) {
 			final Frame window = (Frame) GUIUtilities.getPrincipalContainer(container);
@@ -414,16 +364,4 @@ public class RegistryPanel extends JPanel implements ActionListener {
 
 	}
 
-	public void register() {
-		if (tfName.getText().equals("") || tfLastName.getText().equals("") || tfEmail.getText().equals("") || tfPassword.getText().equals("") || tfPassword2.getText().equals("") || tfUsername.getText().equals("")) {
-			JOptionPane.showMessageDialog(null, "You must fill all the fields.", "", JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass().getResource("/resources/errorIcon.png")));
-
-		} else if (!tfPassword.getText().equals(tfPassword2.getText())) {
-			JOptionPane.showMessageDialog(null, "Passwords don't match.", "", JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass().getResource("/resources/errorIcon.png")));
-
-		} else if (!EmailValidator.getInstance().isValid(tfEmail.getText())) {
-			JOptionPane.showMessageDialog(null, "You must provide a valid email.", "", JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass().getResource("/resources/errorIcon.png")));
-		}
-		// TODO Username exists or email exist validation missing.
-	}
 }

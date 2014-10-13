@@ -101,7 +101,7 @@ public class RegistryPanel extends JPanel implements ActionListener {
 			public void keyPressed(final KeyEvent e) {
 				final int key = e.getKeyCode();
 				if (key == KeyEvent.VK_ENTER)
-					register();
+					login();
 			}
 		});
 		container2 = new JPanel();
@@ -123,14 +123,6 @@ public class RegistryPanel extends JPanel implements ActionListener {
 
 			}
 
-		});
-		tfName.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(final KeyEvent e) {
-				final int key = e.getKeyCode();
-				if (key == KeyEvent.VK_ENTER)
-					register();
-			}
 		});
 		tfName.addFocusListener(new FocusListener() {
 
@@ -158,14 +150,6 @@ public class RegistryPanel extends JPanel implements ActionListener {
 				if (tfLastName.getText().equals("Example:Lopez")) {
 					tfLastName.setText("");
 				}
-			}
-		});
-		tfLastName.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(final KeyEvent e) {
-				final int key = e.getKeyCode();
-				if (key == KeyEvent.VK_ENTER)
-					register();
 			}
 		});
 		tfLastName.addFocusListener(new FocusListener() {
@@ -196,14 +180,6 @@ public class RegistryPanel extends JPanel implements ActionListener {
 
 			}
 		});
-		tfEmail.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(final KeyEvent e) {
-				final int key = e.getKeyCode();
-				if (key == KeyEvent.VK_ENTER)
-					register();
-			}
-		});
 		tfEmail.addFocusListener(new FocusListener() {
 
 			@Override
@@ -229,14 +205,6 @@ public class RegistryPanel extends JPanel implements ActionListener {
 				if (tfUsername.getText().equals("Example:Peio")) {
 					tfUsername.setText("");
 				}
-			}
-		});
-		tfUsername.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(final KeyEvent e) {
-				final int key = e.getKeyCode();
-				if (key == KeyEvent.VK_ENTER)
-					register();
 			}
 		});
 		tfUsername.addFocusListener(new FocusListener() {
@@ -270,14 +238,6 @@ public class RegistryPanel extends JPanel implements ActionListener {
 			}
 
 		});
-		tfPassword.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(final KeyEvent e) {
-				final int key = e.getKeyCode();
-				if (key == KeyEvent.VK_ENTER)
-					register();
-			}
-		});
 		tfPassword.addFocusListener(new FocusListener() {
 
 			@Override
@@ -307,14 +267,6 @@ public class RegistryPanel extends JPanel implements ActionListener {
 					tfPassword2.setEchoChar('*');
 				}
 
-			}
-		});
-		tfPassword2.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(final KeyEvent e) {
-				final int key = e.getKeyCode();
-				if (key == KeyEvent.VK_ENTER)
-					register();
 			}
 		});
 		tfPassword2.addFocusListener(new FocusListener() {
@@ -413,12 +365,12 @@ public class RegistryPanel extends JPanel implements ActionListener {
 		}
 
 	}
+	public void register()
+	{
+		if (tfName.equals("") || tfLastName.equals("") || tfEmail.getText().equals("") || tfPassword.getText().equals("") || tfPassword2.getText().equals("") || tfUsername.getText().equals("")) {
+			JOptionPane.showMessageDialog(null, "You must fill all the fields..", "", JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass().getResource("/resources/errorIcon.png")));
 
-	public void register() {
-		if (tfName.getText().equals("") || tfLastName.getText().equals("") || tfEmail.getText().equals("") || tfPassword.getText().equals("") || tfPassword2.getText().equals("") || tfUsername.getText().equals("")) {
-			JOptionPane.showMessageDialog(null, "You must fill all the fields.", "", JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass().getResource("/resources/errorIcon.png")));
-
-		} else if (!tfPassword.getText().equals(tfPassword2.getText())) {
+		} else if (!tfPassword.equals(tfPassword2)) {
 			JOptionPane.showMessageDialog(null, "Passwords don't match.", "", JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass().getResource("/resources/errorIcon.png")));
 
 		} else if (!EmailValidator.getInstance().isValid(tfEmail.getText())) {
@@ -426,4 +378,6 @@ public class RegistryPanel extends JPanel implements ActionListener {
 		}
 		// TODO Username exists or email exist validation missing.
 	}
+}
+
 }

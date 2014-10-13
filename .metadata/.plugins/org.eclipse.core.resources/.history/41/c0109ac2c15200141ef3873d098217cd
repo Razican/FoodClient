@@ -27,9 +27,9 @@ public class Frame extends JFrame {
 		frame.setSize(new Dimension(560, 680));
 		frame.setMinimumSize(new Dimension(560, 680));
 		frame.setMaximumSize(new Dimension(900, 700));
-		final RegistryPanel panel = new RegistryPanel();
+		 final RegistryPanel panel = new RegistryPanel();
 		// final UserPasswordResetPanel panel = new UserPasswordResetPanel();
-		// final LoginPanel panel = new LoginPanel();
+		//final LoginPanel panel = new LoginPanel();
 		// final SearchPanel panel = new SearchPanel();
 		frame.add(panel);
 		frame.setVisible(true);

@@ -413,12 +413,12 @@ public class RegistryPanel extends JPanel implements ActionListener {
 		}
 
 	}
+	public void register()
+	{
+		if (tfName.equals("") || tfLastName.equals("") || tfEmail.getText().equals("") || tfPassword.getText().equals("") || tfPassword2.getText().equals("") || tfUsername.getText().equals("")) {
+			JOptionPane.showMessageDialog(null, "You must fill all the fields..", "", JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass().getResource("/resources/errorIcon.png")));
 
-	public void register() {
-		if (tfName.getText().equals("") || tfLastName.getText().equals("") || tfEmail.getText().equals("") || tfPassword.getText().equals("") || tfPassword2.getText().equals("") || tfUsername.getText().equals("")) {
-			JOptionPane.showMessageDialog(null, "You must fill all the fields.", "", JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass().getResource("/resources/errorIcon.png")));
-
-		} else if (!tfPassword.getText().equals(tfPassword2.getText())) {
+		} else if (!tfPassword.equals(tfPassword2)) {
 			JOptionPane.showMessageDialog(null, "Passwords don't match.", "", JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass().getResource("/resources/errorIcon.png")));
 
 		} else if (!EmailValidator.getInstance().isValid(tfEmail.getText())) {
@@ -427,3 +427,5 @@ public class RegistryPanel extends JPanel implements ActionListener {
 		// TODO Username exists or email exist validation missing.
 	}
 }
+
+
