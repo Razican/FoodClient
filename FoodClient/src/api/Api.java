@@ -27,8 +27,8 @@ public class Api {
 	}
 
 	public static void main(final String[] args) {
-		final String url = "http://localhost/foodweb/api";
 
+		final String url = "login";
 		final HashMap<String, String> params = new HashMap<>();
 		params.put("name", "Razican");
 
