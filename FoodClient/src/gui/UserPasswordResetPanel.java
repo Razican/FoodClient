@@ -1,29 +1,35 @@
 package gui;
-import java.awt.Checkbox;
+
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.time.Year;
 
 import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.SwingConstants;
+
+import org.apache.commons.validator.EmailValidator;
 
 import utilities.GUIUtilities;
 import utilities.SpringUtilities;
 
 public class UserPasswordResetPanel extends JPanel implements ActionListener {
 
+	private static final long serialVersionUID = 1L;
 	private JButton backButton;
 	private JLabel headerTitle;
 	private JLabel connectionStatus;
@@ -37,6 +43,7 @@ public class UserPasswordResetPanel extends JPanel implements ActionListener {
 	private JPanel textPanel;
 	private JPanel checkBoxPanel;
 	private JPanel container;
+	private JPanel container2;
 
 	public UserPasswordResetPanel() {
 		initializeVartiables();
@@ -54,7 +61,6 @@ public class UserPasswordResetPanel extends JPanel implements ActionListener {
 		SpringUtilities.makeCompactGrid(checkBoxPanel, 1, 2, 125, 6, 50, 6);
 
 		container.setLayout(new SpringLayout());
-		// container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
 		container.add(headerPanel);
 		container.add(Box.createVerticalStrut(20));
 		container.add(textPanel);
@@ -67,59 +73,68 @@ public class UserPasswordResetPanel extends JPanel implements ActionListener {
 		bReset.setHorizontalAlignment(SwingConstants.CENTER);
 		SpringUtilities.makeCompactGrid(container, 8, 1, 6, 6, 6, 6);
 
-		this.setLayout(new FlowLayout());
-		this.add(container);
-		this.add(bReset);
-		this.setSize(600, 400);
+		container2.setLayout(new FlowLayout());
+		container2.add(container);
+		container2.add(bReset);
+		container2.setPreferredSize(new Dimension(560, 400));
+		this.add(container2);
 
 	}
 
 	public void initializeVartiables() {
+		this.setFocusable(true);
+		this.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(final KeyEvent e) {
+				final int key = e.getKeyCode();
+				if (key == KeyEvent.VK_ENTER)
+					reset();
+			}
+		});
+		container2 = new JPanel();
 		headerPanel = new JPanel();
 		textPanel = new JPanel();
 		checkBoxPanel = new JPanel();
 		container = new JPanel();
-		backButton = new JButton(new ImageIcon(getClass().getResource(
-				"/resources/back-icon.png")));
+		backButton = new JButton(new ImageIcon(getClass().getResource("/resources/back-icon.png")));
 		backButton.addActionListener(this);
 		headerTitle = new JLabel("USER/PASSWORD RESET");
-		connectionStatus = new JLabel(new ImageIcon(getClass().getResource(
-				"/resources/Base Green Deep.png")));
+		connectionStatus = new JLabel(new ImageIcon(getClass().getResource("/resources/Base Green Deep.png")));
+		connectionStatus.setText("Connection Status:OK");
 		lEmail = new JLabel("Email:");
 		tfEmail = new JTextField(15);
 		tfEmail.setText("Example:alvaro@gmail.com");
-		tfEmail.addMouseListener(new MouseListener() {
+		tfEmail.addMouseListener(new MouseAdapter() {
 
 			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
+			public void mousePressed(final MouseEvent e) {
 				if (tfEmail.getText().equals("Example:alvaro@gmail.com"))
 					;
 				{
 					tfEmail.setText("");
 				}
+			}
+		});
+		tfEmail.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(final KeyEvent e) {
+				final int key = e.getKeyCode();
+				if (key == KeyEvent.VK_ENTER)
+					reset();
+			}
+		});
+		tfEmail.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusLost(final FocusEvent e) {
+				if (tfEmail.getText().equals("")) {
+					tfEmail.setText("Example:alvaro@gmail.com");
+				}
 
 			}
 
 			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void focusGained(final FocusEvent e) {
 				// TODO Auto-generated method stub
 
 			}
@@ -129,8 +144,7 @@ public class UserPasswordResetPanel extends JPanel implements ActionListener {
 		lQuestion = new JLabel("What did you forgot?");
 		bReset = new JButton();
 		bReset.setText(" Reset ");
-		bReset.setIcon(new ImageIcon(getClass().getResource(
-				"/resources/images.jpeg")));
+		bReset.setIcon(new ImageIcon(getClass().getResource("/resources/images.jpeg")));
 		bReset.addActionListener(this);
 
 	}
@@ -151,22 +165,54 @@ public class UserPasswordResetPanel extends JPanel implements ActionListener {
 		checkBoxPanel.add(cbPassword);
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
-	public void actionPerformed(ActionEvent e) {
+	public void actionPerformed(final ActionEvent e) {
 		if (e.getSource() == bReset) {
-			System.out.println(this.getSize().toString());
+			reset();
 		}
+
 		if (e.getSource() == backButton) {
-			Frame window = (Frame) GUIUtilities
-					.getPrincipalContainer(container);
+			final Frame window = (Frame) GUIUtilities.getPrincipalContainer(container);
 			window.getContentPane().remove(0);
 			window.getContentPane().add(new LoginPanel());
 			window.pack();
-			window.repaint();
-			window.setSize(600, 400);
+			window.setMinimumSize(new Dimension(560, 400));
+			window.setSize(560, 400);
 			GUIUtilities.CenterWindow(window);
 		}
 
+	}
+
+	public void reset() {
+		if (tfEmail.getText().equals("") || tfEmail.getText().equals("Example:alvaro@gmail.com")) {
+
+			JOptionPane.showMessageDialog(null, "Insert the email address.", "", JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass().getResource("/resources/errorIcon.png")));
+
+		} else if (!cbPassword.isSelected() && !cbUsername.isSelected()) {
+			JOptionPane.showMessageDialog(null, "Select what you want to reset.", "", JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass().getResource("/resources/errorIcon.png")));
+		}
+
+		else if (!EmailValidator.getInstance().isValid(tfEmail.getText())) {
+			JOptionPane.showMessageDialog(null, "Incorrect Email.", "", JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass().getResource("/resources/errorIcon.png")));
+		} else {
+
+			final int optionType = JOptionPane.DEFAULT_OPTION;
+			final int messageType = JOptionPane.QUESTION_MESSAGE;
+			final ImageIcon icon = new ImageIcon(getClass().getResource("/resources/nothing.png"));
+			final Object[] selValues = { "No", "Yes" };
+			final int selection = JOptionPane.showOptionDialog(null, "Are you sure you want to reset user/password?", "", optionType, messageType, icon, selValues, selValues[0]);
+			if (selection == 1) {
+				final Frame window = (Frame) GUIUtilities.getPrincipalContainer(container);
+				window.getContentPane().remove(0);
+				window.getContentPane().add(new LoginPanel());
+				window.pack();
+				window.repaint();
+				window.setMinimumSize(new Dimension(560, 400));
+				window.setSize(560, 400);
+				GUIUtilities.CenterWindow(window);
+			}
+		}
 	}
 
 }

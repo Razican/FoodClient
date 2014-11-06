@@ -1,25 +1,26 @@
 package gui;
-import java.awt.BorderLayout;
+
+import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
-import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
-import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
 import utilities.GUIUtilities;
@@ -27,11 +28,14 @@ import utilities.SpringUtilities;
 
 public class SearchPanel extends JPanel implements ActionListener {
 
+	// Dimension(560, 680)
+
 	private static final long serialVersionUID = 1L;
 	private JPanel headerPanel;
 	private JPanel fieldPanel;
 	private JPanel searchButtonPanel;
 	private JPanel fieldContainer;
+	private JPanel container;
 	private JButton blogout;
 	private JLabel lHeader;
 	private JLabel lConnectionStatus;
@@ -78,102 +82,95 @@ public class SearchPanel extends JPanel implements ActionListener {
 		placeFieldObjects();
 		placeInformationObjects();
 		placeTableInfoComponents();
-		this.setLayout(new FlowLayout());
-		this.add(headerPanel);
-		this.add(fieldContainer);
-		this.add(tableInfoPanel);
-		this.add(lSupermarketMap);
+		container.setLayout(new FlowLayout());
+		container.add(headerPanel);
+		container.add(fieldContainer);
+		container.add(tableInfoPanel);
+		container.add(lSupermarketMap);
+		container.setPreferredSize(new Dimension(560, 680));
+		this.add(container);
 
 	}
 
 	public void InitializeVariables() {
+		this.setFocusable(true);
+		this.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(final KeyEvent e) {
+				final int key = e.getKeyCode();
+				if (key == KeyEvent.VK_ENTER)
+					search();
+			}
+		});
 		blogout = new JButton();
-		blogout.setIcon(new ImageIcon(getClass().getResource(
-				"/resources/logout.png")));
+		blogout.setIcon(new ImageIcon(getClass().getResource("/resources/logout.png")));
 		blogout.addActionListener(this);
 		blogout.setText("Logout");
 		lHeader = new JLabel("SEARCH");
-		lConnectionStatus = new JLabel(new ImageIcon(getClass().getResource(
-				"/resources/Base Green Deep.png")));
+		lConnectionStatus = new JLabel(new ImageIcon(getClass().getResource("/resources/Base Green Deep.png")));
+		lConnectionStatus.setToolTipText("Connection Status:OK");
 		headerPanel = new JPanel();
 		fieldPanel = new JPanel();
 		fieldContainer = new JPanel();
 		searchButtonPanel = new JPanel();
+		container = new JPanel();
 		bSearch = new JButton();
 		bSearch.setLayout(new SpringLayout());
-		JLabel searchImage = new JLabel(new ImageIcon(getClass().getResource(
-				"/resources/search.png")));
+		final JLabel searchImage = new JLabel(new ImageIcon(getClass().getResource("/resources/search.png")));
 		bSearch.add(searchImage);
 		bSearch.add(new JLabel("Search"));
 		SpringUtilities.makeCompactGrid(bSearch, 2, 1, 6, 6, 6, 6);
+		bSearch.addActionListener(this);
 		lName = new JLabel("Name:");
 		tfName = new JTextField("Example:Washer");
-		tfName.addMouseListener(new MouseListener() {
+		tfName.addMouseListener(new MouseAdapter() {
 
 			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
+			public void mousePressed(final MouseEvent e) {
 				if (tfName.getText().equals("Example:Washer")) {
 					tfName.setText("");
+				}
+			}
+		});
+		tfName.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusLost(final FocusEvent e) {
+				if (tfName.getText().equals("")) {
+					tfName.setText("Example:Washer");
 				}
 
 			}
 
 			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void focusGained(final FocusEvent e) {
 				// TODO Auto-generated method stub
 
 			}
 		});
 		lBrand = new JLabel("Brand:");
 		tfBrand = new JTextField("Example:Ariel");
-		tfBrand.addMouseListener(new MouseListener() {
+		tfBrand.addMouseListener(new MouseAdapter() {
 
 			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
+			public void mousePressed(final MouseEvent e) {
 				if (tfBrand.getText().equals("Example:Ariel")) {
 					tfBrand.setText("");
+				}
+			}
+		});
+		tfBrand.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusLost(final FocusEvent e) {
+				if (tfBrand.getText().equals("")) {
+					tfBrand.setText("Example:Ariel");
 				}
 
 			}
 
 			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void focusGained(final FocusEvent e) {
 				// TODO Auto-generated method stub
 
 			}
@@ -185,36 +182,27 @@ public class SearchPanel extends JPanel implements ActionListener {
 		lPrice1 = new JLabel(" between ");
 		tfPrice2 = new JTextField(5);
 		tfPrice2.setText("0.00");
-		tfPrice2.addMouseListener(new MouseListener() {
+		tfPrice2.addMouseListener(new MouseAdapter() {
 
 			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
+			public void mousePressed(final MouseEvent e) {
 				if (tfPrice2.getText().equals("0.00")) {
 					tfPrice2.setText("");
+				}
+			}
+		});
+		tfPrice2.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusLost(final FocusEvent e) {
+				if (tfPrice2.getText().equals("")) {
+					tfPrice2.setText("0.00");
 				}
 
 			}
 
 			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void focusGained(final FocusEvent e) {
 				// TODO Auto-generated method stub
 
 			}
@@ -222,36 +210,27 @@ public class SearchPanel extends JPanel implements ActionListener {
 		lPrice3 = new JLabel("€  and ");
 		tfPrice4 = new JTextField(5);
 		tfPrice4.setText("99.00");
-		tfPrice4.addMouseListener(new MouseListener() {
+		tfPrice4.addMouseListener(new MouseAdapter() {
 
 			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
+			public void mousePressed(final MouseEvent e) {
 				if (tfPrice4.getText().equals("99.00")) {
 					tfPrice4.setText("");
+				}
+			}
+		});
+		tfPrice4.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusLost(final FocusEvent e) {
+				if (tfPrice4.getText().equals("")) {
+					tfPrice4.setText("99.00");
 				}
 
 			}
 
 			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void focusGained(final FocusEvent e) {
 				// TODO Auto-generated method stub
 
 			}
@@ -264,21 +243,18 @@ public class SearchPanel extends JPanel implements ActionListener {
 		lTypeInfo = new JLabel("______");
 		lDesc = new JLabel("Desc:");
 		lDescInfo = new JLabel("______");
-		lImageInfo = new JLabel(new ImageIcon(getClass().getResource(
-				"/resources/pictographs-information-inv.png")));
+		lImageInfo = new JLabel(new ImageIcon(getClass().getResource("/resources/pictographs-information-inv.png")));
 		lName1 = new JLabel("Name:");
 		lType1 = new JLabel("Type:");
 		lBrand1 = new JLabel("Brand:");
 		lPrice11 = new JLabel("Price");
 		tableInfoPanel = new JPanel();
 		headers = new Object[] { "Name", "Type", "Brand", "Price" };
-		data = new Object[][] { { "Ariel", "Washing", "Ariel", "3,60" },
-				{ "Ariel", "Washing", "Ariel", "3,60" } };
+		data = new Object[][] { { "Ariel", "Washing", "Ariel", "3,60" }, { "Ariel", "Washing", "Ariel", "3,60" } };
 		modeloTabla = new DefaultTableModel(data, headers);
 		resultsTable = new JTable(modeloTabla);
 		resultsTable.setEnabled(true);
-		lSupermarketMap = new JLabel(new ImageIcon(getClass().getResource(
-				"/resources/Supermarket.jpg")));
+		lSupermarketMap = new JLabel(new ImageIcon(getClass().getResource("/resources/Supermarket.jpg")));
 
 	}
 
@@ -302,8 +278,7 @@ public class SearchPanel extends JPanel implements ActionListener {
 		fieldPanel.add(lPrice);
 		fieldPanel.add(pricePanel);
 		SpringUtilities.makeCompactGrid(fieldPanel, 4, 2, 6, 6, 6, 6);
-		fieldContainer
-				.setLayout(new BoxLayout(fieldContainer, BoxLayout.X_AXIS));
+		fieldContainer.setLayout(new BoxLayout(fieldContainer, BoxLayout.X_AXIS));
 		fieldContainer.add(fieldPanel);
 		searchButtonPanel.add(bSearch);
 		fieldContainer.add(searchButtonPanel);
@@ -345,8 +320,7 @@ public class SearchPanel extends JPanel implements ActionListener {
 
 	public void placeTableInfoComponents() {
 		tableInfoPanel.setLayout(new SpringLayout());
-		resultsTable.setPreferredScrollableViewportSize(resultsTable
-				.getPreferredSize());
+		resultsTable.setPreferredScrollableViewportSize(resultsTable.getPreferredSize());
 		resultsTable.setFillsViewportHeight(true);
 		tablePanel = new JScrollPane(resultsTable);
 		tablePanel.setViewportView(resultsTable);
@@ -357,10 +331,10 @@ public class SearchPanel extends JPanel implements ActionListener {
 
 	}
 
-	public void actionPerformed(ActionEvent e) {
+	@Override
+	public void actionPerformed(final ActionEvent e) {
 		if (e.getSource() == blogout) {
-			Frame window = (Frame) GUIUtilities
-					.getPrincipalContainer(tablePanel);
+			final Frame window = (Frame) GUIUtilities.getPrincipalContainer(tablePanel);
 			window.getContentPane().remove(0);
 			window.getContentPane().add(new LoginPanel());
 			window.pack();
@@ -368,7 +342,15 @@ public class SearchPanel extends JPanel implements ActionListener {
 			window.setSize(560, 420);
 			GUIUtilities.CenterWindow(window);
 		}
+		if (e.getSource() == bSearch) {
+			search();
+		}
 
+	}
+
+	public void search() {
+		final Frame window = (Frame) GUIUtilities.getPrincipalContainer(tablePanel);
+		System.out.println(window.getSize().toString());
 	}
 
 }

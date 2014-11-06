@@ -1,8 +1,13 @@
 package gui;
 
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -10,6 +15,7 @@ import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -41,6 +47,9 @@ public class LoginPanel extends JPanel implements ActionListener {
 	private FlowLayout flowLayout;
 	private JPanel buttonPanel;
 	private JPanel thisContainer;
+	private JPanel container2;
+	private String user;
+	private String welcomeMessage;
 
 	public LoginPanel() {
 		initializeVariables();
@@ -62,14 +71,29 @@ public class LoginPanel extends JPanel implements ActionListener {
 		thisContainer.add(textPanel);
 		thisContainer.add(Box.createVerticalStrut(40));
 		thisContainer.add(buttonPanel);
+		container2.add(thisContainer);
 
 	}
 
 	public void initializeVariables() {
-		thisContainer = this;
+
+		user = "Usuario";
+		thisContainer = new JPanel();
+		container2 = this;
+		container2.setFocusable(true);
+		container2.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(final KeyEvent e) {
+				final int key = e.getKeyCode();
+				if (key == KeyEvent.VK_ENTER)
+					login();
+			}
+		});
+		thisContainer.setPreferredSize(new Dimension(560, 420));
 		header = new JPanel();
 		lHeader = new JLabel("PRODUCT FINDER");
 		connectionStatus = new JLabel(new ImageIcon(getClass().getResource("/resources/Base Green Deep.png")));
+		connectionStatus.setToolTipText("Connection Status: OK");
 		textPanel = new JPanel();
 		lUsername = new JLabel("Username:");
 		tfUsername = new JTextField(20);
@@ -80,6 +104,28 @@ public class LoginPanel extends JPanel implements ActionListener {
 				if (tfUsername.getText().equals("Example:Peio")) {
 					tfUsername.setText("");
 				}
+			}
+		});
+		tfUsername.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(final KeyEvent e) {
+				final int key = e.getKeyCode();
+				if (key == KeyEvent.VK_ENTER)
+					login();
+			}
+		});
+		tfUsername.addFocusListener(new FocusListener() {
+			@Override
+			public void focusLost(final FocusEvent e) {
+				if (tfUsername.getText().equals("")) {
+					tfUsername.setText("Example:Peio");
+				}
+			}
+
+			@Override
+			public void focusGained(final FocusEvent e) {
+				// TODO Auto-generated method stub
+
 			}
 		});
 		lPassword = new JLabel("Password:");
@@ -95,6 +141,30 @@ public class LoginPanel extends JPanel implements ActionListener {
 					tfPassword.setText("");
 					tfPassword.setEchoChar('*');
 				}
+			}
+		});
+		tfPassword.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(final KeyEvent e) {
+				final int key = e.getKeyCode();
+				if (key == KeyEvent.VK_ENTER)
+					login();
+			}
+		});
+		tfPassword.addFocusListener(new FocusListener() {
+			@SuppressWarnings("deprecation")
+			@Override
+			public void focusLost(final FocusEvent e) {
+				if (tfPassword.getText().equals("")) {
+					tfPassword.setText("Example:1234");
+					tfPassword.setEchoChar((char) 0);
+				}
+			}
+
+			@Override
+			public void focusGained(final FocusEvent e) {
+				// TODO Auto-generated method stub
+
 			}
 		});
 		flowLayout = new FlowLayout();
@@ -149,18 +219,7 @@ public class LoginPanel extends JPanel implements ActionListener {
 
 		if (e.getSource() == bLogin) {
 
-			final JSONObject loginResponse = Api.login(tfUsername.getText(), StringUtils.sha1(tfPassword.getPassword()));
-			if (loginResponse.get("status").equals("OK")) {
-				final Frame window = (Frame) GUIUtilities.getPrincipalContainer(thisContainer);
-				window.getContentPane().remove(0);
-				window.getContentPane().add(new SearchPanel());
-				window.pack();
-				window.repaint();
-				window.setSize(600, 710);
-				GUIUtilities.CenterWindow(window);
-			} else {
-				// TODO Show error in loginResponse.get("error")
-			}
+			login();
 		}
 
 		if (e.getSource() == bNewUser) {
@@ -169,8 +228,35 @@ public class LoginPanel extends JPanel implements ActionListener {
 			window.getContentPane().add(new RegistryPanel());
 			window.pack();
 			window.repaint();
+			window.setMinimumSize(new Dimension(480, 470));
 			window.setSize(480, 470);
 			GUIUtilities.CenterWindow(window);
 		}
 	}
+
+	public void login() {
+		final JSONObject loginResponse = Api.login(tfUsername.getText(), StringUtils.sha1(tfPassword.getPassword()));
+
+		if (tfUsername.getText().equals("") || tfPassword.getText().equals("") || tfUsername.getText().equals("Example:Peio") || tfPassword.getText().equals("Example:1234")) {
+			JOptionPane.showMessageDialog(null, "Insert username or password.", "", JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass().getResource("/resources/errorIcon.png")));
+		}
+
+		else if (loginResponse.get("status").equals("OK")) {
+
+			welcomeMessage = "Welcome " + user + "!";
+			JOptionPane.showMessageDialog(null, welcomeMessage, "", JOptionPane.INFORMATION_MESSAGE, new ImageIcon(getClass().getResource("/resources/nothing.png")));
+			final Frame window = (Frame) GUIUtilities.getPrincipalContainer(thisContainer);
+			window.getContentPane().remove(0);
+			window.getContentPane().add(new SearchPanel());
+			window.pack();
+			window.repaint();
+			window.setMinimumSize(new Dimension(600, 710));
+			window.setSize(600, 710);
+			GUIUtilities.CenterWindow(window);
+		} else {
+			// TODO Show error in loginResponse.get("error")
+			JOptionPane.showMessageDialog(null, "Incorrect username or password.", "", JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass().getResource("/resources/errorIcon.png")));
+		}
+	}
+
 }

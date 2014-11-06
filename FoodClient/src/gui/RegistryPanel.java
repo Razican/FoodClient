@@ -1,21 +1,27 @@
 package gui;
-import java.awt.BorderLayout;
+
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
-import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
+
+import org.apache.commons.validator.EmailValidator;
 
 import utilities.GUIUtilities;
 import utilities.SpringUtilities;
@@ -50,6 +56,7 @@ public class RegistryPanel extends JPanel implements ActionListener {
 	private JLabel connectionStatus;
 	private JButton registerButton;
 	private JPanel container;
+	private JPanel container2;
 
 	public RegistryPanel() {
 		initializeVariables();
@@ -65,12 +72,10 @@ public class RegistryPanel extends JPanel implements ActionListener {
 		checkBoxIssuePanel.setLayout(new SpringLayout());
 		checkBoxIssuePanel1.setLayout(new SpringLayout());
 		placeCheckBoxIssue1();
-		SpringUtilities
-				.makeCompactGrid(checkBoxIssuePanel1, 1, 1, 1, 1, 50, 50);
+		SpringUtilities.makeCompactGrid(checkBoxIssuePanel1, 1, 1, 1, 1, 50, 50);
 		checkBoxIssuePanel2.setLayout(new SpringLayout());
 		placeCheckBoxIssue2();
-		SpringUtilities
-				.makeCompactGrid(checkBoxIssuePanel2, 2, 2, 10, 0, 30, 0);
+		SpringUtilities.makeCompactGrid(checkBoxIssuePanel2, 2, 2, 10, 0, 30, 0);
 
 		checkBoxIssuePanel.add(checkBoxIssuePanel1);
 		checkBoxIssuePanel.add(checkBoxIssuePanel2);
@@ -82,158 +87,170 @@ public class RegistryPanel extends JPanel implements ActionListener {
 		container.add(checkBoxIssuePanel);
 		SpringUtilities.makeCompactGrid(container, 3, 1, 6, 6, 6, 6);
 
-		this.setLayout(new FlowLayout());
-		this.add(container);
-		this.add(registerButton);
-		this.setSize(new Dimension(460, 480));
+		container2.setLayout(new FlowLayout());
+		container2.add(container);
+		container2.add(registerButton);
+		this.add(container2);
 
 	}
 
 	public void initializeVariables() {
+		this.setFocusable(true);
+		this.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(final KeyEvent e) {
+				final int key = e.getKeyCode();
+				if (key == KeyEvent.VK_ENTER)
+					register();
+			}
+		});
+		container2 = new JPanel();
+		container2.setPreferredSize(new Dimension(480, 470));
 		textFieldPanel = new JPanel();
 		checkBoxIssuePanel = new JPanel();
 		checkBoxIssuePanel1 = new JPanel();
 		checkBoxIssuePanel2 = new JPanel();
 		tfName = new JTextField(20);
 		tfName.setText("Example:Patxi");
-		tfName.addMouseListener(new MouseListener() {
+		tfName.addMouseListener(new MouseAdapter() {
 
+			@SuppressWarnings("deprecation")
 			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
+			public void mousePressed(final MouseEvent e) {
 				if (tfName.getText().equals("Example:Patxi")) {
 					tfName.setText("");
 				}
 
 			}
 
+		});
+		tfName.addKeyListener(new KeyAdapter() {
 			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
+			public void keyPressed(final KeyEvent e) {
+				final int key = e.getKeyCode();
+				if (key == KeyEvent.VK_ENTER)
+					register();
+			}
+		});
+		tfName.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusLost(final FocusEvent e) {
+				if (tfName.getText().equals("")) {
+					tfName.setText("Example:Patxi");
+				}
 
 			}
 
 			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void focusGained(final FocusEvent e) {
 				// TODO Auto-generated method stub
 
 			}
 		});
 		tfLastName = new JTextField(20);
 		tfLastName.setText("Example:Lopez");
-		tfLastName.addMouseListener(new MouseListener() {
+		tfLastName.addMouseListener(new MouseAdapter() {
 
+			@SuppressWarnings("deprecation")
 			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
+			public void mousePressed(final MouseEvent e) {
 				if (tfLastName.getText().equals("Example:Lopez")) {
 					tfLastName.setText("");
+				}
+			}
+		});
+		tfLastName.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(final KeyEvent e) {
+				final int key = e.getKeyCode();
+				if (key == KeyEvent.VK_ENTER)
+					register();
+			}
+		});
+		tfLastName.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusLost(final FocusEvent e) {
+				if (tfLastName.getText().equals("")) {
+					tfLastName.setText("Example:Lopez");
 				}
 
 			}
 
 			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void focusGained(final FocusEvent e) {
 				// TODO Auto-generated method stub
 
 			}
 		});
 		tfEmail = new JTextField(20);
 		tfEmail.setText("Example:alvaro@gmail.com");
-		tfEmail.addMouseListener(new MouseListener() {
+		tfEmail.addMouseListener(new MouseAdapter() {
 
 			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
+			public void mousePressed(final MouseEvent e) {
 				if (tfEmail.getText().equals("Example:alvaro@gmail.com")) {
 					tfEmail.setText("");
 				}
 
 			}
+		});
+		tfEmail.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(final KeyEvent e) {
+				final int key = e.getKeyCode();
+				if (key == KeyEvent.VK_ENTER)
+					register();
+			}
+		});
+		tfEmail.addFocusListener(new FocusListener() {
 
 			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
+			public void focusLost(final FocusEvent e) {
+				if (tfEmail.getText().equals("")) {
+					tfEmail.setText("Example:alvaro@gmail.com");
+				}
 
 			}
 
 			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void focusGained(final FocusEvent e) {
 				// TODO Auto-generated method stub
 
 			}
 		});
 		tfUsername = new JTextField(20);
 		tfUsername.setText("Example:Peio");
-		tfUsername.addMouseListener(new MouseListener() {
+		tfUsername.addMouseListener(new MouseAdapter() {
 
 			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
+			public void mousePressed(final MouseEvent e) {
 				if (tfUsername.getText().equals("Example:Peio")) {
 					tfUsername.setText("");
+				}
+			}
+		});
+		tfUsername.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(final KeyEvent e) {
+				final int key = e.getKeyCode();
+				if (key == KeyEvent.VK_ENTER)
+					register();
+			}
+		});
+		tfUsername.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusLost(final FocusEvent e) {
+				if (tfUsername.getText().equals("")) {
+					tfUsername.setText("Example:Peio");
 				}
 
 			}
 
 			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void focusGained(final FocusEvent e) {
 				// TODO Auto-generated method stub
 
 			}
@@ -241,16 +258,10 @@ public class RegistryPanel extends JPanel implements ActionListener {
 		tfPassword = new JPasswordField(20);
 		tfPassword.setText("Example:1234");
 		tfPassword.setEchoChar((char) 0);
-		tfPassword.addMouseListener(new MouseListener() {
+		tfPassword.addMouseListener(new MouseAdapter() {
 
 			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
+			public void mousePressed(final MouseEvent e) {
 				if (tfPassword.getText().equals("Example:1234")) {
 					tfPassword.setText("");
 					tfPassword.setEchoChar('*');
@@ -258,20 +269,28 @@ public class RegistryPanel extends JPanel implements ActionListener {
 
 			}
 
+		});
+		tfPassword.addKeyListener(new KeyAdapter() {
 			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
+			public void keyPressed(final KeyEvent e) {
+				final int key = e.getKeyCode();
+				if (key == KeyEvent.VK_ENTER)
+					register();
+			}
+		});
+		tfPassword.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusLost(final FocusEvent e) {
+				if (tfPassword.getText().equals("")) {
+					tfPassword.setText("Example:1234");
+					tfPassword.setEchoChar((char) 0);
+				}
 
 			}
 
 			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void focusGained(final FocusEvent e) {
 				// TODO Auto-generated method stub
 
 			}
@@ -279,37 +298,38 @@ public class RegistryPanel extends JPanel implements ActionListener {
 		tfPassword2 = new JPasswordField(20);
 		tfPassword2.setText("Example:1234");
 		tfPassword2.setEchoChar((char) 0);
-		tfPassword2.addMouseListener(new MouseListener() {
+		tfPassword2.addMouseListener(new MouseAdapter() {
 
 			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
+			public void mousePressed(final MouseEvent e) {
 				if (tfPassword2.getText().equals("Example:1234")) {
 					tfPassword2.setText("");
 					tfPassword2.setEchoChar('*');
 				}
 
 			}
+		});
+		tfPassword2.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(final KeyEvent e) {
+				final int key = e.getKeyCode();
+				if (key == KeyEvent.VK_ENTER)
+					register();
+			}
+		});
+		tfPassword2.addFocusListener(new FocusListener() {
 
 			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
+			public void focusLost(final FocusEvent e) {
+				if (tfPassword2.getText().equals("")) {
+					tfPassword2.setText("Example:1234");
+					tfPassword2.setEchoChar((char) 0);
+				}
 
 			}
 
 			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void focusGained(final FocusEvent e) {
 				// TODO Auto-generated method stub
 
 			}
@@ -327,16 +347,14 @@ public class RegistryPanel extends JPanel implements ActionListener {
 		lHealthIssues = new JLabel("Health Issues:");
 		bRegister = new JButton("Register");
 		headerPanel = new JPanel();
-		backButton = new JButton(new ImageIcon(getClass().getResource(
-				"/resources/back-icon.png")));
+		backButton = new JButton(new ImageIcon(getClass().getResource("/resources/back-icon.png")));
 		backButton.addActionListener(this);
 		headerTitle = new JLabel("REGISTER");
-		connectionStatus = new JLabel(new ImageIcon(getClass().getResource(
-				"/resources/Base Green Deep.png")));
+		connectionStatus = new JLabel(new ImageIcon(getClass().getResource("/resources/Base Green Deep.png")));
+		connectionStatus.setToolTipText("Connection Status:OK");
 		container = new JPanel();
 		registerButton = new JButton();
-		registerButton.setIcon(new ImageIcon(getClass().getResource(
-				"/resources/form_icon_25603.png")));
+		registerButton.setIcon(new ImageIcon(getClass().getResource("/resources/form_icon_25603.png")));
 		registerButton.setText("Register");
 		registerButton.addActionListener(this);
 
@@ -348,7 +366,6 @@ public class RegistryPanel extends JPanel implements ActionListener {
 		headerPanel.add(connectionStatus);
 	}
 
-	// frame.setSize(new Dimension(460, 480));
 	public void placeComponentsText() {
 		textFieldPanel.add(lName);
 		textFieldPanel.add(tfName);
@@ -362,7 +379,6 @@ public class RegistryPanel extends JPanel implements ActionListener {
 		textFieldPanel.add(tfPassword);
 		textFieldPanel.add(lPassword2);
 		textFieldPanel.add(tfPassword2);
-		// this.add(boton);
 
 	}
 
@@ -379,23 +395,35 @@ public class RegistryPanel extends JPanel implements ActionListener {
 		checkBoxIssuePanel2.add(cbMilk);
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
-	public void actionPerformed(ActionEvent e) {
+	public void actionPerformed(final ActionEvent e) {
 		if (e.getSource() == registerButton) {
-			System.out.println("heigth:" + this.getSize().height + " Width"
-					+ this.getSize().width);
+			register();
 		}
 		if (e.getSource() == backButton) {
-			Frame window = (Frame) GUIUtilities
-					.getPrincipalContainer(container);
+			final Frame window = (Frame) GUIUtilities.getPrincipalContainer(container);
 			window.getContentPane().remove(0);
 			window.getContentPane().add(new LoginPanel());
 			window.pack();
 			window.repaint();
+			window.setMinimumSize(new Dimension(560, 420));
 			window.setSize(560, 420);
 			GUIUtilities.CenterWindow(window);
 		}
 
 	}
 
+	public void register() {
+		if (tfName.getText().equals("") || tfLastName.getText().equals("") || tfEmail.getText().equals("") || tfPassword.getText().equals("") || tfPassword2.getText().equals("") || tfUsername.getText().equals("")) {
+			JOptionPane.showMessageDialog(null, "You must fill all the fields.", "", JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass().getResource("/resources/errorIcon.png")));
+
+		} else if (!tfPassword.getText().equals(tfPassword2.getText())) {
+			JOptionPane.showMessageDialog(null, "Passwords don't match.", "", JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass().getResource("/resources/errorIcon.png")));
+
+		} else if (!EmailValidator.getInstance().isValid(tfEmail.getText())) {
+			JOptionPane.showMessageDialog(null, "You must provide a valid email.", "", JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass().getResource("/resources/errorIcon.png")));
+		}
+		// TODO Username exists or email exist validation missing.
+	}
 }
