@@ -3,3 +3,11 @@ jdk:
   - oraclejdk8
   - oraclejdk7
   - openjdk7
+
+notifications:
+  email:
+    recipients:
+      - iban.eguia@opendeusto.es
+      - alvaro.garcia@opendeusto.es
+    on_success: change
+    on_failure: always
