@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring accessors="true" comment="Delete element from project &apos;FoodClient&apos;&#x0A;- Original project: &apos;FoodClient&apos;&#x0A;- Original element: &apos;key-icon-614x460.png&apos;" description="Delete element" element1="src/Resources/key-icon-614x460.png" elements="0" flags="589830" id="org.eclipse.jdt.ui.delete" resources="1" stamp="1412258209047" subPackages="false" version="1.0"/>
-</session>
