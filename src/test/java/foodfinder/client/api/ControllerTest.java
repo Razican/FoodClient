@@ -2,15 +2,15 @@ package foodfinder.client.api;
 
 import static org.junit.Assert.fail;
 
+import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 
 public class ControllerTest {
 
-	@Ignore("Not yet implemented")
 	@Test
 	public void testStatus() {
-		fail("Not yet implemented");
+		Assert.assertTrue(Controller.checkStatus());
 	}
 
 	@Ignore("Not yet implemented")

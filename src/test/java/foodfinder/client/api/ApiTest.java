@@ -12,7 +12,7 @@ public class ApiTest {
 
 	@Test
 	public void testStatus() {
-		final JSONObject result = Api.status();
+		final JSONObject result = Api.checkStatus();
 
 		Assert.assertEquals("OK", result.get("status"));
 		Assert.assertEquals(JSONObject.NULL, result.get("error"));

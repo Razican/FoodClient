@@ -24,12 +24,12 @@ public class Api {
 	private Api() {
 	}
 
-	public static JSONObject status() {
+	public static JSONObject checkStatus() {
 		return getJSON("status", null);
 	}
 
 	public static JSONObject
-			login(final String username, final char[] password) {
+	login(final String username, final char[] password) {
 		final HashMap<String, String> params = new HashMap<>();
 		params.put("username", username);
 		params.put("password", StringUtils.sha1(password));
