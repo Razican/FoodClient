@@ -25,6 +25,7 @@ import javax.swing.table.DefaultTableModel;
 
 import org.apache.uima.tools.util.gui.SpringUtilities;
 
+import foodfinder.client.api.Controller;
 import foodfinder.client.utilities.GUIUtilities;
 
 public class SearchPanel extends JPanel implements ActionListener {
@@ -109,10 +110,7 @@ public class SearchPanel extends JPanel implements ActionListener {
 		blogout.addActionListener(this);
 		blogout.setText("Logout");
 		lHeader = new JLabel("SEARCH");
-		lConnectionStatus =
-				new JLabel(new ImageIcon(getClass().getResource(
-						"/status-OK.png")));
-		lConnectionStatus.setToolTipText("Connection Status:OK");
+		getConnectionLabel();
 		headerPanel = new JPanel();
 		fieldPanel = new JPanel();
 		fieldContainer = new JPanel();
@@ -337,6 +335,25 @@ public class SearchPanel extends JPanel implements ActionListener {
 		}
 
 	}
+	public void getConnectionLabel()
+	{
+		
+		if(Controller.checkStatus()==true)
+		{
+			lConnectionStatus =
+					new JLabel(new ImageIcon(getClass().getResource(
+							"/status-OK.png")));	
+			lConnectionStatus.setToolTipText("Connection Status: OK");
+		}
+		else
+		{
+			lConnectionStatus =
+					new JLabel(new ImageIcon(getClass().getResource(
+							"/status-ERR.png")));
+			lConnectionStatus.setToolTipText("Connection Status: ERROR");
+		}
+	}
+
 
 	public void search() {
 		final Frame window = (Frame) GUIUtilities.getMainContainer(tablePanel);

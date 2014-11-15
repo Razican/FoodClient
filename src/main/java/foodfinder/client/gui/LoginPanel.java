@@ -25,6 +25,7 @@ import org.apache.uima.tools.util.gui.SpringUtilities;
 import org.json.JSONObject;
 
 import foodfinder.client.api.Api;
+import foodfinder.client.api.Controller;
 import foodfinder.client.utilities.GUIUtilities;
 
 public class LoginPanel extends JPanel implements ActionListener {
@@ -91,10 +92,7 @@ public class LoginPanel extends JPanel implements ActionListener {
 		thisContainer.setPreferredSize(new Dimension(560, 420));
 		header = new JPanel();
 		lHeader = new JLabel("PRODUCT FINDER");
-		connectionStatus =
-				new JLabel(new ImageIcon(getClass().getResource(
-						"/status-OK.png")));
-		connectionStatus.setToolTipText("Connection Status: OK");
+		getConnectionLabel();
 		textPanel = new JPanel();
 		lUsername = new JLabel("Username:");
 		tfUsername = new JTextField(20);
@@ -223,6 +221,24 @@ public class LoginPanel extends JPanel implements ActionListener {
 			window.setMinimumSize(new Dimension(480, 470));
 			window.setSize(480, 470);
 			GUIUtilities.CenterWindow(window);
+		}
+	}
+	
+	public void getConnectionLabel()
+	{
+		if(Controller.checkStatus()==true)
+		{
+			connectionStatus =
+					new JLabel(new ImageIcon(getClass().getResource(
+							"/status-OK.png")));	
+			connectionStatus.setToolTipText("Connection Status: OK");
+		}
+		else
+		{
+			connectionStatus =
+					new JLabel(new ImageIcon(getClass().getResource(
+							"/status-ERR.png")));
+			connectionStatus.setToolTipText("Connection Status: ERROR");
 		}
 	}
 

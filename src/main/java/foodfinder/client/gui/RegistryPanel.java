@@ -24,6 +24,7 @@ import javax.swing.SpringLayout;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.apache.uima.tools.util.gui.SpringUtilities;
 
+import foodfinder.client.api.Controller;
 import foodfinder.client.utilities.GUIUtilities;
 
 public class RegistryPanel extends JPanel implements ActionListener {
@@ -315,10 +316,7 @@ public class RegistryPanel extends JPanel implements ActionListener {
 						"/back-icon.png")));
 		backButton.addActionListener(this);
 		headerTitle = new JLabel("REGISTER");
-		connectionStatus =
-				new JLabel(new ImageIcon(getClass()
-						.getResource("status-OK.png")));
-		connectionStatus.setToolTipText("Connection Status:OK");
+		getConnectionLabel();
 		container = new JPanel();
 		registerButton = new JButton();
 		registerButton.setIcon(new ImageIcon(getClass().getResource(
@@ -381,6 +379,25 @@ public class RegistryPanel extends JPanel implements ActionListener {
 		}
 
 	}
+	
+	public void getConnectionLabel()
+	{
+		if(Controller.checkStatus()==true)
+		{
+			connectionStatus =
+					new JLabel(new ImageIcon(getClass().getResource(
+							"/status-OK.png")));	
+			connectionStatus.setToolTipText("Connection Status: OK");
+		}
+		else
+		{
+			connectionStatus =
+					new JLabel(new ImageIcon(getClass().getResource(
+							"/status-ERR.png")));
+			connectionStatus.setToolTipText("Connection Status: ERROR");
+		}
+	}
+
 
 	public void register() {
 		if (tfName.getText().equals("") || tfLastName.getText().equals("")

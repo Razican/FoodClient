@@ -25,6 +25,7 @@ import javax.swing.SwingConstants;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.apache.uima.tools.util.gui.SpringUtilities;
 
+import foodfinder.client.api.Controller;
 import foodfinder.client.utilities.GUIUtilities;
 
 public class PasswordResetPanel extends JPanel implements ActionListener {
@@ -101,10 +102,7 @@ public class PasswordResetPanel extends JPanel implements ActionListener {
 						"/back-icon.png")));
 		backButton.addActionListener(this);
 		headerTitle = new JLabel("USER/PASSWORD RESET");
-		connectionStatus =
-				new JLabel(new ImageIcon(getClass().getResource(
-						"/status-OK.png")));
-		connectionStatus.setText("Connection Status:OK");
+		getConnectionLabel();
 		lEmail = new JLabel("Email:");
 		tfEmail = new JTextField(15);
 		tfEmail.setText("Example:alvaro@gmail.com");
@@ -180,6 +178,24 @@ public class PasswordResetPanel extends JPanel implements ActionListener {
 			GUIUtilities.CenterWindow(window);
 		}
 
+	}
+	
+	public void getConnectionLabel()
+	{
+		if(Controller.checkStatus()==true)
+		{
+			connectionStatus =
+					new JLabel(new ImageIcon(getClass().getResource(
+							"/status-OK.png")));	
+			connectionStatus.setToolTipText("Connection Status: OK");
+		}
+		else
+		{
+			connectionStatus =
+					new JLabel(new ImageIcon(getClass().getResource(
+							"/status-ERR.png")));
+			connectionStatus.setToolTipText("Connection Status: ERROR");
+		}
 	}
 
 	public void reset() {
