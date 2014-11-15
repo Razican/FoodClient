@@ -229,7 +229,8 @@ public class LoginPanel extends JPanel implements ActionListener {
 		}
 
 		if (e.getSource() == bNewUser) {
-			final JFrame window = (JFrame) GUIUtilities.getMainContainer(container2);
+			final JFrame window =
+					(JFrame) GUIUtilities.getMainContainer(container2);
 			window.getContentPane().remove(0);
 			window.getContentPane().add(new RegistryPanel());
 			window.pack();
@@ -280,22 +281,10 @@ public class LoginPanel extends JPanel implements ActionListener {
 			window.setMinimumSize(new Dimension(600, 710));
 			window.setSize(600, 710);
 			GUIUtilities.CenterWindow(window);
-<<<<<<< HEAD
-		}
-
-		 else {
-=======
-		} else if (loginResponse.equals("Insert username and password.")) {
-			JOptionPane.showMessageDialog(null, "Insert username or password.",
-					"", JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass()
-							.getResource("/error-icon.png")));
 		} else {
->>>>>>> FETCH_HEAD
-			// TODO Show error in loginResponse.get("error")
 			JOptionPane.showMessageDialog(null, loginResponse, "",
 					JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass()
 							.getResource("/error-icon.png")));
 		}
 	}
-
 }
