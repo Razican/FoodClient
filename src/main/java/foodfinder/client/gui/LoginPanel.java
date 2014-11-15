@@ -24,10 +24,6 @@ import javax.swing.SpringLayout;
 
 import org.apache.uima.tools.util.gui.SpringUtilities;
 
-<<<<<<< HEAD
-import foodfinder.client.api.Api;
-=======
->>>>>>> FETCH_HEAD
 import foodfinder.client.api.Controller;
 import foodfinder.client.utilities.GUIUtilities;
 
@@ -226,18 +222,14 @@ public class LoginPanel extends JPanel implements ActionListener {
 			GUIUtilities.CenterWindow(window);
 		}
 	}
-	
-	public void getConnectionLabel()
-	{
-		if(Controller.checkStatus()==true)
-		{
+
+	public void getConnectionLabel() {
+		if (Controller.checkStatus() == true) {
 			connectionStatus =
 					new JLabel(new ImageIcon(getClass().getResource(
-							"/status-OK.png")));	
+							"/status-OK.png")));
 			connectionStatus.setToolTipText("Connection Status: OK");
-		}
-		else
-		{
+		} else {
 			connectionStatus =
 					new JLabel(new ImageIcon(getClass().getResource(
 							"/status-ERR.png")));
