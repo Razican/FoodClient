@@ -46,7 +46,6 @@ public class RegistryPanel extends JPanel implements ActionListener {
 	private JLabel lPassword;
 	private JLabel lPassword2;
 	private JLabel lHealthIssues;
-	private JButton bRegister;
 	private JPanel textFieldPanel;
 	private JPanel checkBoxIssuePanel;
 	private JPanel checkBoxIssuePanel1;
@@ -263,7 +262,7 @@ public class RegistryPanel extends JPanel implements ActionListener {
 
 			@Override
 			public void mousePressed(final MouseEvent e) {
-				if (tfPassword.getText().equals("Example:1234")) {
+				if (tfPassword.getPassword().equals("Example:1234")) {
 					tfPassword.setText("");
 					tfPassword.setEchoChar('*');
 				}
@@ -283,7 +282,7 @@ public class RegistryPanel extends JPanel implements ActionListener {
 
 			@Override
 			public void focusLost(final FocusEvent e) {
-				if (tfPassword.getText().equals("")) {
+				if (tfPassword.getPassword().equals("")) {
 					tfPassword.setText("Example:1234");
 					tfPassword.setEchoChar((char) 0);
 				}
@@ -303,7 +302,7 @@ public class RegistryPanel extends JPanel implements ActionListener {
 
 			@Override
 			public void mousePressed(final MouseEvent e) {
-				if (tfPassword2.getText().equals("Example:1234")) {
+				if (tfPassword2.getPassword().equals("Example:1234")) {
 					tfPassword2.setText("");
 					tfPassword2.setEchoChar('*');
 				}
@@ -322,7 +321,7 @@ public class RegistryPanel extends JPanel implements ActionListener {
 
 			@Override
 			public void focusLost(final FocusEvent e) {
-				if (tfPassword2.getText().equals("")) {
+				if (tfPassword2.getPassword().equals("")) {
 					tfPassword2.setText("Example:1234");
 					tfPassword2.setEchoChar((char) 0);
 				}
@@ -346,7 +345,6 @@ public class RegistryPanel extends JPanel implements ActionListener {
 		lPassword = new JLabel("Password:");
 		lPassword2 = new JLabel("Repeat Password:");
 		lHealthIssues = new JLabel("Health Issues:");
-		bRegister = new JButton("Register");
 		headerPanel = new JPanel();
 		backButton =
 				new JButton(new ImageIcon(getClass().getResource(
@@ -423,15 +421,15 @@ public class RegistryPanel extends JPanel implements ActionListener {
 	public void register() {
 		if (tfName.getText().equals("") || tfLastName.getText().equals("")
 				|| tfEmail.getText().equals("")
-				|| tfPassword.getText().equals("")
-				|| tfPassword2.getText().equals("")
+				|| tfPassword.getPassword().equals("")
+				|| tfPassword2.getPassword().equals("")
 				|| tfUsername.getText().equals("")) {
 			JOptionPane.showMessageDialog(null,
 					"You must fill all the fields.", "",
 					JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass()
 							.getResource("/error-icon.png")));
 
-		} else if (!tfPassword.getText().equals(tfPassword2.getText())) {
+		} else if (!tfPassword.getPassword().equals(tfPassword2.getPassword())) {
 			JOptionPane.showMessageDialog(null, "Passwords don't match.", "",
 					JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass()
 							.getResource("/error-icon.png")));

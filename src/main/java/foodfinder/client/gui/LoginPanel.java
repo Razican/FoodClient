@@ -137,7 +137,7 @@ public class LoginPanel extends JPanel implements ActionListener {
 
 			@Override
 			public void mousePressed(final MouseEvent e) {
-				if (tfPassword.getText().equals("Example:1234")) {
+				if (tfPassword.getPassword().equals("Example:1234")) {
 					tfPassword.setText("");
 					tfPassword.setEchoChar('*');
 				}
@@ -155,7 +155,7 @@ public class LoginPanel extends JPanel implements ActionListener {
 
 			@Override
 			public void focusLost(final FocusEvent e) {
-				if (tfPassword.getText().equals("")) {
+				if (tfPassword.getPassword().equals("")) {
 					tfPassword.setText("Example:1234");
 					tfPassword.setEchoChar((char) 0);
 				}
@@ -242,9 +242,9 @@ public class LoginPanel extends JPanel implements ActionListener {
 		final JSONObject loginResponse =
 				Api.login(tfUsername.getText(), tfPassword.getPassword());
 
-		if (tfUsername.getText().equals("") || tfPassword.getText().equals("")
+		if (tfUsername.getText().equals("") || tfPassword.getPassword().equals("")
 				|| tfUsername.getText().equals("Example:Peio")
-				|| tfPassword.getText().equals("Example:1234")) {
+				|| tfPassword.getPassword().equals("Example:1234")) {
 			JOptionPane.showMessageDialog(null, "Insert username or password.",
 					"", JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass()
 							.getResource("/error-icon.png")));
