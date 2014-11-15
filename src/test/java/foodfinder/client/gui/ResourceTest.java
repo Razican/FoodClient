@@ -58,4 +58,13 @@ public class ResourceTest {
 		Assert.assertNotNull("Missing image check",
 				getClass().getResource("/missing.png"));
 	}
+
+	@Test
+	public void testProducts() {
+
+		for (int i = 1; i <= 25; i++) {
+			Assert.assertNotNull("Product #" + i + " image check", getClass()
+					.getResource("/products/" + i + ".jpg"));
+		}
+	}
 }
