@@ -24,8 +24,6 @@ import javax.swing.SpringLayout;
 import org.apache.uima.tools.util.gui.SpringUtilities;
 import org.json.JSONObject;
 
-import com.razican.utils.StringUtils;
-
 import foodfinder.client.api.Api;
 import foodfinder.client.utilities.GUIUtilities;
 
@@ -237,7 +235,7 @@ public class LoginPanel extends JPanel implements ActionListener {
 	}
 
 	public void login() {
-		final JSONObject loginResponse = Api.login(tfUsername.getText(), StringUtils.sha1(tfPassword.getPassword()));
+		final JSONObject loginResponse = Api.login(tfUsername.getText(), tfPassword.getPassword());
 
 		if (tfUsername.getText().equals("") || tfPassword.getText().equals("") || tfUsername.getText().equals("Example:Peio") || tfPassword.getText().equals("Example:1234")) {
 			JOptionPane.showMessageDialog(null, "Insert username or password.", "", JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass().getResource("/resources/errorIcon.png")));

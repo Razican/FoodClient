@@ -14,6 +14,8 @@ import java.util.Map;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.razican.utils.StringUtils;
+
 public class Api {
 
 	private static String API_URL = "http://localhost/foodweb/api/";
@@ -21,29 +23,31 @@ public class Api {
 	private Api() {
 	}
 
-	public static JSONObject login(final String username, final String password) {
+	public static JSONObject status() {
+		return getJSON("status", null);
+	}
+
+	public static JSONObject
+			login(final String username, final char[] password) {
 		final HashMap<String, String> params = new HashMap<>();
 		params.put("username", username);
-		params.put("password", password);
+		params.put("password", StringUtils.sha1(password));
 
 		return getJSON("login", params);
 	}
 
-	public static void main(final String[] args) {
-
-		final String url = "login";
-		final HashMap<String, String> params = new HashMap<>();
-		params.put("name", "Razican");
-
-		final JSONObject json = getJSON(url, params);
-		System.out.println(json.get("message"));
+	public static JSONObject register(final String name, final String lastName,
+			final String email, final String username, final char[] password,
+			final boolean gluten, final boolean diabetes,
+			final boolean vegetables, final boolean milk) {
+		// TODO
+		return null;
 	}
 
 	private static JSONObject getJSON(final String url, final Map<?, ?> params) {
 		try {
 			return new JSONObject(getTextfromURL(API_URL + url, params));
 		} catch (JSONException | IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -51,7 +55,8 @@ public class Api {
 	}
 
 	// From http://www.mkyong.com/java/how-to-send-http-request-getpost-in-java/
-	private static String getTextfromURL(final String urlStr, final Map<?, ?> params) throws IOException {
+	private static String getTextfromURL(final String urlStr,
+			final Map<?, ?> params) throws IOException {
 		final URL obj = new URL(urlStr);
 		final HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
@@ -69,12 +74,8 @@ public class Api {
 		wr.flush();
 		wr.close();
 
-		final int responseCode = con.getResponseCode();
-		System.out.println("\nSending 'POST' request to URL: " + urlStr);
-		System.out.println("Post parameters: " + urlParameters);
-		System.out.println("Response Code: " + responseCode);
-
-		final BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+		final BufferedReader in =
+				new BufferedReader(new InputStreamReader(con.getInputStream()));
 		String inputLine;
 		final StringBuffer response = new StringBuffer();
 
@@ -102,8 +103,20 @@ public class Api {
 			if (sb.length() > 0) {
 				sb.append("&");
 			}
-			sb.append(String.format("%s=%s", urlEncodeUTF8(entry.getKey().toString()), urlEncodeUTF8(entry.getValue().toString())));
+			sb.append(String.format("%s=%s", urlEncodeUTF8(entry.getKey()
+					.toString()), urlEncodeUTF8(entry.getValue().toString())));
 		}
 		return sb.toString();
+	}
+
+	public static void main(final String[] args) {
+
+		final String url = "login";
+		final HashMap<String, String> params = new HashMap<>();
+		params.put("name", "Razican");
+		params.put("password", "Razican");
+
+		final JSONObject json = getJSON(url, params);
+		System.out.println(json.get("error"));
 	}
 }
