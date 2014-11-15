@@ -148,7 +148,7 @@ public class LoginPanel extends JPanel implements ActionListener {
 
 			@Override
 			public void focusLost(final FocusEvent e) {
-				if (tfPassword.getPassword().equals("")) {
+				if (Arrays.equals(tfPassword.getPassword(), "".toCharArray())) {
 					tfPassword.setText("Example:1234");
 					tfPassword.setEchoChar((char) 0);
 				}

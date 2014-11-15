@@ -10,6 +10,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Arrays;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -239,7 +240,7 @@ public class RegistryPanel extends JPanel implements ActionListener {
 
 			@Override
 			public void mousePressed(final MouseEvent e) {
-				if (tfPassword.getPassword().equals("Example:1234")) {
+				if (Arrays.equals(tfPassword.getPassword(),"Example:1234".toCharArray())) {
 					tfPassword.setText("");
 					tfPassword.setEchoChar('*');
 				}
@@ -259,7 +260,7 @@ public class RegistryPanel extends JPanel implements ActionListener {
 
 			@Override
 			public void focusLost(final FocusEvent e) {
-				if (tfPassword.getPassword().equals("")) {
+				if (Arrays.equals(tfPassword.getPassword(),"".toCharArray())) {
 					tfPassword.setText("Example:1234");
 					tfPassword.setEchoChar((char) 0);
 				}
@@ -273,7 +274,7 @@ public class RegistryPanel extends JPanel implements ActionListener {
 
 			@Override
 			public void mousePressed(final MouseEvent e) {
-				if (tfPassword2.getPassword().equals("Example:1234")) {
+				if (Arrays.equals(tfPassword2.getPassword(),"Example:1234".toCharArray())) {
 					tfPassword2.setText("");
 					tfPassword2.setEchoChar('*');
 				}
@@ -292,7 +293,7 @@ public class RegistryPanel extends JPanel implements ActionListener {
 
 			@Override
 			public void focusLost(final FocusEvent e) {
-				if (tfPassword2.getPassword().equals("")) {
+				if (Arrays.equals(tfPassword2.getPassword(),"".toCharArray())) {
 					tfPassword2.setText("Example:1234");
 					tfPassword2.setEchoChar((char) 0);
 				}
