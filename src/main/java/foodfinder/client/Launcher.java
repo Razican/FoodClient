@@ -25,8 +25,8 @@ public class Launcher {
 					e.printStackTrace();
 				}
 		}
-		Frame.getInstance().setSize(new Dimension(560, 680));
-		Frame.getInstance().setMinimumSize(new Dimension(560, 680));
+		Frame.getInstance().setSize(new Dimension(560, 420));
+		Frame.getInstance().setMinimumSize(new Dimension(560, 420));
 		Frame.getInstance().setMaximumSize(new Dimension(900, 700));
 
 		Frame.getInstance().add(new LoginPanel());
