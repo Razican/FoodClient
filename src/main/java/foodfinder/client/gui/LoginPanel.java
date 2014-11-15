@@ -11,7 +11,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.Arrays;
 
 import javax.swing.Box;
@@ -130,7 +129,8 @@ public class LoginPanel extends JPanel implements ActionListener {
 
 			@Override
 			public void mousePressed(final MouseEvent e) {
-				if (Arrays.equals(tfPassword.getPassword(),"Example:1234".toCharArray())) {
+				if (Arrays.equals(tfPassword.getPassword(),
+						"Example:1234".toCharArray())) {
 					tfPassword.setText("");
 					tfPassword.setEchoChar('*');
 				}
@@ -208,19 +208,19 @@ public class LoginPanel extends JPanel implements ActionListener {
 		}
 
 		if (e.getSource() == bLogin) {
-			boolean example=false;
-			if(tfUsername.getText().equals("Example:Peio")||Arrays.equals(tfPassword.getPassword(),"Example:1234".toCharArray()))
-			{
-				example=true;
+			boolean example = false;
+			if (tfUsername.getText().equals("Example:Peio")
+					|| Arrays.equals(tfPassword.getPassword(),
+							"Example:1234".toCharArray())) {
+				example = true;
 				tfUsername.setText("");
 				tfPassword.setText("");
 				tfPassword.setEchoChar('*');
 			}
 
 			login();
-			
-			if(example)
-			{
+
+			if (example) {
 				tfUsername.setText("Example:Peio");
 				tfPassword.setText("Example:1234");
 				tfPassword.setEchoChar((char) 0);
@@ -280,15 +280,11 @@ public class LoginPanel extends JPanel implements ActionListener {
 			window.setMinimumSize(new Dimension(600, 710));
 			window.setSize(600, 710);
 			GUIUtilities.CenterWindow(window);
-		}
-
-		else if(loginResponse.equals("Insert username and password.")) {
+		} else if (loginResponse.equals("Insert username and password.")) {
 			JOptionPane.showMessageDialog(null, "Insert username or password.",
 					"", JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass()
 							.getResource("/error-icon.png")));
-		}
-
-		 else {
+		} else {
 			// TODO Show error in loginResponse.get("error")
 			JOptionPane.showMessageDialog(null, loginResponse, "",
 					JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass()
