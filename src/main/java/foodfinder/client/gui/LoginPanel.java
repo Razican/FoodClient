@@ -10,6 +10,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 
 import javax.swing.Box;
 import javax.swing.ImageIcon;
@@ -22,9 +23,8 @@ import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 
 import org.apache.uima.tools.util.gui.SpringUtilities;
-import org.json.JSONObject;
 
-import foodfinder.client.api.Api;
+import foodfinder.client.api.Controller;
 import foodfinder.client.utilities.GUIUtilities;
 
 public class LoginPanel extends JPanel implements ActionListener {
@@ -227,8 +227,16 @@ public class LoginPanel extends JPanel implements ActionListener {
 	}
 
 	public void login() {
-		final JSONObject loginResponse =
-				Api.login(tfUsername.getText(), tfPassword.getPassword());
+		String loginResponse = null;
+		if (Controller.checkStatus()) {
+			try {
+				loginResponse =
+						Controller.login(tfUsername.getText(),
+								tfPassword.getPassword());
+			} catch (final IOException e) {
+				e.printStackTrace();
+			}
+		}
 
 		if (tfUsername.getText().equals("")
 				|| tfPassword.getPassword().equals("")
@@ -239,7 +247,7 @@ public class LoginPanel extends JPanel implements ActionListener {
 							.getResource("/error-icon.png")));
 		}
 
-		else if (loginResponse.get("status").equals("OK")) {
+		else if (loginResponse == null) {
 
 			welcomeMessage = "Welcome " + user + "!";
 			JOptionPane.showMessageDialog(null, welcomeMessage, "",
@@ -256,8 +264,7 @@ public class LoginPanel extends JPanel implements ActionListener {
 			GUIUtilities.CenterWindow(window);
 		} else {
 			// TODO Show error in loginResponse.get("error")
-			JOptionPane.showMessageDialog(null,
-					"Incorrect username or password.", "",
+			JOptionPane.showMessageDialog(null, loginResponse, "",
 					JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass()
 							.getResource("/error-icon.png")));
 		}

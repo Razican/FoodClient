@@ -12,7 +12,6 @@ import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.razican.utils.StringUtils;
@@ -24,12 +23,13 @@ public class Api {
 	private Api() {
 	}
 
-	public static JSONObject checkStatus() {
+	public static JSONObject checkStatus() throws IOException {
 		return getJSON("status", null);
 	}
 
 	public static JSONObject
-	login(final String username, final char[] password) {
+			login(final String username, final char[] password)
+					throws IOException {
 		final HashMap<String, String> params = new HashMap<>();
 		params.put("username", username);
 		params.put("password", StringUtils.sha1(password));
@@ -40,7 +40,7 @@ public class Api {
 	public static JSONObject register(final String name, final String lastName,
 			final String email, final String username, final char[] password,
 			final boolean gluten, final boolean diabetes,
-			final boolean vegetables, final boolean milk) {
+			final boolean vegetables, final boolean milk) throws IOException {
 
 		final HashMap<String, String> params = new HashMap<>();
 		params.put("name", name);
@@ -57,7 +57,7 @@ public class Api {
 	}
 
 	public static JSONObject resetPassword(final String email,
-			final boolean username, final boolean password) {
+			final boolean username, final boolean password) throws IOException {
 
 		final HashMap<String, String> params = new HashMap<>();
 		params.put("email", email);
@@ -67,19 +67,14 @@ public class Api {
 		return getJSON("reset_password", params);
 	}
 
-	public static JSONObject search() {
+	public static JSONObject search() throws IOException {
 		// TODO
 		return null;
 	}
 
-	private static JSONObject getJSON(final String url, final Map<?, ?> params) {
-		try {
-			return new JSONObject(getTextfromURL(API_URL + url, params));
-		} catch (JSONException | IOException e) {
-			e.printStackTrace();
-		}
-
-		return null;
+	private static JSONObject getJSON(final String url, final Map<?, ?> params)
+			throws IOException {
+		return new JSONObject(getTextfromURL(API_URL + url, params));
 	}
 
 	// From http://www.mkyong.com/java/how-to-send-http-request-getpost-in-java/
