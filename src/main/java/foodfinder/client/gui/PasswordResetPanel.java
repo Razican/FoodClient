@@ -27,9 +27,9 @@ import org.apache.uima.tools.util.gui.SpringUtilities;
 
 import foodfinder.client.utilities.GUIUtilities;
 
-public class UserPasswordResetPanel extends JPanel implements ActionListener {
+public class PasswordResetPanel extends JPanel implements ActionListener {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 7978489183613836147L;
 	private JButton backButton;
 	private JLabel headerTitle;
 	private JLabel connectionStatus;
@@ -45,7 +45,7 @@ public class UserPasswordResetPanel extends JPanel implements ActionListener {
 	private JPanel container;
 	private JPanel container2;
 
-	public UserPasswordResetPanel() {
+	public PasswordResetPanel() {
 		initializeVartiables();
 
 		headerPanel.setLayout(new SpringLayout());
@@ -98,12 +98,12 @@ public class UserPasswordResetPanel extends JPanel implements ActionListener {
 		container = new JPanel();
 		backButton =
 				new JButton(new ImageIcon(getClass().getResource(
-						"/resources/back-icon.png")));
+						"/back-icon.png")));
 		backButton.addActionListener(this);
 		headerTitle = new JLabel("USER/PASSWORD RESET");
 		connectionStatus =
 				new JLabel(new ImageIcon(getClass().getResource(
-						"/resources/Base Green Deep.png")));
+						"/status-OK.png")));
 		connectionStatus.setText("Connection Status:OK");
 		lEmail = new JLabel("Email:");
 		tfEmail = new JTextField(15);
@@ -148,8 +148,7 @@ public class UserPasswordResetPanel extends JPanel implements ActionListener {
 		lQuestion = new JLabel("What did you forgot?");
 		bReset = new JButton();
 		bReset.setText(" Reset ");
-		bReset.setIcon(new ImageIcon(getClass().getResource(
-				"/resources/images.jpeg")));
+		bReset.setIcon(new ImageIcon(getClass().getResource("/reset-icon.png")));
 		bReset.addActionListener(this);
 
 	}
@@ -195,26 +194,25 @@ public class UserPasswordResetPanel extends JPanel implements ActionListener {
 
 			JOptionPane.showMessageDialog(null, "Insert the email address.",
 					"", JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass()
-							.getResource("/resources/errorIcon.png")));
+							.getResource("/error-icon.png")));
 
 		} else if (!cbPassword.isSelected() && !cbUsername.isSelected()) {
 			JOptionPane.showMessageDialog(null,
 					"Select what you want to reset.", "",
 					JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass()
-							.getResource("/resources/errorIcon.png")));
+							.getResource("/error-icon.png")));
 		}
 
 		else if (!EmailValidator.getInstance().isValid(tfEmail.getText())) {
 			JOptionPane.showMessageDialog(null, "Incorrect Email.", "",
 					JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass()
-							.getResource("/resources/errorIcon.png")));
+							.getResource("/error-icon.png")));
 		} else {
 
 			final int optionType = JOptionPane.DEFAULT_OPTION;
 			final int messageType = JOptionPane.QUESTION_MESSAGE;
 			final ImageIcon icon =
-					new ImageIcon(getClass().getResource(
-							"/resources/nothing.png"));
+					new ImageIcon(getClass().getResource("/empty.png"));
 			final Object[] selValues = { "No", "Yes" };
 			final int selection =
 					JOptionPane.showOptionDialog(null,

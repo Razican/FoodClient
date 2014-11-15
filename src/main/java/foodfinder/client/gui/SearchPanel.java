@@ -104,13 +104,14 @@ public class SearchPanel extends JPanel implements ActionListener {
 			}
 		});
 		blogout = new JButton();
-		blogout.setIcon(new ImageIcon(getClass().getResource("/logout.png")));
+		blogout.setIcon(new ImageIcon(getClass()
+				.getResource("/logout-icon.png")));
 		blogout.addActionListener(this);
 		blogout.setText("Logout");
 		lHeader = new JLabel("SEARCH");
 		lConnectionStatus =
 				new JLabel(new ImageIcon(getClass().getResource(
-						"/Base Green Deep.png")));
+						"/status-OK.png")));
 		lConnectionStatus.setToolTipText("Connection Status:OK");
 		headerPanel = new JPanel();
 		fieldPanel = new JPanel();
@@ -120,7 +121,8 @@ public class SearchPanel extends JPanel implements ActionListener {
 		bSearch = new JButton();
 		bSearch.setLayout(new SpringLayout());
 		final JLabel searchImage =
-				new JLabel(new ImageIcon(getClass().getResource("/search.png")));
+				new JLabel(new ImageIcon(getClass().getResource(
+						"/search-icon.png")));
 		bSearch.add(searchImage);
 		bSearch.add(new JLabel("Search"));
 		SpringUtilities.makeCompactGrid(bSearch, 2, 1, 6, 6, 6, 6);
@@ -248,8 +250,8 @@ public class SearchPanel extends JPanel implements ActionListener {
 		lDesc = new JLabel("Desc:");
 		lDescInfo = new JLabel("______");
 		lImageInfo =
-				new JLabel(new ImageIcon(getClass().getResource(
-						"/pictographs-information-inv.png")));
+				new JLabel(
+						new ImageIcon(getClass().getResource("/missing.png")));
 		lName1 = new JLabel("Name:");
 		lType1 = new JLabel("Type:");
 		lBrand1 = new JLabel("Brand:");
@@ -258,13 +260,12 @@ public class SearchPanel extends JPanel implements ActionListener {
 		headers = new Object[] { "Name", "Type", "Brand", "Price" };
 		data =
 				new Object[][] { { "Ariel", "Washing", "Ariel", "3,60" },
-						{ "Ariel", "Washing", "Ariel", "3,60" } };
+				{ "Ariel", "Washing", "Ariel", "3,60" } };
 		modeloTabla = new DefaultTableModel(data, headers);
 		resultsTable = new JTable(modeloTabla);
 		resultsTable.setEnabled(true);
 		lSupermarketMap =
-				new JLabel(new ImageIcon(getClass().getResource(
-						"/Supermarket.jpg")));
+				new JLabel(new ImageIcon(getClass().getResource("/map.png")));
 
 	}
 
@@ -289,7 +290,7 @@ public class SearchPanel extends JPanel implements ActionListener {
 		fieldPanel.add(pricePanel);
 		SpringUtilities.makeCompactGrid(fieldPanel, 4, 2, 6, 6, 6, 6);
 		fieldContainer
-				.setLayout(new BoxLayout(fieldContainer, BoxLayout.X_AXIS));
+		.setLayout(new BoxLayout(fieldContainer, BoxLayout.X_AXIS));
 		fieldContainer.add(fieldPanel);
 		searchButtonPanel.add(bSearch);
 		fieldContainer.add(searchButtonPanel);

@@ -41,8 +41,19 @@ public class Api {
 			final String email, final String username, final char[] password,
 			final boolean gluten, final boolean diabetes,
 			final boolean vegetables, final boolean milk) {
-		// TODO
-		return null;
+
+		final HashMap<String, String> params = new HashMap<>();
+		params.put("name", name);
+		params.put("lastname", lastName);
+		params.put("email", email);
+		params.put("username", username);
+		params.put("password", StringUtils.sha1(password));
+		params.put("gluten", String.valueOf(gluten));
+		params.put("diabetes", String.valueOf(diabetes));
+		params.put("vegetables", String.valueOf(vegetables));
+		params.put("milk", String.valueOf(milk));
+
+		return getJSON("register", params);
 	}
 
 	private static JSONObject getJSON(final String url, final Map<?, ?> params) {

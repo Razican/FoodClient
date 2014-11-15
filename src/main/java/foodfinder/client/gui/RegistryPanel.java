@@ -74,11 +74,11 @@ public class RegistryPanel extends JPanel implements ActionListener {
 		checkBoxIssuePanel1.setLayout(new SpringLayout());
 		placeCheckBoxIssue1();
 		SpringUtilities
-				.makeCompactGrid(checkBoxIssuePanel1, 1, 1, 1, 1, 50, 50);
+		.makeCompactGrid(checkBoxIssuePanel1, 1, 1, 1, 1, 50, 50);
 		checkBoxIssuePanel2.setLayout(new SpringLayout());
 		placeCheckBoxIssue2();
 		SpringUtilities
-				.makeCompactGrid(checkBoxIssuePanel2, 2, 2, 10, 0, 30, 0);
+		.makeCompactGrid(checkBoxIssuePanel2, 2, 2, 10, 0, 30, 0);
 
 		checkBoxIssuePanel.add(checkBoxIssuePanel1);
 		checkBoxIssuePanel.add(checkBoxIssuePanel2);
@@ -350,17 +350,17 @@ public class RegistryPanel extends JPanel implements ActionListener {
 		headerPanel = new JPanel();
 		backButton =
 				new JButton(new ImageIcon(getClass().getResource(
-						"/resources/back-icon.png")));
+						"/back-icon.png")));
 		backButton.addActionListener(this);
 		headerTitle = new JLabel("REGISTER");
 		connectionStatus =
-				new JLabel(new ImageIcon(getClass().getResource(
-						"/resources/Base Green Deep.png")));
+				new JLabel(new ImageIcon(getClass()
+						.getResource("status-OK.png")));
 		connectionStatus.setToolTipText("Connection Status:OK");
 		container = new JPanel();
 		registerButton = new JButton();
 		registerButton.setIcon(new ImageIcon(getClass().getResource(
-				"/resources/form_icon_25603.png")));
+				"/register-icon.png")));
 		registerButton.setText("Register");
 		registerButton.addActionListener(this);
 
@@ -429,18 +429,18 @@ public class RegistryPanel extends JPanel implements ActionListener {
 			JOptionPane.showMessageDialog(null,
 					"You must fill all the fields.", "",
 					JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass()
-							.getResource("/resources/errorIcon.png")));
+							.getResource("/error-icon.png")));
 
 		} else if (!tfPassword.getText().equals(tfPassword2.getText())) {
 			JOptionPane.showMessageDialog(null, "Passwords don't match.", "",
 					JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass()
-							.getResource("/resources/errorIcon.png")));
+							.getResource("/error-icon.png")));
 
 		} else if (!EmailValidator.getInstance().isValid(tfEmail.getText())) {
 			JOptionPane.showMessageDialog(null,
 					"You must provide a valid email.", "",
 					JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass()
-							.getResource("/resources/errorIcon.png")));
+							.getResource("/error-icon.png")));
 		}
 		// TODO Username exists or email exist validation missing.
 	}

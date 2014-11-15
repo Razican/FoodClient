@@ -93,7 +93,7 @@ public class LoginPanel extends JPanel implements ActionListener {
 		lHeader = new JLabel("PRODUCT FINDER");
 		connectionStatus =
 				new JLabel(new ImageIcon(getClass().getResource(
-						"/Base Green Deep.png")));
+						"/status-OK.png")));
 		connectionStatus.setToolTipText("Connection Status: OK");
 		textPanel = new JPanel();
 		lUsername = new JLabel("Username:");
@@ -172,17 +172,16 @@ public class LoginPanel extends JPanel implements ActionListener {
 		buttonPanel = new JPanel();
 		bUserPasswordReset = new JButton();
 		bUserPasswordReset.setIcon(new ImageIcon(getClass().getResource(
-				"/Question.png")));
+				"/question-icon.png")));
 		bUserPasswordReset.setText("Forgotten User/Password");
 		bUserPasswordReset.addActionListener(this);
 		bLogin = new JButton();
-		bLogin.setIcon(new ImageIcon(getClass().getResource(
-				"/086817-simple-red-glossy-icon-business-key7.png")));
+		bLogin.setIcon(new ImageIcon(getClass().getResource("/key-icon.png")));
 		bLogin.setText("Login");
 		bLogin.addActionListener(this);
 		bNewUser = new JButton();
 		bNewUser.setIcon(new ImageIcon(getClass().getResource(
-				"/form_icon_25603.png")));
+				"/register-icon.png")));
 		bNewUser.setText("New User");
 		bNewUser.addActionListener(this);
 
@@ -214,7 +213,7 @@ public class LoginPanel extends JPanel implements ActionListener {
 			final Frame window =
 					(Frame) GUIUtilities.getMainContainer(thisContainer);
 			window.getContentPane().remove(0);
-			window.getContentPane().add(new UserPasswordResetPanel());
+			window.getContentPane().add(new PasswordResetPanel());
 			window.pack();
 			window.repaint();
 			window.setSize(560, 400);
@@ -248,7 +247,7 @@ public class LoginPanel extends JPanel implements ActionListener {
 				|| tfPassword.getText().equals("Example:1234")) {
 			JOptionPane.showMessageDialog(null, "Insert username or password.",
 					"", JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass()
-							.getResource("/errorIcon.png")));
+							.getResource("/error-icon.png")));
 		}
 
 		else if (loginResponse.get("status").equals("OK")) {
@@ -256,7 +255,7 @@ public class LoginPanel extends JPanel implements ActionListener {
 			welcomeMessage = "Welcome " + user + "!";
 			JOptionPane.showMessageDialog(null, welcomeMessage, "",
 					JOptionPane.INFORMATION_MESSAGE, new ImageIcon(getClass()
-							.getResource("/nothing.png")));
+							.getResource("/empty.png")));
 			final Frame window =
 					(Frame) GUIUtilities.getMainContainer(thisContainer);
 			window.getContentPane().remove(0);
@@ -271,7 +270,7 @@ public class LoginPanel extends JPanel implements ActionListener {
 			JOptionPane.showMessageDialog(null,
 					"Incorrect username or password.", "",
 					JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass()
-							.getResource("/errorIcon.png")));
+							.getResource("/error-icon.png")));
 		}
 	}
 
