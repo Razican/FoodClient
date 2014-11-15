@@ -4,8 +4,8 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -115,18 +115,12 @@ public class LoginPanel extends JPanel implements ActionListener {
 					login();
 			}
 		});
-		tfUsername.addFocusListener(new FocusListener() {
+		tfUsername.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(final FocusEvent e) {
 				if (tfUsername.getText().equals("")) {
 					tfUsername.setText("Example:Peio");
 				}
-			}
-
-			@Override
-			public void focusGained(final FocusEvent e) {
-				// TODO Auto-generated method stub
-
 			}
 		});
 		lPassword = new JLabel("Password:");
@@ -151,7 +145,7 @@ public class LoginPanel extends JPanel implements ActionListener {
 					login();
 			}
 		});
-		tfPassword.addFocusListener(new FocusListener() {
+		tfPassword.addFocusListener(new FocusAdapter() {
 
 			@Override
 			public void focusLost(final FocusEvent e) {
@@ -159,12 +153,6 @@ public class LoginPanel extends JPanel implements ActionListener {
 					tfPassword.setText("Example:1234");
 					tfPassword.setEchoChar((char) 0);
 				}
-			}
-
-			@Override
-			public void focusGained(final FocusEvent e) {
-				// TODO Auto-generated method stub
-
 			}
 		});
 		flowLayout = new FlowLayout();
@@ -242,7 +230,8 @@ public class LoginPanel extends JPanel implements ActionListener {
 		final JSONObject loginResponse =
 				Api.login(tfUsername.getText(), tfPassword.getPassword());
 
-		if (tfUsername.getText().equals("") || tfPassword.getPassword().equals("")
+		if (tfUsername.getText().equals("")
+				|| tfPassword.getPassword().equals("")
 				|| tfUsername.getText().equals("Example:Peio")
 				|| tfPassword.getPassword().equals("Example:1234")) {
 			JOptionPane.showMessageDialog(null, "Insert username or password.",
