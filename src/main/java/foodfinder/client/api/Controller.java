@@ -33,11 +33,11 @@ public class Controller {
 	}
 
 	public static String
-	register(final String name, final String lastName,
-			final String email, final String username,
-			final char[] password, final char[] pass_conf,
-			final boolean gluten, final boolean diabetes,
-			final boolean vegetables, final boolean milk)
+			register(final String name, final String lastName,
+					final String email, final String username,
+					final char[] password, final char[] pass_conf,
+					final boolean gluten, final boolean diabetes,
+					final boolean vegetables, final boolean milk)
 					throws IOException {
 
 		if (empty(name) || empty(lastName) || empty(email) || empty(username)
@@ -59,9 +59,23 @@ public class Controller {
 		return apiCall.getString("error");
 	}
 
-	public static String resetPassword() throws IOException {
-		// TODO
-		return null;
+	public static String resetPassword(final String email,
+			final boolean username, final boolean password) throws IOException {
+
+		if (empty(email))
+			return "Insert the email address.";
+
+		if (username == false && password == false)
+			return "Select what you want to reset.";
+
+		if (!EmailValidator.getInstance().isValid(email))
+			return "The email you provided is not valid";
+
+		final JSONObject apiCall = Api.resetPassword(email, username, password);
+		if (apiCall.get("error").equals(JSONObject.NULL))
+			return null;
+
+		return apiCall.getString("error");
 	}
 
 	private static boolean empty(final String str) {

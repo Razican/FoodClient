@@ -109,10 +109,34 @@ public class ControllerTest {
 		}
 	}
 
-	@Ignore("Not yet implemented")
 	@Test
-	public void testResetPassword() {
-		fail("Not yet implemented");
+	public void testResetPassword() throws IOException {
+		if (Controller.checkStatus()) {
+
+			Assert.assertEquals("Insert the email address.",
+					Controller.resetPassword(null, true, false));
+
+			Assert.assertEquals("Insert the email address.",
+					Controller.resetPassword("", true, false));
+
+			Assert.assertEquals(
+					"Select what you want to reset.",
+					Controller.resetPassword(
+							"testR_" + RandomStringUtils.randomNumeric(5)
+							+ "@example.com", false, false));
+
+			Assert.assertEquals("The email you provided is not valid",
+					Controller.resetPassword("ssdfsfsdfs", true, false));
+
+			Assert.assertEquals(
+					"There is no user with that email",
+					Controller.resetPassword(
+							"testR_" + RandomStringUtils.randomNumeric(5)
+							+ "@example.com", true, false));
+
+			Assert.assertNull(Controller.resetPassword("testUser@example.com",
+					true, false));
+		}
 	}
 
 	@Ignore("Not yet implemented")
