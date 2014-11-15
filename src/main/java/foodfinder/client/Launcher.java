@@ -7,7 +7,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import foodfinder.client.gui.Frame;
-import foodfinder.client.gui.SearchPanel;
+import foodfinder.client.gui.LoginPanel;
 import foodfinder.client.utilities.GUIUtilities;
 
 public class Launcher {
@@ -25,11 +25,11 @@ public class Launcher {
 					e.printStackTrace();
 				}
 		}
-		Frame.getInstance().setSize(new Dimension(560, 680));
-		Frame.getInstance().setMinimumSize(new Dimension(560, 680));
+		Frame.getInstance().setSize(new Dimension(560, 420));
+		Frame.getInstance().setMinimumSize(new Dimension(560, 420));
 		Frame.getInstance().setMaximumSize(new Dimension(900, 700));
 
-		Frame.getInstance().add(new SearchPanel());
+		Frame.getInstance().add(new LoginPanel());
 		Frame.getInstance().setVisible(true);
 		Frame.getInstance().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		GUIUtilities.CenterWindow(Frame.getInstance());
