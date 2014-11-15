@@ -87,7 +87,7 @@ public class ApiTest {
 							gluten, diabetes, vegetables, milk);
 
 			Assert.assertEquals("ERR", result.get("status"));
-			Assert.assertEquals("Email exists", result.get("error"));
+			Assert.assertEquals("Email already exists.", result.get("error"));
 		}
 	}
 
@@ -105,7 +105,7 @@ public class ApiTest {
 			result =
 					Api.resetPassword(
 							"testR_" + RandomStringUtils.randomNumeric(5)
-							+ "@example.com", true, false);
+									+ "@example.com", true, false);
 
 			Assert.assertEquals("ERR", result.get("status"));
 			Assert.assertEquals("There is no user with that email",
