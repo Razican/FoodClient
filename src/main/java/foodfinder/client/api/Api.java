@@ -56,6 +56,22 @@ public class Api {
 		return getJSON("register", params);
 	}
 
+	public static JSONObject resetPassword(final String email,
+			final boolean username, final boolean password) {
+
+		final HashMap<String, String> params = new HashMap<>();
+		params.put("email", email);
+		params.put("username", String.valueOf(username));
+		params.put("password", String.valueOf(password));
+
+		return getJSON("reset_password", params);
+	}
+
+	public static JSONObject search() {
+		// TODO
+		return null;
+	}
+
 	private static JSONObject getJSON(final String url, final Map<?, ?> params) {
 		try {
 			return new JSONObject(getTextfromURL(API_URL + url, params));
@@ -120,16 +136,5 @@ public class Api {
 					.toString()), urlEncodeUTF8(entry.getValue().toString())));
 		}
 		return sb.toString();
-	}
-
-	public static void main(final String[] args) {
-
-		final String url = "login";
-		final HashMap<String, String> params = new HashMap<>();
-		params.put("name", "Razican");
-		params.put("password", "Razican");
-
-		final JSONObject json = getJSON(url, params);
-		System.out.println(json.get("error"));
 	}
 }
