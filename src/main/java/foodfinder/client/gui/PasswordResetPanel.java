@@ -15,6 +15,7 @@ import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -168,8 +169,8 @@ public class PasswordResetPanel extends JPanel implements ActionListener {
 		}
 
 		if (e.getSource() == backButton) {
-			final Frame window =
-					(Frame) GUIUtilities.getMainContainer(container);
+			final JFrame window =
+					(JFrame) GUIUtilities.getMainContainer(container);
 			window.getContentPane().remove(0);
 			window.getContentPane().add(new LoginPanel());
 			window.pack();
@@ -230,8 +231,8 @@ public class PasswordResetPanel extends JPanel implements ActionListener {
 							"", optionType, messageType, icon, selValues,
 							selValues[0]);
 			if (selection == 1) {
-				final Frame window =
-						(Frame) GUIUtilities.getMainContainer(container);
+				final JFrame window =
+						(JFrame) GUIUtilities.getMainContainer(container);
 				window.getContentPane().remove(0);
 				window.getContentPane().add(new LoginPanel());
 				window.pack();

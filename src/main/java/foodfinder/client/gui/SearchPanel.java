@@ -15,6 +15,7 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -321,8 +322,8 @@ public class SearchPanel extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(final ActionEvent e) {
 		if (e.getSource() == blogout) {
-			final Frame window =
-					(Frame) GUIUtilities.getMainContainer(tablePanel);
+			final JFrame window =
+					(JFrame) GUIUtilities.getMainContainer(tablePanel);
 			window.getContentPane().remove(0);
 			window.getContentPane().add(new LoginPanel());
 			window.pack();
@@ -356,7 +357,7 @@ public class SearchPanel extends JPanel implements ActionListener {
 
 
 	public void search() {
-		final Frame window = (Frame) GUIUtilities.getMainContainer(tablePanel);
+		final JFrame window = (JFrame) GUIUtilities.getMainContainer(tablePanel);
 		System.out.println(window.getSize().toString());
 	}
 

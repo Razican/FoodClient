@@ -10,11 +10,13 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.util.Arrays;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -368,8 +370,8 @@ public class RegistryPanel extends JPanel implements ActionListener {
 			register();
 		}
 		if (e.getSource() == backButton) {
-			final Frame window =
-					(Frame) GUIUtilities.getMainContainer(container);
+			final JFrame window =
+					(JFrame) GUIUtilities.getMainContainer(container);
 			window.getContentPane().remove(0);
 			window.getContentPane().add(new LoginPanel());
 			window.pack();
@@ -401,27 +403,33 @@ public class RegistryPanel extends JPanel implements ActionListener {
 
 
 	public void register() {
-		if (tfName.getText().equals("") || tfLastName.getText().equals("")
-				|| tfEmail.getText().equals("")
-				|| tfPassword.getPassword().equals("")
-				|| tfPassword2.getPassword().equals("")
-				|| tfUsername.getText().equals("")) {
-			JOptionPane.showMessageDialog(null,
-					"You must fill all the fields.", "",
-					JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass()
-							.getResource("/error-icon.png")));
-
-		} else if (!tfPassword.getPassword().equals(tfPassword2.getPassword())) {
-			JOptionPane.showMessageDialog(null, "Passwords don't match.", "",
-					JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass()
-							.getResource("/error-icon.png")));
-
-		} else if (!EmailValidator.getInstance().isValid(tfEmail.getText())) {
-			JOptionPane.showMessageDialog(null,
-					"You must provide a valid email.", "",
-					JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass()
-							.getResource("/error-icon.png")));
+		String registerResponse = null;
+		if (Controller.checkStatus()) {
+			try {
+				registerResponse =
+						Controller.register(tfName.getText(), tfLastName.getText(), tfEmail.getText(), tfUsername.getText(), tfPassword.getPassword(), tfPassword2.getPassword(), cbGluten.isSelected(), cbDiabetes.isSelected(), cbVegetables.isSelected(), cbMilk.isSelected());
+			} catch (final IOException e) {
+				e.printStackTrace();
+			}
 		}
+		
+		if (registerResponse==null) {
+			final JFrame window =
+					(JFrame) GUIUtilities.getMainContainer(container);
+			window.getContentPane().remove(0);
+			window.getContentPane().add(new LoginPanel());
+			window.pack();
+			window.setMinimumSize(new Dimension(560, 400));
+			window.setSize(560, 400);
+			GUIUtilities.CenterWindow(window);
+
+		} 
+		else {
+			JOptionPane.showMessageDialog(null, registerResponse, "",
+					JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass()
+							.getResource("/error-icon.png")));
+
+		} 
 		// TODO Username exists or email exist validation missing.
 	}
 }

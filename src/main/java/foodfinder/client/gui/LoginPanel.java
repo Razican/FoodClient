@@ -17,6 +17,7 @@ import java.util.Arrays;
 import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -197,8 +198,8 @@ public class LoginPanel extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(final ActionEvent e) {
 		if (e.getSource() == bUserPasswordReset) {
-			final Frame window =
-					(Frame) GUIUtilities.getMainContainer(thisContainer);
+			final JFrame window =
+					(JFrame) GUIUtilities.getMainContainer(thisContainer);
 			window.getContentPane().remove(0);
 			window.getContentPane().add(new PasswordResetPanel());
 			window.pack();
@@ -228,8 +229,7 @@ public class LoginPanel extends JPanel implements ActionListener {
 		}
 
 		if (e.getSource() == bNewUser) {
-			final Frame window =
-					(Frame) GUIUtilities.getMainContainer(thisContainer);
+			final JFrame window = (JFrame) GUIUtilities.getMainContainer(container2);
 			window.getContentPane().remove(0);
 			window.getContentPane().add(new RegistryPanel());
 			window.pack();
@@ -271,8 +271,8 @@ public class LoginPanel extends JPanel implements ActionListener {
 			JOptionPane.showMessageDialog(null, welcomeMessage, "",
 					JOptionPane.INFORMATION_MESSAGE, new ImageIcon(getClass()
 							.getResource("/empty.png")));
-			final Frame window =
-					(Frame) GUIUtilities.getMainContainer(thisContainer);
+			final JFrame window =
+					(JFrame) GUIUtilities.getMainContainer(thisContainer);
 			window.getContentPane().remove(0);
 			window.getContentPane().add(new SearchPanel());
 			window.pack();
@@ -280,12 +280,6 @@ public class LoginPanel extends JPanel implements ActionListener {
 			window.setMinimumSize(new Dimension(600, 710));
 			window.setSize(600, 710);
 			GUIUtilities.CenterWindow(window);
-		}
-
-		else if(loginResponse.equals("Insert username and password.")) {
-			JOptionPane.showMessageDialog(null, "Insert username or password.",
-					"", JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass()
-							.getResource("/error-icon.png")));
 		}
 
 		 else {
