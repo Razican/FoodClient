@@ -104,11 +104,13 @@ public class SearchPanel extends JPanel implements ActionListener {
 			}
 		});
 		blogout = new JButton();
-		blogout.setIcon(new ImageIcon(getClass().getResource("/resources/logout.png")));
+		blogout.setIcon(new ImageIcon(getClass().getResource("/logout.png")));
 		blogout.addActionListener(this);
 		blogout.setText("Logout");
 		lHeader = new JLabel("SEARCH");
-		lConnectionStatus = new JLabel(new ImageIcon(getClass().getResource("/resources/Base Green Deep.png")));
+		lConnectionStatus =
+				new JLabel(new ImageIcon(getClass().getResource(
+						"/Base Green Deep.png")));
 		lConnectionStatus.setToolTipText("Connection Status:OK");
 		headerPanel = new JPanel();
 		fieldPanel = new JPanel();
@@ -117,7 +119,8 @@ public class SearchPanel extends JPanel implements ActionListener {
 		container = new JPanel();
 		bSearch = new JButton();
 		bSearch.setLayout(new SpringLayout());
-		final JLabel searchImage = new JLabel(new ImageIcon(getClass().getResource("/resources/search.png")));
+		final JLabel searchImage =
+				new JLabel(new ImageIcon(getClass().getResource("/search.png")));
 		bSearch.add(searchImage);
 		bSearch.add(new JLabel("Search"));
 		SpringUtilities.makeCompactGrid(bSearch, 2, 1, 6, 6, 6, 6);
@@ -244,18 +247,24 @@ public class SearchPanel extends JPanel implements ActionListener {
 		lTypeInfo = new JLabel("______");
 		lDesc = new JLabel("Desc:");
 		lDescInfo = new JLabel("______");
-		lImageInfo = new JLabel(new ImageIcon(getClass().getResource("/resources/pictographs-information-inv.png")));
+		lImageInfo =
+				new JLabel(new ImageIcon(getClass().getResource(
+						"/pictographs-information-inv.png")));
 		lName1 = new JLabel("Name:");
 		lType1 = new JLabel("Type:");
 		lBrand1 = new JLabel("Brand:");
 		lPrice11 = new JLabel("Price");
 		tableInfoPanel = new JPanel();
 		headers = new Object[] { "Name", "Type", "Brand", "Price" };
-		data = new Object[][] { { "Ariel", "Washing", "Ariel", "3,60" }, { "Ariel", "Washing", "Ariel", "3,60" } };
+		data =
+				new Object[][] { { "Ariel", "Washing", "Ariel", "3,60" },
+						{ "Ariel", "Washing", "Ariel", "3,60" } };
 		modeloTabla = new DefaultTableModel(data, headers);
 		resultsTable = new JTable(modeloTabla);
 		resultsTable.setEnabled(true);
-		lSupermarketMap = new JLabel(new ImageIcon(getClass().getResource("/resources/Supermarket.jpg")));
+		lSupermarketMap =
+				new JLabel(new ImageIcon(getClass().getResource(
+						"/Supermarket.jpg")));
 
 	}
 
@@ -279,7 +288,8 @@ public class SearchPanel extends JPanel implements ActionListener {
 		fieldPanel.add(lPrice);
 		fieldPanel.add(pricePanel);
 		SpringUtilities.makeCompactGrid(fieldPanel, 4, 2, 6, 6, 6, 6);
-		fieldContainer.setLayout(new BoxLayout(fieldContainer, BoxLayout.X_AXIS));
+		fieldContainer
+				.setLayout(new BoxLayout(fieldContainer, BoxLayout.X_AXIS));
 		fieldContainer.add(fieldPanel);
 		searchButtonPanel.add(bSearch);
 		fieldContainer.add(searchButtonPanel);
@@ -321,7 +331,8 @@ public class SearchPanel extends JPanel implements ActionListener {
 
 	public void placeTableInfoComponents() {
 		tableInfoPanel.setLayout(new SpringLayout());
-		resultsTable.setPreferredScrollableViewportSize(resultsTable.getPreferredSize());
+		resultsTable.setPreferredScrollableViewportSize(resultsTable
+				.getPreferredSize());
 		resultsTable.setFillsViewportHeight(true);
 		tablePanel = new JScrollPane(resultsTable);
 		tablePanel.setViewportView(resultsTable);
@@ -335,7 +346,8 @@ public class SearchPanel extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(final ActionEvent e) {
 		if (e.getSource() == blogout) {
-			final Frame window = (Frame) GUIUtilities.getPrincipalContainer(tablePanel);
+			final Frame window =
+					(Frame) GUIUtilities.getMainContainer(tablePanel);
 			window.getContentPane().remove(0);
 			window.getContentPane().add(new LoginPanel());
 			window.pack();
@@ -350,7 +362,7 @@ public class SearchPanel extends JPanel implements ActionListener {
 	}
 
 	public void search() {
-		final Frame window = (Frame) GUIUtilities.getPrincipalContainer(tablePanel);
+		final Frame window = (Frame) GUIUtilities.getMainContainer(tablePanel);
 		System.out.println(window.getSize().toString());
 	}
 

@@ -22,7 +22,7 @@ import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.SwingConstants;
 
-import org.apache.commons.validator.EmailValidator;
+import org.apache.commons.validator.routines.EmailValidator;
 import org.apache.uima.tools.util.gui.SpringUtilities;
 
 import foodfinder.client.utilities.GUIUtilities;
@@ -96,10 +96,14 @@ public class UserPasswordResetPanel extends JPanel implements ActionListener {
 		textPanel = new JPanel();
 		checkBoxPanel = new JPanel();
 		container = new JPanel();
-		backButton = new JButton(new ImageIcon(getClass().getResource("/resources/back-icon.png")));
+		backButton =
+				new JButton(new ImageIcon(getClass().getResource(
+						"/resources/back-icon.png")));
 		backButton.addActionListener(this);
 		headerTitle = new JLabel("USER/PASSWORD RESET");
-		connectionStatus = new JLabel(new ImageIcon(getClass().getResource("/resources/Base Green Deep.png")));
+		connectionStatus =
+				new JLabel(new ImageIcon(getClass().getResource(
+						"/resources/Base Green Deep.png")));
 		connectionStatus.setText("Connection Status:OK");
 		lEmail = new JLabel("Email:");
 		tfEmail = new JTextField(15);
@@ -144,7 +148,8 @@ public class UserPasswordResetPanel extends JPanel implements ActionListener {
 		lQuestion = new JLabel("What did you forgot?");
 		bReset = new JButton();
 		bReset.setText(" Reset ");
-		bReset.setIcon(new ImageIcon(getClass().getResource("/resources/images.jpeg")));
+		bReset.setIcon(new ImageIcon(getClass().getResource(
+				"/resources/images.jpeg")));
 		bReset.addActionListener(this);
 
 	}
@@ -165,7 +170,6 @@ public class UserPasswordResetPanel extends JPanel implements ActionListener {
 		checkBoxPanel.add(cbPassword);
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void actionPerformed(final ActionEvent e) {
 		if (e.getSource() == bReset) {
@@ -173,7 +177,8 @@ public class UserPasswordResetPanel extends JPanel implements ActionListener {
 		}
 
 		if (e.getSource() == backButton) {
-			final Frame window = (Frame) GUIUtilities.getPrincipalContainer(container);
+			final Frame window =
+					(Frame) GUIUtilities.getMainContainer(container);
 			window.getContentPane().remove(0);
 			window.getContentPane().add(new LoginPanel());
 			window.pack();
@@ -185,25 +190,40 @@ public class UserPasswordResetPanel extends JPanel implements ActionListener {
 	}
 
 	public void reset() {
-		if (tfEmail.getText().equals("") || tfEmail.getText().equals("Example:alvaro@gmail.com")) {
+		if (tfEmail.getText().equals("")
+				|| tfEmail.getText().equals("Example:alvaro@gmail.com")) {
 
-			JOptionPane.showMessageDialog(null, "Insert the email address.", "", JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass().getResource("/resources/errorIcon.png")));
+			JOptionPane.showMessageDialog(null, "Insert the email address.",
+					"", JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass()
+							.getResource("/resources/errorIcon.png")));
 
 		} else if (!cbPassword.isSelected() && !cbUsername.isSelected()) {
-			JOptionPane.showMessageDialog(null, "Select what you want to reset.", "", JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass().getResource("/resources/errorIcon.png")));
+			JOptionPane.showMessageDialog(null,
+					"Select what you want to reset.", "",
+					JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass()
+							.getResource("/resources/errorIcon.png")));
 		}
 
 		else if (!EmailValidator.getInstance().isValid(tfEmail.getText())) {
-			JOptionPane.showMessageDialog(null, "Incorrect Email.", "", JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass().getResource("/resources/errorIcon.png")));
+			JOptionPane.showMessageDialog(null, "Incorrect Email.", "",
+					JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass()
+							.getResource("/resources/errorIcon.png")));
 		} else {
 
 			final int optionType = JOptionPane.DEFAULT_OPTION;
 			final int messageType = JOptionPane.QUESTION_MESSAGE;
-			final ImageIcon icon = new ImageIcon(getClass().getResource("/resources/nothing.png"));
+			final ImageIcon icon =
+					new ImageIcon(getClass().getResource(
+							"/resources/nothing.png"));
 			final Object[] selValues = { "No", "Yes" };
-			final int selection = JOptionPane.showOptionDialog(null, "Are you sure you want to reset user/password?", "", optionType, messageType, icon, selValues, selValues[0]);
+			final int selection =
+					JOptionPane.showOptionDialog(null,
+							"Are you sure you want to reset user/password?",
+							"", optionType, messageType, icon, selValues,
+							selValues[0]);
 			if (selection == 1) {
-				final Frame window = (Frame) GUIUtilities.getPrincipalContainer(container);
+				final Frame window =
+						(Frame) GUIUtilities.getMainContainer(container);
 				window.getContentPane().remove(0);
 				window.getContentPane().add(new LoginPanel());
 				window.pack();

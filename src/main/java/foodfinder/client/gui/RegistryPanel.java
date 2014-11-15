@@ -21,7 +21,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 
-import org.apache.commons.validator.EmailValidator;
+import org.apache.commons.validator.routines.EmailValidator;
 import org.apache.uima.tools.util.gui.SpringUtilities;
 
 import foodfinder.client.utilities.GUIUtilities;
@@ -73,10 +73,12 @@ public class RegistryPanel extends JPanel implements ActionListener {
 		checkBoxIssuePanel.setLayout(new SpringLayout());
 		checkBoxIssuePanel1.setLayout(new SpringLayout());
 		placeCheckBoxIssue1();
-		SpringUtilities.makeCompactGrid(checkBoxIssuePanel1, 1, 1, 1, 1, 50, 50);
+		SpringUtilities
+				.makeCompactGrid(checkBoxIssuePanel1, 1, 1, 1, 1, 50, 50);
 		checkBoxIssuePanel2.setLayout(new SpringLayout());
 		placeCheckBoxIssue2();
-		SpringUtilities.makeCompactGrid(checkBoxIssuePanel2, 2, 2, 10, 0, 30, 0);
+		SpringUtilities
+				.makeCompactGrid(checkBoxIssuePanel2, 2, 2, 10, 0, 30, 0);
 
 		checkBoxIssuePanel.add(checkBoxIssuePanel1);
 		checkBoxIssuePanel.add(checkBoxIssuePanel2);
@@ -115,7 +117,6 @@ public class RegistryPanel extends JPanel implements ActionListener {
 		tfName.setText("Example:Patxi");
 		tfName.addMouseListener(new MouseAdapter() {
 
-			@SuppressWarnings("deprecation")
 			@Override
 			public void mousePressed(final MouseEvent e) {
 				if (tfName.getText().equals("Example:Patxi")) {
@@ -153,7 +154,6 @@ public class RegistryPanel extends JPanel implements ActionListener {
 		tfLastName.setText("Example:Lopez");
 		tfLastName.addMouseListener(new MouseAdapter() {
 
-			@SuppressWarnings("deprecation")
 			@Override
 			public void mousePressed(final MouseEvent e) {
 				if (tfLastName.getText().equals("Example:Lopez")) {
@@ -348,14 +348,19 @@ public class RegistryPanel extends JPanel implements ActionListener {
 		lHealthIssues = new JLabel("Health Issues:");
 		bRegister = new JButton("Register");
 		headerPanel = new JPanel();
-		backButton = new JButton(new ImageIcon(getClass().getResource("/resources/back-icon.png")));
+		backButton =
+				new JButton(new ImageIcon(getClass().getResource(
+						"/resources/back-icon.png")));
 		backButton.addActionListener(this);
 		headerTitle = new JLabel("REGISTER");
-		connectionStatus = new JLabel(new ImageIcon(getClass().getResource("/resources/Base Green Deep.png")));
+		connectionStatus =
+				new JLabel(new ImageIcon(getClass().getResource(
+						"/resources/Base Green Deep.png")));
 		connectionStatus.setToolTipText("Connection Status:OK");
 		container = new JPanel();
 		registerButton = new JButton();
-		registerButton.setIcon(new ImageIcon(getClass().getResource("/resources/form_icon_25603.png")));
+		registerButton.setIcon(new ImageIcon(getClass().getResource(
+				"/resources/form_icon_25603.png")));
 		registerButton.setText("Register");
 		registerButton.addActionListener(this);
 
@@ -396,14 +401,14 @@ public class RegistryPanel extends JPanel implements ActionListener {
 		checkBoxIssuePanel2.add(cbMilk);
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void actionPerformed(final ActionEvent e) {
 		if (e.getSource() == registerButton) {
 			register();
 		}
 		if (e.getSource() == backButton) {
-			final Frame window = (Frame) GUIUtilities.getPrincipalContainer(container);
+			final Frame window =
+					(Frame) GUIUtilities.getMainContainer(container);
 			window.getContentPane().remove(0);
 			window.getContentPane().add(new LoginPanel());
 			window.pack();
@@ -416,14 +421,26 @@ public class RegistryPanel extends JPanel implements ActionListener {
 	}
 
 	public void register() {
-		if (tfName.getText().equals("") || tfLastName.getText().equals("") || tfEmail.getText().equals("") || tfPassword.getText().equals("") || tfPassword2.getText().equals("") || tfUsername.getText().equals("")) {
-			JOptionPane.showMessageDialog(null, "You must fill all the fields.", "", JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass().getResource("/resources/errorIcon.png")));
+		if (tfName.getText().equals("") || tfLastName.getText().equals("")
+				|| tfEmail.getText().equals("")
+				|| tfPassword.getText().equals("")
+				|| tfPassword2.getText().equals("")
+				|| tfUsername.getText().equals("")) {
+			JOptionPane.showMessageDialog(null,
+					"You must fill all the fields.", "",
+					JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass()
+							.getResource("/resources/errorIcon.png")));
 
 		} else if (!tfPassword.getText().equals(tfPassword2.getText())) {
-			JOptionPane.showMessageDialog(null, "Passwords don't match.", "", JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass().getResource("/resources/errorIcon.png")));
+			JOptionPane.showMessageDialog(null, "Passwords don't match.", "",
+					JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass()
+							.getResource("/resources/errorIcon.png")));
 
 		} else if (!EmailValidator.getInstance().isValid(tfEmail.getText())) {
-			JOptionPane.showMessageDialog(null, "You must provide a valid email.", "", JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass().getResource("/resources/errorIcon.png")));
+			JOptionPane.showMessageDialog(null,
+					"You must provide a valid email.", "",
+					JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass()
+							.getResource("/resources/errorIcon.png")));
 		}
 		// TODO Username exists or email exist validation missing.
 	}

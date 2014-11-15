@@ -9,7 +9,7 @@ import javax.swing.JFrame;
 
 public class GUIUtilities {
 
-	public static Container getPrincipalContainer(Component c) {
+	public static Container getMainContainer(Component c) {
 		if (c == null)
 			return null;
 		Container ret = c.getParent();

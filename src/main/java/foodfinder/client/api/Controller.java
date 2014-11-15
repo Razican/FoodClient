@@ -1,4 +1,4 @@
-package foodfinder.client.gui;
+package foodfinder.client.api;
 
 public class Controller {
 

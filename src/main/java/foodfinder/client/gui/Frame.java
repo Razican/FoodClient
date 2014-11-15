@@ -1,40 +1,16 @@
 package foodfinder.client.gui;
 
-import java.awt.Dimension;
-
 import javax.swing.JFrame;
-import javax.swing.UIManager;
-
-import foodfinder.client.utilities.GUIUtilities;
 
 public class Frame extends JFrame {
 
-	public static JFrame frame;
+	private static final long serialVersionUID = -1643547869380117402L;
+	public static JFrame frame = new JFrame();
 
-	public Frame() {
-
+	private Frame() {
 	}
 
-	public static void main(final String[] args) {
-		frame = new Frame();
-		for (final UIManager.LookAndFeelInfo laf : UIManager.getInstalledLookAndFeels()) {
-			if ("Nimbus".equals(laf.getName()))
-				try {
-					UIManager.setLookAndFeel(laf.getClassName());
-				} catch (final Exception ex) {
-				}
-		}
-		frame.setSize(new Dimension(560, 680));
-		frame.setMinimumSize(new Dimension(560, 680));
-		frame.setMaximumSize(new Dimension(900, 700));
-		// final RegistryPanel panel = new RegistryPanel();
-		// final UserPasswordResetPanel panel = new UserPasswordResetPanel();
-		// final LoginPanel panel = new LoginPanel();
-		final SearchPanel panel = new SearchPanel();
-		frame.add(panel);
-		frame.setVisible(true);
-		frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		GUIUtilities.CenterWindow(frame);
-
+	public static JFrame getInstance() {
+		return frame;
 	}
 }

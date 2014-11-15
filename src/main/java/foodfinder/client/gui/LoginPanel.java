@@ -29,10 +29,7 @@ import foodfinder.client.utilities.GUIUtilities;
 
 public class LoginPanel extends JPanel implements ActionListener {
 
-	/**
-	 *
-	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1020165421212949639L;
 	private JLabel lUsername;
 	private JLabel lPassword;
 	private JTextField tfUsername;
@@ -56,7 +53,9 @@ public class LoginPanel extends JPanel implements ActionListener {
 
 		header.setLayout(new SpringLayout());
 		placeHeaderComponents();
-		SpringUtilities.makeCompactGrid(header, 1, 2, ((Frame.frame.getWidth() / 2) + 25), 1, Frame.frame.getWidth() / 4, 0);
+		SpringUtilities.makeCompactGrid(header, 1, 2,
+				((Frame.frame.getWidth() / 2) + 25), 1,
+				Frame.frame.getWidth() / 4, 0);
 
 		textPanel.setLayout(new SpringLayout());
 		placeTextComponents();
@@ -92,7 +91,9 @@ public class LoginPanel extends JPanel implements ActionListener {
 		thisContainer.setPreferredSize(new Dimension(560, 420));
 		header = new JPanel();
 		lHeader = new JLabel("PRODUCT FINDER");
-		connectionStatus = new JLabel(new ImageIcon(getClass().getResource("/resources/Base Green Deep.png")));
+		connectionStatus =
+				new JLabel(new ImageIcon(getClass().getResource(
+						"/Base Green Deep.png")));
 		connectionStatus.setToolTipText("Connection Status: OK");
 		textPanel = new JPanel();
 		lUsername = new JLabel("Username:");
@@ -134,7 +135,6 @@ public class LoginPanel extends JPanel implements ActionListener {
 		tfPassword.setText("Example:1234");
 		tfPassword.addMouseListener(new MouseAdapter() {
 
-			@SuppressWarnings("deprecation")
 			@Override
 			public void mousePressed(final MouseEvent e) {
 				if (tfPassword.getText().equals("Example:1234")) {
@@ -152,7 +152,7 @@ public class LoginPanel extends JPanel implements ActionListener {
 			}
 		});
 		tfPassword.addFocusListener(new FocusListener() {
-			@SuppressWarnings("deprecation")
+
 			@Override
 			public void focusLost(final FocusEvent e) {
 				if (tfPassword.getText().equals("")) {
@@ -171,15 +171,18 @@ public class LoginPanel extends JPanel implements ActionListener {
 		flowLayout.setVgap(Frame.frame.getHeight() / 10);
 		buttonPanel = new JPanel();
 		bUserPasswordReset = new JButton();
-		bUserPasswordReset.setIcon(new ImageIcon(getClass().getResource("/resources/Question.png")));
+		bUserPasswordReset.setIcon(new ImageIcon(getClass().getResource(
+				"/Question.png")));
 		bUserPasswordReset.setText("Forgotten User/Password");
 		bUserPasswordReset.addActionListener(this);
 		bLogin = new JButton();
-		bLogin.setIcon(new ImageIcon(getClass().getResource("/resources/086817-simple-red-glossy-icon-business-key7.png")));
+		bLogin.setIcon(new ImageIcon(getClass().getResource(
+				"/086817-simple-red-glossy-icon-business-key7.png")));
 		bLogin.setText("Login");
 		bLogin.addActionListener(this);
 		bNewUser = new JButton();
-		bNewUser.setIcon(new ImageIcon(getClass().getResource("/resources/form_icon_25603.png")));
+		bNewUser.setIcon(new ImageIcon(getClass().getResource(
+				"/form_icon_25603.png")));
 		bNewUser.setText("New User");
 		bNewUser.addActionListener(this);
 
@@ -208,7 +211,8 @@ public class LoginPanel extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(final ActionEvent e) {
 		if (e.getSource() == bUserPasswordReset) {
-			final Frame window = (Frame) GUIUtilities.getPrincipalContainer(thisContainer);
+			final Frame window =
+					(Frame) GUIUtilities.getMainContainer(thisContainer);
 			window.getContentPane().remove(0);
 			window.getContentPane().add(new UserPasswordResetPanel());
 			window.pack();
@@ -223,7 +227,8 @@ public class LoginPanel extends JPanel implements ActionListener {
 		}
 
 		if (e.getSource() == bNewUser) {
-			final Frame window = (Frame) GUIUtilities.getPrincipalContainer(thisContainer);
+			final Frame window =
+					(Frame) GUIUtilities.getMainContainer(thisContainer);
 			window.getContentPane().remove(0);
 			window.getContentPane().add(new RegistryPanel());
 			window.pack();
@@ -235,17 +240,25 @@ public class LoginPanel extends JPanel implements ActionListener {
 	}
 
 	public void login() {
-		final JSONObject loginResponse = Api.login(tfUsername.getText(), tfPassword.getPassword());
+		final JSONObject loginResponse =
+				Api.login(tfUsername.getText(), tfPassword.getPassword());
 
-		if (tfUsername.getText().equals("") || tfPassword.getText().equals("") || tfUsername.getText().equals("Example:Peio") || tfPassword.getText().equals("Example:1234")) {
-			JOptionPane.showMessageDialog(null, "Insert username or password.", "", JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass().getResource("/resources/errorIcon.png")));
+		if (tfUsername.getText().equals("") || tfPassword.getText().equals("")
+				|| tfUsername.getText().equals("Example:Peio")
+				|| tfPassword.getText().equals("Example:1234")) {
+			JOptionPane.showMessageDialog(null, "Insert username or password.",
+					"", JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass()
+							.getResource("/errorIcon.png")));
 		}
 
 		else if (loginResponse.get("status").equals("OK")) {
 
 			welcomeMessage = "Welcome " + user + "!";
-			JOptionPane.showMessageDialog(null, welcomeMessage, "", JOptionPane.INFORMATION_MESSAGE, new ImageIcon(getClass().getResource("/resources/nothing.png")));
-			final Frame window = (Frame) GUIUtilities.getPrincipalContainer(thisContainer);
+			JOptionPane.showMessageDialog(null, welcomeMessage, "",
+					JOptionPane.INFORMATION_MESSAGE, new ImageIcon(getClass()
+							.getResource("/nothing.png")));
+			final Frame window =
+					(Frame) GUIUtilities.getMainContainer(thisContainer);
 			window.getContentPane().remove(0);
 			window.getContentPane().add(new SearchPanel());
 			window.pack();
@@ -255,7 +268,10 @@ public class LoginPanel extends JPanel implements ActionListener {
 			GUIUtilities.CenterWindow(window);
 		} else {
 			// TODO Show error in loginResponse.get("error")
-			JOptionPane.showMessageDialog(null, "Incorrect username or password.", "", JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass().getResource("/resources/errorIcon.png")));
+			JOptionPane.showMessageDialog(null,
+					"Incorrect username or password.", "",
+					JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass()
+							.getResource("/errorIcon.png")));
 		}
 	}
 
