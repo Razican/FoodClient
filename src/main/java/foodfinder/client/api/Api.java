@@ -5,11 +5,12 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.net.ssl.HttpsURLConnection;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,7 +19,7 @@ import com.razican.utils.StringUtils;
 
 public class Api {
 
-	private static String API_URL = "http://localhost/foodweb/api/";
+	private static String API_URL = "https://www.razican.com/foodweb/api/";
 
 	private Api() {
 	}
@@ -58,7 +59,8 @@ public class Api {
 	private static String getTextfromURL(final String urlStr,
 			final Map<?, ?> params) throws IOException {
 		final URL obj = new URL(urlStr);
-		final HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+		final HttpsURLConnection con =
+				(HttpsURLConnection) obj.openConnection();
 
 		// add reuqest header
 		con.setRequestMethod("POST");
