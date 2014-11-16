@@ -2,13 +2,24 @@ package foodfinder.client.api;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
 
 import org.apache.commons.validator.routines.EmailValidator;
 import org.json.JSONObject;
 
 public class Controller {
 
+	private static String username = null;
+
 	private Controller() {
+	}
+
+	public static void setUsername(final String username) {
+		Controller.username = username;
+	}
+
+	public static String getUsername() {
+		return username;
 	}
 
 	public static boolean checkStatus() {
@@ -76,6 +87,14 @@ public class Controller {
 			return null;
 
 		return apiCall.getString("error");
+	}
+
+	public static List<SearchResult> search(final String name, final int type,
+			final String brand, final float price_min, final float price_max)
+					throws UserNotSetException {
+
+		return null;
+
 	}
 
 	private static boolean empty(final String str) {

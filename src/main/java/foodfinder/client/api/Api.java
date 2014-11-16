@@ -28,8 +28,8 @@ public class Api {
 	}
 
 	public static JSONObject
-			login(final String username, final char[] password)
-					throws IOException {
+	login(final String username, final char[] password)
+			throws IOException {
 		final HashMap<String, String> params = new HashMap<>();
 		params.put("username", username);
 		params.put("password", StringUtils.sha1(password));
@@ -67,7 +67,9 @@ public class Api {
 		return getJSON("reset_password", params);
 	}
 
-	public static JSONObject search() throws IOException {
+	public static JSONObject search(final String username, final String name,
+			final int type, final String brand, final float price_min,
+			final float price_max) throws IOException {
 		// TODO
 		return null;
 	}

@@ -12,6 +12,16 @@ import org.junit.Test;
 public class ControllerTest {
 
 	@Test
+	public void testUsername() {
+		Assert.assertNull(Controller.getUsername());
+
+		Controller.setUsername("testUser");
+		Assert.assertEquals("testUser", Controller.getUsername());
+
+		Controller.setUsername(null);
+	}
+
+	@Test
 	public void testStatus() {
 		Assert.assertTrue(Controller.checkStatus());
 	}
@@ -123,7 +133,7 @@ public class ControllerTest {
 					"Select what you want to reset.",
 					Controller.resetPassword(
 							"testR_" + RandomStringUtils.randomNumeric(5)
-							+ "@example.com", false, false));
+									+ "@example.com", false, false));
 
 			Assert.assertEquals("The email you provided is not valid",
 					Controller.resetPassword("ssdfsfsdfs", true, false));
@@ -132,7 +142,7 @@ public class ControllerTest {
 					"There is no user with that email",
 					Controller.resetPassword(
 							"testR_" + RandomStringUtils.randomNumeric(5)
-							+ "@example.com", true, false));
+									+ "@example.com", true, false));
 
 			Assert.assertNull(Controller.resetPassword("testUser@example.com",
 					true, false));
