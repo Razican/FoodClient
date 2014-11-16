@@ -10,6 +10,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 
 import javax.swing.Box;
 import javax.swing.ImageIcon;
@@ -98,9 +99,8 @@ public class PasswordResetPanel extends JPanel implements ActionListener {
 		textPanel = new JPanel();
 		checkBoxPanel = new JPanel();
 		container = new JPanel();
-		backButton =
-				new JButton(new ImageIcon(getClass().getResource(
-						"/back-icon.png")));
+		backButton = new JButton(new ImageIcon(getClass().getResource(
+				"/back-icon.png")));
 		backButton.addActionListener(this);
 		headerTitle = new JLabel("USER/PASSWORD RESET");
 		getConnectionLabel();
@@ -165,12 +165,19 @@ public class PasswordResetPanel extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(final ActionEvent e) {
 		if (e.getSource() == bReset) {
+
+			if (tfEmail.getText().equals("Example:alvaro@gmail.com")) {
+				tfEmail.setText("");
+			}
+
 			reset();
+
+			tfEmail.setText("Example:alvaro@gmail.com");
 		}
 
 		if (e.getSource() == backButton) {
-			final JFrame window =
-					(JFrame) GUIUtilities.getMainContainer(container);
+			final JFrame window = (JFrame) GUIUtilities
+					.getMainContainer(container);
 			window.getContentPane().remove(0);
 			window.getContentPane().add(new LoginPanel());
 			window.pack();
@@ -180,59 +187,43 @@ public class PasswordResetPanel extends JPanel implements ActionListener {
 		}
 
 	}
-	
-	public void getConnectionLabel()
-	{
-		if(Controller.checkStatus()==true)
-		{
-			connectionStatus =
-					new JLabel(new ImageIcon(getClass().getResource(
-							"/status-OK.png")));	
+
+	public void getConnectionLabel() {
+		if (Controller.checkStatus() == true) {
+			connectionStatus = new JLabel(new ImageIcon(getClass().getResource(
+					"/status-OK.png")));
 			connectionStatus.setToolTipText("Connection Status: OK");
-		}
-		else
-		{
-			connectionStatus =
-					new JLabel(new ImageIcon(getClass().getResource(
-							"/status-ERR.png")));
+		} else {
+			connectionStatus = new JLabel(new ImageIcon(getClass().getResource(
+					"/status-ERR.png")));
 			connectionStatus.setToolTipText("Connection Status: ERROR");
 		}
 	}
 
 	public void reset() {
-		if (tfEmail.getText().equals("")
-				|| tfEmail.getText().equals("Example:alvaro@gmail.com")) {
-
-			JOptionPane.showMessageDialog(null, "Insert the email address.",
-					"", JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass()
-							.getResource("/error-icon.png")));
-
-		} else if (!cbPassword.isSelected() && !cbUsername.isSelected()) {
-			JOptionPane.showMessageDialog(null,
-					"Select what you want to reset.", "",
-					JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass()
-							.getResource("/error-icon.png")));
+		String resetResponse = null;
+		if (Controller.checkStatus()) {
+			try {
+				resetResponse = Controller.resetPassword(tfEmail.getText(),
+						cbUsername.isSelected(), cbPassword.isSelected());
+			} catch (final IOException e) {
+				e.printStackTrace();
+			}
 		}
 
-		else if (!EmailValidator.getInstance().isValid(tfEmail.getText())) {
-			JOptionPane.showMessageDialog(null, "Incorrect Email.", "",
-					JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass()
-							.getResource("/error-icon.png")));
-		} else {
+		if (resetResponse == null) {
 
 			final int optionType = JOptionPane.DEFAULT_OPTION;
 			final int messageType = JOptionPane.QUESTION_MESSAGE;
-			final ImageIcon icon =
-					new ImageIcon(getClass().getResource("/empty.png"));
+			final ImageIcon icon = new ImageIcon(getClass().getResource(
+					"/empty.png"));
 			final Object[] selValues = { "No", "Yes" };
-			final int selection =
-					JOptionPane.showOptionDialog(null,
-							"Are you sure you want to reset user/password?",
-							"", optionType, messageType, icon, selValues,
-							selValues[0]);
+			final int selection = JOptionPane.showOptionDialog(null,
+					"Are you sure you want to reset user/password?", "",
+					optionType, messageType, icon, selValues, selValues[0]);
 			if (selection == 1) {
-				final JFrame window =
-						(JFrame) GUIUtilities.getMainContainer(container);
+				final JFrame window = (JFrame) GUIUtilities
+						.getMainContainer(container);
 				window.getContentPane().remove(0);
 				window.getContentPane().add(new LoginPanel());
 				window.pack();
@@ -241,6 +232,11 @@ public class PasswordResetPanel extends JPanel implements ActionListener {
 				window.setSize(560, 400);
 				GUIUtilities.CenterWindow(window);
 			}
+		} else {
+			JOptionPane.showMessageDialog(null, resetResponse, "",
+					JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass()
+							.getResource("/error-icon.png")));
+
 		}
 	}
 
