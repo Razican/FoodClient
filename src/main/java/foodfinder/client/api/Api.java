@@ -27,9 +27,7 @@ public class Api {
 		return getJSON("status", null);
 	}
 
-	public static JSONObject
-			login(final String username, final char[] password)
-					throws IOException {
+	public static JSONObject login(final String username, final char[] password) throws IOException {
 		final HashMap<String, String> params = new HashMap<>();
 		params.put("username", username);
 		params.put("password", StringUtils.sha1(password));
@@ -37,10 +35,10 @@ public class Api {
 		return getJSON("login", params);
 	}
 
-	public static JSONObject register(final String name, final String lastName,
-			final String email, final String username, final char[] password,
-			final boolean gluten, final boolean diabetes,
-			final boolean vegetables, final boolean milk) throws IOException {
+	public static JSONObject register(final String name, final String lastName, final String email,
+			final String username, final char[] password, final boolean gluten,
+			final boolean diabetes, final boolean vegetables, final boolean milk)
+			throws IOException {
 
 		final HashMap<String, String> params = new HashMap<>();
 		params.put("name", name);
@@ -56,8 +54,8 @@ public class Api {
 		return getJSON("register", params);
 	}
 
-	public static JSONObject resetPassword(final String email,
-			final boolean username, final boolean password) throws IOException {
+	public static JSONObject resetPassword(final String email, final boolean username,
+			final boolean password) throws IOException {
 
 		final HashMap<String, String> params = new HashMap<>();
 		params.put("email", email);
@@ -67,9 +65,8 @@ public class Api {
 		return getJSON("reset_password", params);
 	}
 
-	public static JSONObject search(final String username, final String name,
-			final int type, final String brand, final float price_min,
-			final float price_max) throws IOException {
+	public static JSONObject search(final String username, final String name, final int type,
+			final String brand, final float price_min, final float price_max) throws IOException {
 
 		final HashMap<String, String> params = new HashMap<>();
 		params.put("username", username);
@@ -82,17 +79,15 @@ public class Api {
 		return getJSON("reset_password", params);
 	}
 
-	private static JSONObject getJSON(final String url, final Map<?, ?> params)
-			throws IOException {
+	private static JSONObject getJSON(final String url, final Map<?, ?> params) throws IOException {
 		return new JSONObject(getTextfromURL(API_URL + url, params));
 	}
 
 	// From http://www.mkyong.com/java/how-to-send-http-request-getpost-in-java/
-	private static String getTextfromURL(final String urlStr,
-			final Map<?, ?> params) throws IOException {
+	private static String getTextfromURL(final String urlStr, final Map<?, ?> params)
+			throws IOException {
 		final URL obj = new URL(urlStr);
-		final HttpsURLConnection con =
-				(HttpsURLConnection) obj.openConnection();
+		final HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
 
 		// add reuqest header
 		con.setRequestMethod("POST");
@@ -108,8 +103,7 @@ public class Api {
 		wr.flush();
 		wr.close();
 
-		final BufferedReader in =
-				new BufferedReader(new InputStreamReader(con.getInputStream()));
+		final BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
 		String inputLine;
 		final StringBuffer response = new StringBuffer();
 
@@ -137,8 +131,8 @@ public class Api {
 			if (sb.length() > 0) {
 				sb.append("&");
 			}
-			sb.append(String.format("%s=%s", urlEncodeUTF8(entry.getKey()
-					.toString()), urlEncodeUTF8(entry.getValue().toString())));
+			sb.append(String.format("%s=%s", urlEncodeUTF8(entry.getKey().toString()),
+					urlEncodeUTF8(entry.getValue().toString())));
 		}
 		return sb.toString();
 	}

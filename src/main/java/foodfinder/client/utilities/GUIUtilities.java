@@ -23,6 +23,7 @@ public class GUIUtilities {
 	public static void CenterWindow(final JFrame a) {
 		final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
 		final Dimension window = a.getSize();
-		a.setLocation((int) (screen.width - window.getWidth()) / 2, (int) (screen.height - window.getHeight()) / 2);
+		a.setLocation((int) (screen.width - window.getWidth()) / 2,
+				(int) (screen.height - window.getHeight()) / 2);
 	}
 }

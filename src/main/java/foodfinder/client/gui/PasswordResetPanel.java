@@ -176,14 +176,13 @@ public class PasswordResetPanel extends JPanel implements ActionListener {
 		}
 
 		if (e.getSource() == backButton) {
-			final JFrame window = (JFrame) GUIUtilities
-					.getMainContainer(container);
-			window.getContentPane().remove(0);
-			window.getContentPane().add(new LoginPanel());
-			window.pack();
-			window.setMinimumSize(new Dimension(560, 400));
-			window.setSize(560, 400);
-			GUIUtilities.CenterWindow(window);
+
+			Frame.getInstance().getContentPane().remove(0);
+			Frame.getInstance().getContentPane().add(new LoginPanel());
+			Frame.getInstance().pack();
+			Frame.getInstance().setMinimumSize(new Dimension(560, 400));
+			Frame.getInstance().setSize(560, 400);
+			GUIUtilities.CenterWindow(Frame.getInstance());
 		}
 
 	}
@@ -222,15 +221,14 @@ public class PasswordResetPanel extends JPanel implements ActionListener {
 					"Are you sure you want to reset user/password?", "",
 					optionType, messageType, icon, selValues, selValues[0]);
 			if (selection == 1) {
-				final JFrame window = (JFrame) GUIUtilities
-						.getMainContainer(container);
-				window.getContentPane().remove(0);
-				window.getContentPane().add(new LoginPanel());
-				window.pack();
-				window.repaint();
-				window.setMinimumSize(new Dimension(560, 400));
-				window.setSize(560, 400);
-				GUIUtilities.CenterWindow(window);
+
+				Frame.getInstance().getContentPane().remove(0);
+				Frame.getInstance().getContentPane().add(new LoginPanel());
+				Frame.getInstance().pack();
+				Frame.getInstance().repaint();
+				Frame.getInstance().setMinimumSize(new Dimension(560, 400));
+				Frame.getInstance().setSize(560, 400);
+				GUIUtilities.CenterWindow(Frame.getInstance());
 			}
 		} else {
 			JOptionPane.showMessageDialog(null, resetResponse, "",

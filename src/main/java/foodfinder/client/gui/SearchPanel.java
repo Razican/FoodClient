@@ -10,6 +10,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -119,9 +121,8 @@ public class SearchPanel extends JPanel implements ActionListener {
 		container = new JPanel();
 		bSearch = new JButton();
 		bSearch.setLayout(new SpringLayout());
-		final JLabel searchImage =
-				new JLabel(new ImageIcon(getClass().getResource(
-						"/search-icon.png")));
+		final JLabel searchImage = new JLabel(new ImageIcon(getClass()
+				.getResource("/search-icon.png")));
 		bSearch.add(searchImage);
 		bSearch.add(new JLabel("Search"));
 		SpringUtilities.makeCompactGrid(bSearch, 2, 1, 6, 6, 6, 6);
@@ -224,24 +225,29 @@ public class SearchPanel extends JPanel implements ActionListener {
 		lTypeInfo = new JLabel("______");
 		lDesc = new JLabel("Desc:");
 		lDescInfo = new JLabel("______");
-		lImageInfo =
-				new JLabel(
-						new ImageIcon(getClass().getResource("/missing.png")));
+		lImageInfo = new JLabel(new ImageIcon(getClass().getResource(
+				"/missing.png")));
 		lName1 = new JLabel("Name:");
 		lType1 = new JLabel("Type:");
 		lBrand1 = new JLabel("Brand:");
 		lPrice11 = new JLabel("Price");
 		tableInfoPanel = new JPanel();
 		headers = new Object[] { "Name", "Type", "Brand", "Price" };
-		data =
-				new Object[][] { { "Ariel", "Washing", "Ariel", "3,60" },
-						{ "Ariel", "Washing", "Ariel", "3,60" } };
+		data = new Object[][] { { "Ariel", "Washing", "Ariel", "3,60" },
+				{ "Ariel", "Washing", "Ariel", "3,60" } };
 		modeloTabla = new DefaultTableModel(data, headers);
 		resultsTable = new JTable(modeloTabla);
 		resultsTable.setEnabled(true);
-		lSupermarketMap =
-				new JLabel(new ImageIcon(getClass().getResource("/map.png")));
+		lSupermarketMap = new JLabel(new ImageIcon(getClass().getResource(
+				"/map.png")));
 
+		Frame.getInstance().addWindowListener(new WindowAdapter() {
+
+			@Override
+			public void windowClosing(WindowEvent e) {
+				Controller.logout();
+			}
+		});
 	}
 
 	public void placeHeaderObjects() {
@@ -322,42 +328,37 @@ public class SearchPanel extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(final ActionEvent e) {
 		if (e.getSource() == blogout) {
-			final JFrame window =
-					(JFrame) GUIUtilities.getMainContainer(tablePanel);
-			window.getContentPane().remove(0);
-			window.getContentPane().add(new LoginPanel());
-			window.pack();
-			window.repaint();
-			window.setSize(560, 420);
-			GUIUtilities.CenterWindow(window);
+			Controller.logout();
+
+			Frame.getInstance().getContentPane().remove(0);
+			Frame.getInstance().getContentPane().add(new LoginPanel());
+			Frame.getInstance().pack();
+			Frame.getInstance().repaint();
+			Frame.getInstance().setSize(560, 420);
+			GUIUtilities.CenterWindow(Frame.getInstance());
 		}
 		if (e.getSource() == bSearch) {
 			search();
 		}
 
 	}
-	public void getConnectionLabel()
-	{
-		
-		if(Controller.checkStatus()==true)
-		{
-			lConnectionStatus =
-					new JLabel(new ImageIcon(getClass().getResource(
-							"/status-OK.png")));	
+
+	public void getConnectionLabel() {
+
+		if (Controller.checkStatus() == true) {
+			lConnectionStatus = new JLabel(new ImageIcon(getClass()
+					.getResource("/status-OK.png")));
 			lConnectionStatus.setToolTipText("Connection Status: OK");
-		}
-		else
-		{
-			lConnectionStatus =
-					new JLabel(new ImageIcon(getClass().getResource(
-							"/status-ERR.png")));
+		} else {
+			lConnectionStatus = new JLabel(new ImageIcon(getClass()
+					.getResource("/status-ERR.png")));
 			lConnectionStatus.setToolTipText("Connection Status: ERROR");
 		}
 	}
 
-
 	public void search() {
-		final JFrame window = (JFrame) GUIUtilities.getMainContainer(tablePanel);
+		final JFrame window = (JFrame) GUIUtilities
+				.getMainContainer(tablePanel);
 		System.out.println(window.getSize().toString());
 	}
 
