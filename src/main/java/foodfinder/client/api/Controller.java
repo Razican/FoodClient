@@ -9,17 +9,13 @@ import org.json.JSONObject;
 
 public class Controller {
 
-	private static String username = null;
+	private static String username;
 
 	private Controller() {
 	}
 
-	public static void setUsername(final String username) {
-		Controller.username = username;
-	}
-
-	public static String getUsername() {
-		return username;
+	public static void logout() {
+		username = null;
 	}
 
 	public static boolean checkStatus() {
@@ -37,8 +33,10 @@ public class Controller {
 			return "Insert username and password.";
 
 		final JSONObject apiCall = Api.login(username, password);
-		if (apiCall.get("error").equals(JSONObject.NULL))
+		if (apiCall.get("error").equals(JSONObject.NULL)) {
+			Controller.username = username;
 			return null;
+		}
 
 		return apiCall.getString("error");
 	}
@@ -92,6 +90,9 @@ public class Controller {
 	public static List<SearchResult> search(final String name, final int type,
 			final String brand, final float price_min, final float price_max)
 					throws UserNotSetException {
+
+		if (empty(Controller.username))
+			throw new UserNotSetException();
 
 		return null;
 
