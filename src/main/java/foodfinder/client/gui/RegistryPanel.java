@@ -77,11 +77,11 @@ public class RegistryPanel extends JPanel implements ActionListener {
 		checkBoxIssuePanel1.setLayout(new SpringLayout());
 		placeCheckBoxIssue1();
 		SpringUtilities
-		.makeCompactGrid(checkBoxIssuePanel1, 1, 1, 1, 1, 50, 50);
+				.makeCompactGrid(checkBoxIssuePanel1, 1, 1, 1, 1, 50, 50);
 		checkBoxIssuePanel2.setLayout(new SpringLayout());
 		placeCheckBoxIssue2();
 		SpringUtilities
-		.makeCompactGrid(checkBoxIssuePanel2, 2, 2, 10, 0, 30, 0);
+				.makeCompactGrid(checkBoxIssuePanel2, 2, 2, 10, 0, 30, 0);
 
 		checkBoxIssuePanel.add(checkBoxIssuePanel1);
 		checkBoxIssuePanel.add(checkBoxIssuePanel2);
@@ -242,7 +242,8 @@ public class RegistryPanel extends JPanel implements ActionListener {
 
 			@Override
 			public void mousePressed(final MouseEvent e) {
-				if (Arrays.equals(tfPassword.getPassword(),"Example:1234".toCharArray())) {
+				if (Arrays.equals(tfPassword.getPassword(),
+						"Example:1234".toCharArray())) {
 					tfPassword.setText("");
 					tfPassword.setEchoChar('*');
 				}
@@ -262,7 +263,7 @@ public class RegistryPanel extends JPanel implements ActionListener {
 
 			@Override
 			public void focusLost(final FocusEvent e) {
-				if (Arrays.equals(tfPassword.getPassword(),"".toCharArray())) {
+				if (Arrays.equals(tfPassword.getPassword(), "".toCharArray())) {
 					tfPassword.setText("Example:1234");
 					tfPassword.setEchoChar((char) 0);
 				}
@@ -276,7 +277,8 @@ public class RegistryPanel extends JPanel implements ActionListener {
 
 			@Override
 			public void mousePressed(final MouseEvent e) {
-				if (Arrays.equals(tfPassword2.getPassword(),"Example:1234".toCharArray())) {
+				if (Arrays.equals(tfPassword2.getPassword(),
+						"Example:1234".toCharArray())) {
 					tfPassword2.setText("");
 					tfPassword2.setEchoChar('*');
 				}
@@ -295,7 +297,7 @@ public class RegistryPanel extends JPanel implements ActionListener {
 
 			@Override
 			public void focusLost(final FocusEvent e) {
-				if (Arrays.equals(tfPassword2.getPassword(),"".toCharArray())) {
+				if (Arrays.equals(tfPassword2.getPassword(), "".toCharArray())) {
 					tfPassword2.setText("Example:1234");
 					tfPassword2.setEchoChar((char) 0);
 				}
@@ -314,9 +316,8 @@ public class RegistryPanel extends JPanel implements ActionListener {
 		lPassword2 = new JLabel("Repeat Password:");
 		lHealthIssues = new JLabel("Health Issues:");
 		headerPanel = new JPanel();
-		backButton =
-				new JButton(new ImageIcon(getClass().getResource(
-						"/back-icon.png")));
+		backButton = new JButton(new ImageIcon(getClass().getResource(
+				"/back-icon.png")));
 		backButton.addActionListener(this);
 		headerTitle = new JLabel("REGISTER");
 		getConnectionLabel();
@@ -370,66 +371,59 @@ public class RegistryPanel extends JPanel implements ActionListener {
 			register();
 		}
 		if (e.getSource() == backButton) {
-			final JFrame window =
-					(JFrame) GUIUtilities.getMainContainer(container);
-			window.getContentPane().remove(0);
-			window.getContentPane().add(new LoginPanel());
-			window.pack();
-			window.repaint();
-			window.setMinimumSize(new Dimension(560, 420));
-			window.setSize(560, 420);
-			GUIUtilities.CenterWindow(window);
+			Frame.getInstance().getContentPane().remove(0);
+			Frame.getInstance().getContentPane().add(new LoginPanel());
+			Frame.getInstance().pack();
+			Frame.getInstance().repaint();
+			Frame.getInstance().setMinimumSize(new Dimension(560, 420));
+			Frame.getInstance().setSize(560, 420);
+			GUIUtilities.CenterWindow(Frame.getInstance());
 		}
 
 	}
-	
-	public void getConnectionLabel()
-	{
-		if(Controller.checkStatus()==true)
-		{
-			connectionStatus =
-					new JLabel(new ImageIcon(getClass().getResource(
-							"/status-OK.png")));	
+
+	public void getConnectionLabel() {
+		if (Controller.checkStatus() == true) {
+			connectionStatus = new JLabel(new ImageIcon(getClass().getResource(
+					"/status-OK.png")));
 			connectionStatus.setToolTipText("Connection Status: OK");
-		}
-		else
-		{
-			connectionStatus =
-					new JLabel(new ImageIcon(getClass().getResource(
-							"/status-ERR.png")));
+		} else {
+			connectionStatus = new JLabel(new ImageIcon(getClass().getResource(
+					"/status-ERR.png")));
 			connectionStatus.setToolTipText("Connection Status: ERROR");
 		}
 	}
-
 
 	public void register() {
 		String registerResponse = null;
 		if (Controller.checkStatus()) {
 			try {
-				registerResponse =
-						Controller.register(tfName.getText(), tfLastName.getText(), tfEmail.getText(), tfUsername.getText(), tfPassword.getPassword(), tfPassword2.getPassword(), cbGluten.isSelected(), cbDiabetes.isSelected(), cbVegetables.isSelected(), cbMilk.isSelected());
+				registerResponse = Controller.register(tfName.getText(),
+						tfLastName.getText(), tfEmail.getText(),
+						tfUsername.getText(), tfPassword.getPassword(),
+						tfPassword2.getPassword(), cbGluten.isSelected(),
+						cbDiabetes.isSelected(), cbVegetables.isSelected(),
+						cbMilk.isSelected());
 			} catch (final IOException e) {
 				e.printStackTrace();
 			}
 		}
-		
-		if (registerResponse==null) {
-			final JFrame window =
-					(JFrame) GUIUtilities.getMainContainer(container);
-			window.getContentPane().remove(0);
-			window.getContentPane().add(new LoginPanel());
-			window.pack();
-			window.setMinimumSize(new Dimension(560, 400));
-			window.setSize(560, 400);
-			GUIUtilities.CenterWindow(window);
 
-		} 
-		else {
+		if (registerResponse == null) {
+
+			Frame.getInstance().getContentPane().remove(0);
+			Frame.getInstance().getContentPane().add(new LoginPanel());
+			Frame.getInstance().pack();
+			Frame.getInstance().setMinimumSize(new Dimension(560, 400));
+			Frame.getInstance().setSize(560, 400);
+			GUIUtilities.CenterWindow(Frame.getInstance());
+
+		} else {
 			JOptionPane.showMessageDialog(null, registerResponse, "",
 					JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass()
 							.getResource("/error-icon.png")));
 
-		} 
+		}
 		// TODO Username exists or email exist validation missing.
 	}
 }

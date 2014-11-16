@@ -34,4 +34,5 @@ public class Launcher {
 		Frame.getInstance().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		GUIUtilities.CenterWindow(Frame.getInstance());
 	}
+
 }

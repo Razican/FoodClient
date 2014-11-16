@@ -198,14 +198,13 @@ public class LoginPanel extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(final ActionEvent e) {
 		if (e.getSource() == bUserPasswordReset) {
-			final JFrame window =
-					(JFrame) GUIUtilities.getMainContainer(thisContainer);
-			window.getContentPane().remove(0);
-			window.getContentPane().add(new PasswordResetPanel());
-			window.pack();
-			window.repaint();
-			window.setSize(560, 400);
-			GUIUtilities.CenterWindow(window);
+
+			Frame.getInstance().getContentPane().remove(0);
+			Frame.getInstance().getContentPane().add(new PasswordResetPanel());
+			Frame.getInstance().pack();
+			Frame.getInstance().repaint();
+			Frame.getInstance().setSize(560, 400);
+			GUIUtilities.CenterWindow(Frame.getInstance());
 		}
 
 		if (e.getSource() == bLogin) {
@@ -229,28 +228,25 @@ public class LoginPanel extends JPanel implements ActionListener {
 		}
 
 		if (e.getSource() == bNewUser) {
-			final JFrame window =
-					(JFrame) GUIUtilities.getMainContainer(container2);
-			window.getContentPane().remove(0);
-			window.getContentPane().add(new RegistryPanel());
-			window.pack();
-			window.repaint();
-			window.setMinimumSize(new Dimension(480, 470));
-			window.setSize(480, 470);
-			GUIUtilities.CenterWindow(window);
+
+			Frame.getInstance().getContentPane().remove(0);
+			Frame.getInstance().getContentPane().add(new RegistryPanel());
+			Frame.getInstance().pack();
+			Frame.getInstance().repaint();
+			Frame.getInstance().setMinimumSize(new Dimension(480, 470));
+			Frame.getInstance().setSize(480, 470);
+			GUIUtilities.CenterWindow(Frame.getInstance());
 		}
 	}
 
 	public void getConnectionLabel() {
 		if (Controller.checkStatus() == true) {
-			connectionStatus =
-					new JLabel(new ImageIcon(getClass().getResource(
-							"/status-OK.png")));
+			connectionStatus = new JLabel(new ImageIcon(getClass().getResource(
+					"/status-OK.png")));
 			connectionStatus.setToolTipText("Connection Status: OK");
 		} else {
-			connectionStatus =
-					new JLabel(new ImageIcon(getClass().getResource(
-							"/status-ERR.png")));
+			connectionStatus = new JLabel(new ImageIcon(getClass().getResource(
+					"/status-ERR.png")));
 			connectionStatus.setToolTipText("Connection Status: ERROR");
 		}
 	}
@@ -259,9 +255,8 @@ public class LoginPanel extends JPanel implements ActionListener {
 		String loginResponse = null;
 		if (Controller.checkStatus()) {
 			try {
-				loginResponse =
-						Controller.login(tfUsername.getText(),
-								tfPassword.getPassword());
+				loginResponse = Controller.login(tfUsername.getText(),
+						tfPassword.getPassword());
 			} catch (final IOException e) {
 				e.printStackTrace();
 			}
@@ -272,15 +267,13 @@ public class LoginPanel extends JPanel implements ActionListener {
 			JOptionPane.showMessageDialog(null, welcomeMessage, "",
 					JOptionPane.INFORMATION_MESSAGE, new ImageIcon(getClass()
 							.getResource("/empty.png")));
-			final JFrame window =
-					(JFrame) GUIUtilities.getMainContainer(thisContainer);
-			window.getContentPane().remove(0);
-			window.getContentPane().add(new SearchPanel());
-			window.pack();
-			window.repaint();
-			window.setMinimumSize(new Dimension(600, 710));
-			window.setSize(600, 710);
-			GUIUtilities.CenterWindow(window);
+			Frame.getInstance().getContentPane().remove(0);
+			Frame.getInstance().getContentPane().add(new SearchPanel());
+			Frame.getInstance().pack();
+			Frame.getInstance().repaint();
+			Frame.getInstance().setMinimumSize(new Dimension(600, 710));
+			Frame.getInstance().setSize(600, 710);
+			GUIUtilities.CenterWindow(Frame.getInstance());
 		} else {
 			JOptionPane.showMessageDialog(null, loginResponse, "",
 					JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass()

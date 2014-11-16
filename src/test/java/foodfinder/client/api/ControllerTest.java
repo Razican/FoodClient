@@ -51,11 +51,10 @@ public class ControllerTest {
 
 			final String name = "testUser";
 			final String lastName = "testUserLastName";
-			final String email =
-					"test_" + RandomStringUtils.randomNumeric(5) + "@"
-							+ RandomStringUtils.randomNumeric(5) + ".com";
-			final String username =
-					"test_" + RandomStringUtils.randomNumeric(8);
+			final String email = "test_" + RandomStringUtils.randomNumeric(5)
+					+ "@" + RandomStringUtils.randomNumeric(5) + ".com";
+			final String username = "test_"
+					+ RandomStringUtils.randomNumeric(8);
 			final char[] password = { '1', '2', '3', '4', '5' };
 			final char[] password2 = { '1', '2', 'a', 'b', 'c' };
 			final boolean gluten = true;
@@ -123,7 +122,7 @@ public class ControllerTest {
 					"Select what you want to reset.",
 					Controller.resetPassword(
 							"testR_" + RandomStringUtils.randomNumeric(5)
-							+ "@example.com", false, false));
+									+ "@example.com", false, false));
 
 			Assert.assertEquals("The email you provided is not valid",
 					Controller.resetPassword("ssdfsfsdfs", true, false));
@@ -132,7 +131,7 @@ public class ControllerTest {
 					"There is no user with that email",
 					Controller.resetPassword(
 							"testR_" + RandomStringUtils.randomNumeric(5)
-							+ "@example.com", true, false));
+									+ "@example.com", true, false));
 
 			Assert.assertNull(Controller.resetPassword("testUser@example.com",
 					true, false));

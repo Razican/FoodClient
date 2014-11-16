@@ -27,8 +27,7 @@ public class Api {
 		return getJSON("status", null);
 	}
 
-	public static JSONObject
-	login(final String username, final char[] password)
+	public static JSONObject login(final String username, final char[] password)
 			throws IOException {
 		final HashMap<String, String> params = new HashMap<>();
 		params.put("username", username);
@@ -83,8 +82,8 @@ public class Api {
 	private static String getTextfromURL(final String urlStr,
 			final Map<?, ?> params) throws IOException {
 		final URL obj = new URL(urlStr);
-		final HttpsURLConnection con =
-				(HttpsURLConnection) obj.openConnection();
+		final HttpsURLConnection con = (HttpsURLConnection) obj
+				.openConnection();
 
 		// add reuqest header
 		con.setRequestMethod("POST");
@@ -100,8 +99,8 @@ public class Api {
 		wr.flush();
 		wr.close();
 
-		final BufferedReader in =
-				new BufferedReader(new InputStreamReader(con.getInputStream()));
+		final BufferedReader in = new BufferedReader(new InputStreamReader(
+				con.getInputStream()));
 		String inputLine;
 		final StringBuffer response = new StringBuffer();
 
