@@ -166,7 +166,8 @@ public class SearchPanel extends JPanel implements ActionListener {
 			}
 		});
 		lType = new JLabel("Type:");
-		cbType = new JComboBox<String>();
+		String types []={"Vegetables","Fruit","Meat","Fish","Drinks","Snacks"};
+		cbType = new JComboBox<String>(types);
 		pricePanel = new JPanel();
 		lPrice = new JLabel("Price:");
 		lPrice1 = new JLabel(" between ");
