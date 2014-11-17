@@ -1,10 +1,12 @@
 package foodfinder.client.api;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.validator.routines.EmailValidator;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class Controller {
@@ -84,13 +86,25 @@ public class Controller {
 	}
 
 	public static List<SearchResult> search(final String name, final int type, final String brand,
-			final float price_min, final float price_max) throws UserNotSetException {
+			final float price_min, final float price_max) throws UserNotSetException, IOException {
 
-		if (empty(Controller.username))
+		if (empty(username))
 			throw new UserNotSetException();
 
-		return null;
+		final JSONObject apiCall = Api.search(username, name, type, brand, price_min, price_max);
+		if (apiCall.get("error").equals(JSONObject.NULL)) {
 
+			final JSONArray result = apiCall.getJSONArray("result");
+			final List<SearchResult> resultList = new ArrayList<>(result.length());
+
+			for (int i = 0; i < result.length(); i++) {
+				resultList.add(new SearchResult(result.getJSONObject(i)));
+			}
+
+			return resultList;
+		}
+
+		return null;
 	}
 
 	private static boolean empty(final String str) {

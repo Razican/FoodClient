@@ -16,7 +16,6 @@ import java.util.Arrays;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -24,11 +23,10 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 
-import org.apache.commons.validator.routines.EmailValidator;
 import org.apache.uima.tools.util.gui.SpringUtilities;
 
 import foodfinder.client.api.Controller;
-import foodfinder.client.utilities.GUIUtilities;
+import foodfinder.client.gui.components.Frame;
 
 public class RegistryPanel extends JPanel implements ActionListener {
 
@@ -76,12 +74,10 @@ public class RegistryPanel extends JPanel implements ActionListener {
 		checkBoxIssuePanel.setLayout(new SpringLayout());
 		checkBoxIssuePanel1.setLayout(new SpringLayout());
 		placeCheckBoxIssue1();
-		SpringUtilities
-				.makeCompactGrid(checkBoxIssuePanel1, 1, 1, 1, 1, 50, 50);
+		SpringUtilities.makeCompactGrid(checkBoxIssuePanel1, 1, 1, 1, 1, 50, 50);
 		checkBoxIssuePanel2.setLayout(new SpringLayout());
 		placeCheckBoxIssue2();
-		SpringUtilities
-				.makeCompactGrid(checkBoxIssuePanel2, 2, 2, 10, 0, 30, 0);
+		SpringUtilities.makeCompactGrid(checkBoxIssuePanel2, 2, 2, 10, 0, 30, 0);
 
 		checkBoxIssuePanel.add(checkBoxIssuePanel1);
 		checkBoxIssuePanel.add(checkBoxIssuePanel2);
@@ -242,8 +238,7 @@ public class RegistryPanel extends JPanel implements ActionListener {
 
 			@Override
 			public void mousePressed(final MouseEvent e) {
-				if (Arrays.equals(tfPassword.getPassword(),
-						"Example:1234".toCharArray())) {
+				if (Arrays.equals(tfPassword.getPassword(), "Example:1234".toCharArray())) {
 					tfPassword.setText("");
 					tfPassword.setEchoChar('*');
 				}
@@ -277,8 +272,7 @@ public class RegistryPanel extends JPanel implements ActionListener {
 
 			@Override
 			public void mousePressed(final MouseEvent e) {
-				if (Arrays.equals(tfPassword2.getPassword(),
-						"Example:1234".toCharArray())) {
+				if (Arrays.equals(tfPassword2.getPassword(), "Example:1234".toCharArray())) {
 					tfPassword2.setText("");
 					tfPassword2.setEchoChar('*');
 				}
@@ -316,15 +310,13 @@ public class RegistryPanel extends JPanel implements ActionListener {
 		lPassword2 = new JLabel("Repeat Password:");
 		lHealthIssues = new JLabel("Health Issues:");
 		headerPanel = new JPanel();
-		backButton = new JButton(new ImageIcon(getClass().getResource(
-				"/back-icon.png")));
+		backButton = new JButton(new ImageIcon(getClass().getResource("/back-icon.png")));
 		backButton.addActionListener(this);
 		headerTitle = new JLabel("REGISTER");
 		getConnectionLabel();
 		container = new JPanel();
 		registerButton = new JButton();
-		registerButton.setIcon(new ImageIcon(getClass().getResource(
-				"/register-icon.png")));
+		registerButton.setIcon(new ImageIcon(getClass().getResource("/register-icon.png")));
 		registerButton.setText("Register");
 		registerButton.addActionListener(this);
 
@@ -377,19 +369,17 @@ public class RegistryPanel extends JPanel implements ActionListener {
 			Frame.getInstance().repaint();
 			Frame.getInstance().setMinimumSize(new Dimension(560, 420));
 			Frame.getInstance().setSize(560, 420);
-			GUIUtilities.CenterWindow(Frame.getInstance());
+			Frame.getInstance().setLocationRelativeTo(null);
 		}
 
 	}
 
 	public void getConnectionLabel() {
 		if (Controller.checkStatus() == true) {
-			connectionStatus = new JLabel(new ImageIcon(getClass().getResource(
-					"/status-OK.png")));
+			connectionStatus = new JLabel(new ImageIcon(getClass().getResource("/status-OK.png")));
 			connectionStatus.setToolTipText("Connection Status: OK");
 		} else {
-			connectionStatus = new JLabel(new ImageIcon(getClass().getResource(
-					"/status-ERR.png")));
+			connectionStatus = new JLabel(new ImageIcon(getClass().getResource("/status-ERR.png")));
 			connectionStatus.setToolTipText("Connection Status: ERROR");
 		}
 	}
@@ -398,12 +388,12 @@ public class RegistryPanel extends JPanel implements ActionListener {
 		String registerResponse = null;
 		if (Controller.checkStatus()) {
 			try {
-				registerResponse = Controller.register(tfName.getText(),
-						tfLastName.getText(), tfEmail.getText(),
-						tfUsername.getText(), tfPassword.getPassword(),
-						tfPassword2.getPassword(), cbGluten.isSelected(),
-						cbDiabetes.isSelected(), cbVegetables.isSelected(),
-						cbMilk.isSelected());
+				registerResponse =
+						Controller.register(tfName.getText(), tfLastName.getText(),
+								tfEmail.getText(), tfUsername.getText(), tfPassword.getPassword(),
+								tfPassword2.getPassword(), cbGluten.isSelected(),
+								cbDiabetes.isSelected(), cbVegetables.isSelected(),
+								cbMilk.isSelected());
 			} catch (final IOException e) {
 				e.printStackTrace();
 			}
@@ -416,12 +406,11 @@ public class RegistryPanel extends JPanel implements ActionListener {
 			Frame.getInstance().pack();
 			Frame.getInstance().setMinimumSize(new Dimension(560, 400));
 			Frame.getInstance().setSize(560, 400);
-			GUIUtilities.CenterWindow(Frame.getInstance());
+			Frame.getInstance().setLocationRelativeTo(null);
 
 		} else {
-			JOptionPane.showMessageDialog(null, registerResponse, "",
-					JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass()
-							.getResource("/error-icon.png")));
+			JOptionPane.showMessageDialog(null, registerResponse, "", JOptionPane.ERROR_MESSAGE,
+					new ImageIcon(getClass().getResource("/error-icon.png")));
 
 		}
 		// TODO Username exists or email exist validation missing.

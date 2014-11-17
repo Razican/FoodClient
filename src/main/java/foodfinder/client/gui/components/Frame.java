@@ -1,4 +1,4 @@
-package foodfinder.client.gui;
+package foodfinder.client.gui.components;
 
 import javax.swing.JFrame;
 

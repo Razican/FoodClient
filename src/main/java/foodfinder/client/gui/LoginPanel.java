@@ -16,7 +16,6 @@ import java.util.Arrays;
 import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -27,7 +26,7 @@ import javax.swing.SpringLayout;
 import org.apache.uima.tools.util.gui.SpringUtilities;
 
 import foodfinder.client.api.Controller;
-import foodfinder.client.utilities.GUIUtilities;
+import foodfinder.client.gui.components.Frame;
 
 public class LoginPanel extends JPanel implements ActionListener {
 
@@ -55,8 +54,7 @@ public class LoginPanel extends JPanel implements ActionListener {
 
 		header.setLayout(new SpringLayout());
 		placeHeaderComponents();
-		SpringUtilities.makeCompactGrid(header, 1, 2,
-				((Frame.frame.getWidth() / 2) + 25), 1,
+		SpringUtilities.makeCompactGrid(header, 1, 2, ((Frame.frame.getWidth() / 2) + 25), 1,
 				Frame.frame.getWidth() / 4, 0);
 
 		textPanel.setLayout(new SpringLayout());
@@ -130,8 +128,7 @@ public class LoginPanel extends JPanel implements ActionListener {
 
 			@Override
 			public void mousePressed(final MouseEvent e) {
-				if (Arrays.equals(tfPassword.getPassword(),
-						"Example:1234".toCharArray())) {
+				if (Arrays.equals(tfPassword.getPassword(), "Example:1234".toCharArray())) {
 					tfPassword.setText("");
 					tfPassword.setEchoChar('*');
 				}
@@ -159,8 +156,7 @@ public class LoginPanel extends JPanel implements ActionListener {
 		flowLayout.setVgap(Frame.frame.getHeight() / 10);
 		buttonPanel = new JPanel();
 		bUserPasswordReset = new JButton();
-		bUserPasswordReset.setIcon(new ImageIcon(getClass().getResource(
-				"/question-icon.png")));
+		bUserPasswordReset.setIcon(new ImageIcon(getClass().getResource("/question-icon.png")));
 		bUserPasswordReset.setText("Forgotten User/Password");
 		bUserPasswordReset.addActionListener(this);
 		bLogin = new JButton();
@@ -168,8 +164,7 @@ public class LoginPanel extends JPanel implements ActionListener {
 		bLogin.setText("Login");
 		bLogin.addActionListener(this);
 		bNewUser = new JButton();
-		bNewUser.setIcon(new ImageIcon(getClass().getResource(
-				"/register-icon.png")));
+		bNewUser.setIcon(new ImageIcon(getClass().getResource("/register-icon.png")));
 		bNewUser.setText("New User");
 		bNewUser.addActionListener(this);
 
@@ -204,14 +199,13 @@ public class LoginPanel extends JPanel implements ActionListener {
 			Frame.getInstance().pack();
 			Frame.getInstance().repaint();
 			Frame.getInstance().setSize(560, 400);
-			GUIUtilities.CenterWindow(Frame.getInstance());
+			Frame.getInstance().setLocationRelativeTo(null);
 		}
 
 		if (e.getSource() == bLogin) {
 			boolean example = false;
 			if (tfUsername.getText().equals("Example:Peio")
-					|| Arrays.equals(tfPassword.getPassword(),
-							"Example:1234".toCharArray())) {
+					|| Arrays.equals(tfPassword.getPassword(), "Example:1234".toCharArray())) {
 				example = true;
 				tfUsername.setText("");
 				tfPassword.setText("");
@@ -235,18 +229,16 @@ public class LoginPanel extends JPanel implements ActionListener {
 			Frame.getInstance().repaint();
 			Frame.getInstance().setMinimumSize(new Dimension(480, 470));
 			Frame.getInstance().setSize(480, 470);
-			GUIUtilities.CenterWindow(Frame.getInstance());
+			Frame.getInstance().setLocationRelativeTo(null);
 		}
 	}
 
 	public void getConnectionLabel() {
 		if (Controller.checkStatus() == true) {
-			connectionStatus = new JLabel(new ImageIcon(getClass().getResource(
-					"/status-OK.png")));
+			connectionStatus = new JLabel(new ImageIcon(getClass().getResource("/status-OK.png")));
 			connectionStatus.setToolTipText("Connection Status: OK");
 		} else {
-			connectionStatus = new JLabel(new ImageIcon(getClass().getResource(
-					"/status-ERR.png")));
+			connectionStatus = new JLabel(new ImageIcon(getClass().getResource("/status-ERR.png")));
 			connectionStatus.setToolTipText("Connection Status: ERROR");
 		}
 	}
@@ -255,8 +247,7 @@ public class LoginPanel extends JPanel implements ActionListener {
 		String loginResponse = null;
 		if (Controller.checkStatus()) {
 			try {
-				loginResponse = Controller.login(tfUsername.getText(),
-						tfPassword.getPassword());
+				loginResponse = Controller.login(tfUsername.getText(), tfPassword.getPassword());
 			} catch (final IOException e) {
 				e.printStackTrace();
 			}
@@ -265,19 +256,18 @@ public class LoginPanel extends JPanel implements ActionListener {
 
 			welcomeMessage = "Welcome " + user + "!";
 			JOptionPane.showMessageDialog(null, welcomeMessage, "",
-					JOptionPane.INFORMATION_MESSAGE, new ImageIcon(getClass()
-							.getResource("/empty.png")));
+					JOptionPane.INFORMATION_MESSAGE,
+					new ImageIcon(getClass().getResource("/empty.png")));
 			Frame.getInstance().getContentPane().remove(0);
 			Frame.getInstance().getContentPane().add(new SearchPanel());
 			Frame.getInstance().pack();
 			Frame.getInstance().repaint();
 			Frame.getInstance().setMinimumSize(new Dimension(600, 710));
 			Frame.getInstance().setSize(600, 710);
-			GUIUtilities.CenterWindow(Frame.getInstance());
+			Frame.getInstance().setLocationRelativeTo(null);
 		} else {
-			JOptionPane.showMessageDialog(null, loginResponse, "",
-					JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass()
-							.getResource("/error-icon.png")));
+			JOptionPane.showMessageDialog(null, loginResponse, "", JOptionPane.ERROR_MESSAGE,
+					new ImageIcon(getClass().getResource("/error-icon.png")));
 		}
 	}
 }

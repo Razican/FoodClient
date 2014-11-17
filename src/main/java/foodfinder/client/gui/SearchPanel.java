@@ -17,7 +17,6 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -29,7 +28,7 @@ import javax.swing.table.DefaultTableModel;
 import org.apache.uima.tools.util.gui.SpringUtilities;
 
 import foodfinder.client.api.Controller;
-import foodfinder.client.utilities.GUIUtilities;
+import foodfinder.client.gui.components.Frame;
 
 public class SearchPanel extends JPanel implements ActionListener {
 
@@ -108,8 +107,7 @@ public class SearchPanel extends JPanel implements ActionListener {
 			}
 		});
 		blogout = new JButton();
-		blogout.setIcon(new ImageIcon(getClass()
-				.getResource("/logout-icon.png")));
+		blogout.setIcon(new ImageIcon(getClass().getResource("/logout-icon.png")));
 		blogout.addActionListener(this);
 		blogout.setText("Logout");
 		lHeader = new JLabel("SEARCH");
@@ -121,8 +119,8 @@ public class SearchPanel extends JPanel implements ActionListener {
 		container = new JPanel();
 		bSearch = new JButton();
 		bSearch.setLayout(new SpringLayout());
-		final JLabel searchImage = new JLabel(new ImageIcon(getClass()
-				.getResource("/search-icon.png")));
+		final JLabel searchImage =
+				new JLabel(new ImageIcon(getClass().getResource("/search-icon.png")));
 		bSearch.add(searchImage);
 		bSearch.add(new JLabel("Search"));
 		SpringUtilities.makeCompactGrid(bSearch, 2, 1, 6, 6, 6, 6);
@@ -225,26 +223,25 @@ public class SearchPanel extends JPanel implements ActionListener {
 		lTypeInfo = new JLabel("______");
 		lDesc = new JLabel("Desc:");
 		lDescInfo = new JLabel("______");
-		lImageInfo = new JLabel(new ImageIcon(getClass().getResource(
-				"/missing.png")));
+		lImageInfo = new JLabel(new ImageIcon(getClass().getResource("/missing.png")));
 		lName1 = new JLabel("Name:");
 		lType1 = new JLabel("Type:");
 		lBrand1 = new JLabel("Brand:");
 		lPrice11 = new JLabel("Price");
 		tableInfoPanel = new JPanel();
 		headers = new Object[] { "Name", "Type", "Brand", "Price" };
-		data = new Object[][] { { "Ariel", "Washing", "Ariel", "3,60" },
-				{ "Ariel", "Washing", "Ariel", "3,60" } };
+		data =
+				new Object[][] { { "Ariel", "Washing", "Ariel", "3,60" },
+						{ "Ariel", "Washing", "Ariel", "3,60" } };
 		modeloTabla = new DefaultTableModel(data, headers);
 		resultsTable = new JTable(modeloTabla);
 		resultsTable.setEnabled(true);
-		lSupermarketMap = new JLabel(new ImageIcon(getClass().getResource(
-				"/map.png")));
+		lSupermarketMap = new JLabel(new ImageIcon(getClass().getResource("/map.png")));
 
 		Frame.getInstance().addWindowListener(new WindowAdapter() {
 
 			@Override
-			public void windowClosing(WindowEvent e) {
+			public void windowClosing(final WindowEvent e) {
 				Controller.logout();
 			}
 		});
@@ -270,8 +267,7 @@ public class SearchPanel extends JPanel implements ActionListener {
 		fieldPanel.add(lPrice);
 		fieldPanel.add(pricePanel);
 		SpringUtilities.makeCompactGrid(fieldPanel, 4, 2, 6, 6, 6, 6);
-		fieldContainer
-				.setLayout(new BoxLayout(fieldContainer, BoxLayout.X_AXIS));
+		fieldContainer.setLayout(new BoxLayout(fieldContainer, BoxLayout.X_AXIS));
 		fieldContainer.add(fieldPanel);
 		searchButtonPanel.add(bSearch);
 		fieldContainer.add(searchButtonPanel);
@@ -313,8 +309,7 @@ public class SearchPanel extends JPanel implements ActionListener {
 
 	public void placeTableInfoComponents() {
 		tableInfoPanel.setLayout(new SpringLayout());
-		resultsTable.setPreferredScrollableViewportSize(resultsTable
-				.getPreferredSize());
+		resultsTable.setPreferredScrollableViewportSize(resultsTable.getPreferredSize());
 		resultsTable.setFillsViewportHeight(true);
 		tablePanel = new JScrollPane(resultsTable);
 		tablePanel.setViewportView(resultsTable);
@@ -335,7 +330,7 @@ public class SearchPanel extends JPanel implements ActionListener {
 			Frame.getInstance().pack();
 			Frame.getInstance().repaint();
 			Frame.getInstance().setSize(560, 420);
-			GUIUtilities.CenterWindow(Frame.getInstance());
+			Frame.getInstance().setLocationRelativeTo(null);
 		}
 		if (e.getSource() == bSearch) {
 			search();
@@ -346,20 +341,16 @@ public class SearchPanel extends JPanel implements ActionListener {
 	public void getConnectionLabel() {
 
 		if (Controller.checkStatus() == true) {
-			lConnectionStatus = new JLabel(new ImageIcon(getClass()
-					.getResource("/status-OK.png")));
+			lConnectionStatus = new JLabel(new ImageIcon(getClass().getResource("/status-OK.png")));
 			lConnectionStatus.setToolTipText("Connection Status: OK");
 		} else {
-			lConnectionStatus = new JLabel(new ImageIcon(getClass()
-					.getResource("/status-ERR.png")));
+			lConnectionStatus =
+					new JLabel(new ImageIcon(getClass().getResource("/status-ERR.png")));
 			lConnectionStatus.setToolTipText("Connection Status: ERROR");
 		}
 	}
 
 	public void search() {
-		final JFrame window = (JFrame) GUIUtilities
-				.getMainContainer(tablePanel);
-		System.out.println(window.getSize().toString());
+		// TODO
 	}
-
 }

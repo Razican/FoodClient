@@ -16,7 +16,6 @@ import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -24,15 +23,15 @@ import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.SwingConstants;
 
-import org.apache.commons.validator.routines.EmailValidator;
 import org.apache.uima.tools.util.gui.SpringUtilities;
 
 import foodfinder.client.api.Controller;
-import foodfinder.client.utilities.GUIUtilities;
+import foodfinder.client.gui.components.Frame;
 
 public class PasswordResetPanel extends JPanel implements ActionListener {
 
 	private static final long serialVersionUID = 7978489183613836147L;
+
 	private JButton backButton;
 	private JLabel headerTitle;
 	private JLabel connectionStatus;
@@ -99,8 +98,7 @@ public class PasswordResetPanel extends JPanel implements ActionListener {
 		textPanel = new JPanel();
 		checkBoxPanel = new JPanel();
 		container = new JPanel();
-		backButton = new JButton(new ImageIcon(getClass().getResource(
-				"/back-icon.png")));
+		backButton = new JButton(new ImageIcon(getClass().getResource("/back-icon.png")));
 		backButton.addActionListener(this);
 		headerTitle = new JLabel("USER/PASSWORD RESET");
 		getConnectionLabel();
@@ -182,19 +180,17 @@ public class PasswordResetPanel extends JPanel implements ActionListener {
 			Frame.getInstance().pack();
 			Frame.getInstance().setMinimumSize(new Dimension(560, 400));
 			Frame.getInstance().setSize(560, 400);
-			GUIUtilities.CenterWindow(Frame.getInstance());
+			Frame.getInstance().setLocationRelativeTo(null);
 		}
 
 	}
 
 	public void getConnectionLabel() {
 		if (Controller.checkStatus() == true) {
-			connectionStatus = new JLabel(new ImageIcon(getClass().getResource(
-					"/status-OK.png")));
+			connectionStatus = new JLabel(new ImageIcon(getClass().getResource("/status-OK.png")));
 			connectionStatus.setToolTipText("Connection Status: OK");
 		} else {
-			connectionStatus = new JLabel(new ImageIcon(getClass().getResource(
-					"/status-ERR.png")));
+			connectionStatus = new JLabel(new ImageIcon(getClass().getResource("/status-ERR.png")));
 			connectionStatus.setToolTipText("Connection Status: ERROR");
 		}
 	}
@@ -203,8 +199,9 @@ public class PasswordResetPanel extends JPanel implements ActionListener {
 		String resetResponse = null;
 		if (Controller.checkStatus()) {
 			try {
-				resetResponse = Controller.resetPassword(tfEmail.getText(),
-						cbUsername.isSelected(), cbPassword.isSelected());
+				resetResponse =
+						Controller.resetPassword(tfEmail.getText(), cbUsername.isSelected(),
+								cbPassword.isSelected());
 			} catch (final IOException e) {
 				e.printStackTrace();
 			}
@@ -214,12 +211,12 @@ public class PasswordResetPanel extends JPanel implements ActionListener {
 
 			final int optionType = JOptionPane.DEFAULT_OPTION;
 			final int messageType = JOptionPane.QUESTION_MESSAGE;
-			final ImageIcon icon = new ImageIcon(getClass().getResource(
-					"/empty.png"));
+			final ImageIcon icon = new ImageIcon(getClass().getResource("/empty.png"));
 			final Object[] selValues = { "No", "Yes" };
-			final int selection = JOptionPane.showOptionDialog(null,
-					"Are you sure you want to reset user/password?", "",
-					optionType, messageType, icon, selValues, selValues[0]);
+			final int selection =
+					JOptionPane.showOptionDialog(null,
+							"Are you sure you want to reset user/password?", "", optionType,
+							messageType, icon, selValues, selValues[0]);
 			if (selection == 1) {
 
 				Frame.getInstance().getContentPane().remove(0);
@@ -228,12 +225,11 @@ public class PasswordResetPanel extends JPanel implements ActionListener {
 				Frame.getInstance().repaint();
 				Frame.getInstance().setMinimumSize(new Dimension(560, 400));
 				Frame.getInstance().setSize(560, 400);
-				GUIUtilities.CenterWindow(Frame.getInstance());
+				Frame.getInstance().setLocationRelativeTo(null);
 			}
 		} else {
-			JOptionPane.showMessageDialog(null, resetResponse, "",
-					JOptionPane.ERROR_MESSAGE, new ImageIcon(getClass()
-							.getResource("/error-icon.png")));
+			JOptionPane.showMessageDialog(null, resetResponse, "", JOptionPane.ERROR_MESSAGE,
+					new ImageIcon(getClass().getResource("/error-icon.png")));
 
 		}
 	}
