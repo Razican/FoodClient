@@ -10,6 +10,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -75,10 +77,12 @@ public class SearchPanel extends JPanel implements ActionListener {
 	private Object[][] data;
 	private JScrollPane tablePanel;
 	private JLabel lSupermarketMap;
+	private StatusThread statusThread;
 
 	public SearchPanel() {
 
 		InitializeVariables();
+		statusThread.run();
 		placeHeaderObjects();
 		placePriceObjects();
 		placeFieldObjects();
@@ -92,6 +96,14 @@ public class SearchPanel extends JPanel implements ActionListener {
 		container.setPreferredSize(new Dimension(560, 680));
 		this.add(container);
 
+		Frame.getInstance().addWindowListener(new WindowAdapter() {
+
+			@Override
+			public void windowClosing(final WindowEvent e) {
+				Controller.logout();
+				statusThread.interrupt();
+			}
+		});
 	}
 
 	public void InitializeVariables() {
@@ -236,6 +248,7 @@ public class SearchPanel extends JPanel implements ActionListener {
 		resultsTable = new JTable(modeloTabla);
 		resultsTable.setEnabled(true);
 		lSupermarketMap = new JLabel(new ImageIcon(getClass().getResource("/map.png")));
+		statusThread=new StatusThread(lConnectionStatus);
 	}
 
 	public void placeHeaderObjects() {
@@ -315,7 +328,7 @@ public class SearchPanel extends JPanel implements ActionListener {
 	public void actionPerformed(final ActionEvent e) {
 		if (e.getSource() == blogout) {
 			Controller.logout();
-
+			statusThread.interrupt();
 			Frame.getInstance().getContentPane().remove(0);
 			Frame.getInstance().getContentPane().add(new LoginPanel());
 			Frame.getInstance().pack();

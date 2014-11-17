@@ -10,6 +10,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.util.Arrays;
 
@@ -59,10 +61,13 @@ public class RegistryPanel extends JPanel implements ActionListener {
 	private JButton registerButton;
 	private JPanel container;
 	private JPanel container2;
+	private StatusThread statusThread;
 
 	public RegistryPanel() {
 		initializeVariables();
 
+		statusThread.run();
+		
 		headerPanel.setLayout(new SpringLayout());
 		placeHeaderComponents();
 		SpringUtilities.makeCompactGrid(headerPanel, 1, 3, 30, 1, 70, 1);
@@ -93,6 +98,14 @@ public class RegistryPanel extends JPanel implements ActionListener {
 		container2.add(container);
 		container2.add(registerButton);
 		this.add(container2);
+		
+		Frame.getInstance().addWindowListener(new WindowAdapter() {
+
+			@Override
+			public void windowClosing(final WindowEvent e) {
+				statusThread.interrupt();
+			}
+		});
 
 	}
 
@@ -319,6 +332,7 @@ public class RegistryPanel extends JPanel implements ActionListener {
 		registerButton.setIcon(new ImageIcon(getClass().getResource("/register-icon.png")));
 		registerButton.setText("Register");
 		registerButton.addActionListener(this);
+		statusThread = new StatusThread(connectionStatus);
 
 	}
 
@@ -363,6 +377,7 @@ public class RegistryPanel extends JPanel implements ActionListener {
 			register();
 		}
 		if (e.getSource() == backButton) {
+			statusThread.interrupt();
 			Frame.getInstance().getContentPane().remove(0);
 			Frame.getInstance().getContentPane().add(new LoginPanel());
 			Frame.getInstance().pack();
@@ -401,6 +416,7 @@ public class RegistryPanel extends JPanel implements ActionListener {
 
 		if (registerResponse == null) {
 
+			statusThread.interrupt();
 			Frame.getInstance().getContentPane().remove(0);
 			Frame.getInstance().getContentPane().add(new LoginPanel());
 			Frame.getInstance().pack();
