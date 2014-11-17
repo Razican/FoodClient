@@ -85,11 +85,19 @@ public class Controller {
 		return apiCall.getString("error");
 	}
 
-	public static List<SearchResult> search(final String name, final int type, final String brand,
-			final double price_min, final double price_max) throws UserNotSetException, IOException {
+	public static List<SearchResult> search(String name, final int type, String brand,
+			final double price_min, final double price_max) throws UserNotSetException,
+			IOException, PriceMismatchException {
 
 		if (empty(username))
 			throw new UserNotSetException();
+		if (price_min > price_max)
+			throw new PriceMismatchException();
+
+		if (name == null)
+			name = "";
+		if (brand == null)
+			brand = "";
 
 		final JSONObject apiCall = Api.search(username, name, type, brand, price_min, price_max);
 		if (apiCall.get("error").equals(JSONObject.NULL)) {
