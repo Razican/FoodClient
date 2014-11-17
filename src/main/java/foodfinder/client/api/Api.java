@@ -66,7 +66,7 @@ public class Api {
 	}
 
 	public static JSONObject search(final String username, final String name, final int type,
-			final String brand, final float price_min, final float price_max) throws IOException {
+			final String brand, final double price_min, final double price_max) throws IOException {
 
 		final HashMap<String, String> params = new HashMap<>();
 		params.put("username", username);
@@ -76,7 +76,7 @@ public class Api {
 		params.put("price_min", String.valueOf(price_min));
 		params.put("price_max", String.valueOf(price_max));
 
-		return getJSON("reset_password", params);
+		return getJSON("search", params);
 	}
 
 	private static JSONObject getJSON(final String url, final Map<?, ?> params) throws IOException {

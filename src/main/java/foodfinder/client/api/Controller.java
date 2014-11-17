@@ -86,7 +86,7 @@ public class Controller {
 	}
 
 	public static List<SearchResult> search(final String name, final int type, final String brand,
-			final float price_min, final float price_max) throws UserNotSetException, IOException {
+			final double price_min, final double price_max) throws UserNotSetException, IOException {
 
 		if (empty(username))
 			throw new UserNotSetException();

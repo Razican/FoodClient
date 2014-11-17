@@ -59,4 +59,9 @@ public class SearchResult implements Serializable {
 	public int getShelf() {
 		return shelf;
 	}
+
+	@Override
+	public boolean equals(final Object o) {
+		return o instanceof SearchResult && ((SearchResult) o).getId() == id;
+	}
 }
