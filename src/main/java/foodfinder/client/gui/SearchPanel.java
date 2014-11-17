@@ -42,7 +42,7 @@ public class SearchPanel extends JPanel implements ActionListener {
 	private JPanel container;
 	private JButton blogout;
 	private JLabel lHeader;
-	private JLabel lConnectionStatus;
+	private JLabel connectionStatus;
 	private JLabel lName;
 	private JLabel lBrand;
 	private JLabel lType;
@@ -82,7 +82,8 @@ public class SearchPanel extends JPanel implements ActionListener {
 	public SearchPanel() {
 
 		InitializeVariables();
-		statusThread.run();
+		statusThread.start();
+
 		placeHeaderObjects();
 		placePriceObjects();
 		placeFieldObjects();
@@ -121,7 +122,15 @@ public class SearchPanel extends JPanel implements ActionListener {
 		blogout.addActionListener(this);
 		blogout.setText("Logout");
 		lHeader = new JLabel("SEARCH");
-		getConnectionLabel();
+
+		if (Controller.checkStatus() == true) {
+			connectionStatus = new JLabel(new ImageIcon(getClass().getResource("/status-OK.png")));
+			connectionStatus.setToolTipText("Connection Status: OK");
+		} else {
+			connectionStatus = new JLabel(new ImageIcon(getClass().getResource("/status-ERR.png")));
+			connectionStatus.setToolTipText("Connection Status: ERROR");
+		}
+
 		headerPanel = new JPanel();
 		fieldPanel = new JPanel();
 		fieldContainer = new JPanel();
@@ -178,7 +187,7 @@ public class SearchPanel extends JPanel implements ActionListener {
 			}
 		});
 		lType = new JLabel("Type:");
-		String types []={"Vegetables","Fruit","Meat","Fish","Drinks","Snacks"};
+		final String types[] = { "Vegetables", "Fruit", "Meat", "Fish", "Drinks", "Snacks" };
 		cbType = new JComboBox<String>(types);
 		pricePanel = new JPanel();
 		lPrice = new JLabel("Price:");
@@ -243,19 +252,19 @@ public class SearchPanel extends JPanel implements ActionListener {
 		headers = new Object[] { "Name", "Type", "Brand", "Price" };
 		data =
 				new Object[][] { { "Ariel", "Washing", "Ariel", "3,60" },
-				{ "Ariel", "Washing", "Ariel", "3,60" } };
+						{ "Ariel", "Washing", "Ariel", "3,60" } };
 		modeloTabla = new DefaultTableModel(data, headers);
 		resultsTable = new JTable(modeloTabla);
 		resultsTable.setEnabled(true);
 		lSupermarketMap = new JLabel(new ImageIcon(getClass().getResource("/map.png")));
-		statusThread=new StatusThread(lConnectionStatus);
+		statusThread = new StatusThread(connectionStatus);
 	}
 
 	public void placeHeaderObjects() {
 		headerPanel.setLayout(new SpringLayout());
 		headerPanel.add(blogout);
 		headerPanel.add(lHeader);
-		headerPanel.add(lConnectionStatus);
+		headerPanel.add(connectionStatus);
 		SpringUtilities.makeCompactGrid(headerPanel, 1, 3, 70, 6, 130, 1);
 
 	}
@@ -329,29 +338,20 @@ public class SearchPanel extends JPanel implements ActionListener {
 		if (e.getSource() == blogout) {
 			Controller.logout();
 			statusThread.interrupt();
+
 			Frame.getInstance().getContentPane().remove(0);
 			Frame.getInstance().getContentPane().add(new LoginPanel());
+			Frame.getInstance().setMinimumSize(new Dimension(560, 420));
+			Frame.getInstance().setSize(560, 420);
 			Frame.getInstance().pack();
 			Frame.getInstance().repaint();
-			Frame.getInstance().setSize(560, 420);
+
 			Frame.getInstance().setLocationRelativeTo(null);
 		}
 		if (e.getSource() == bSearch) {
 			search();
 		}
 
-	}
-
-	public void getConnectionLabel() {
-
-		if (Controller.checkStatus() == true) {
-			lConnectionStatus = new JLabel(new ImageIcon(getClass().getResource("/status-OK.png")));
-			lConnectionStatus.setToolTipText("Connection Status: OK");
-		} else {
-			lConnectionStatus =
-					new JLabel(new ImageIcon(getClass().getResource("/status-ERR.png")));
-			lConnectionStatus.setToolTipText("Connection Status: ERROR");
-		}
 	}
 
 	public void search() {

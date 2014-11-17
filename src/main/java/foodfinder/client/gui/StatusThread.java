@@ -6,14 +6,13 @@ import javax.swing.JLabel;
 import foodfinder.client.api.Controller;
 
 public class StatusThread extends Thread {
-	
+
 	private JLabel connectionStatus;
-	
-	public StatusThread (JLabel label)
-	{
-		connectionStatus=label;
+
+	public StatusThread(final JLabel label) {
+		connectionStatus = label;
 	}
-	
+
 	@Override
 	public void run() {
 		while (!Thread.currentThread().isInterrupted()) {
@@ -28,9 +27,9 @@ public class StatusThread extends Thread {
 			}
 
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(5000);
 			} catch (final InterruptedException e) {
-				e.printStackTrace();
+				this.interrupt();
 			}
 		}
 	}

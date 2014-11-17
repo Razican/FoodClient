@@ -66,8 +66,8 @@ public class RegistryPanel extends JPanel implements ActionListener {
 	public RegistryPanel() {
 		initializeVariables();
 
-		statusThread.run();
-		
+		statusThread.start();
+
 		headerPanel.setLayout(new SpringLayout());
 		placeHeaderComponents();
 		SpringUtilities.makeCompactGrid(headerPanel, 1, 3, 30, 1, 70, 1);
@@ -98,7 +98,7 @@ public class RegistryPanel extends JPanel implements ActionListener {
 		container2.add(container);
 		container2.add(registerButton);
 		this.add(container2);
-		
+
 		Frame.getInstance().addWindowListener(new WindowAdapter() {
 
 			@Override
@@ -326,7 +326,15 @@ public class RegistryPanel extends JPanel implements ActionListener {
 		backButton = new JButton(new ImageIcon(getClass().getResource("/back-icon.png")));
 		backButton.addActionListener(this);
 		headerTitle = new JLabel("REGISTER");
-		getConnectionLabel();
+
+		if (Controller.checkStatus() == true) {
+			connectionStatus = new JLabel(new ImageIcon(getClass().getResource("/status-OK.png")));
+			connectionStatus.setToolTipText("Connection Status: OK");
+		} else {
+			connectionStatus = new JLabel(new ImageIcon(getClass().getResource("/status-ERR.png")));
+			connectionStatus.setToolTipText("Connection Status: ERROR");
+		}
+
 		container = new JPanel();
 		registerButton = new JButton();
 		registerButton.setIcon(new ImageIcon(getClass().getResource("/register-icon.png")));
@@ -380,23 +388,13 @@ public class RegistryPanel extends JPanel implements ActionListener {
 			statusThread.interrupt();
 			Frame.getInstance().getContentPane().remove(0);
 			Frame.getInstance().getContentPane().add(new LoginPanel());
-			Frame.getInstance().pack();
-			Frame.getInstance().repaint();
 			Frame.getInstance().setMinimumSize(new Dimension(560, 420));
 			Frame.getInstance().setSize(560, 420);
+			Frame.getInstance().pack();
+			Frame.getInstance().repaint();
 			Frame.getInstance().setLocationRelativeTo(null);
 		}
 
-	}
-
-	public void getConnectionLabel() {
-		if (Controller.checkStatus() == true) {
-			connectionStatus = new JLabel(new ImageIcon(getClass().getResource("/status-OK.png")));
-			connectionStatus.setToolTipText("Connection Status: OK");
-		} else {
-			connectionStatus = new JLabel(new ImageIcon(getClass().getResource("/status-ERR.png")));
-			connectionStatus.setToolTipText("Connection Status: ERROR");
-		}
 	}
 
 	public void register() {
@@ -419,9 +417,10 @@ public class RegistryPanel extends JPanel implements ActionListener {
 			statusThread.interrupt();
 			Frame.getInstance().getContentPane().remove(0);
 			Frame.getInstance().getContentPane().add(new LoginPanel());
-			Frame.getInstance().pack();
 			Frame.getInstance().setMinimumSize(new Dimension(560, 400));
 			Frame.getInstance().setSize(560, 400);
+			Frame.getInstance().pack();
+			Frame.getInstance().repaint();
 			Frame.getInstance().setLocationRelativeTo(null);
 
 		} else {

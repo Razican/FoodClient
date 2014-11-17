@@ -48,14 +48,13 @@ public class LoginPanel extends JPanel implements ActionListener {
 	private JPanel buttonPanel;
 	private JPanel thisContainer;
 	private JPanel container2;
-	private String user;
 	private String welcomeMessage;
 	private StatusThread statusThread;
 
 	public LoginPanel() {
 		initializeVariables();
 
-		statusThread.run();
+		statusThread.start();
 
 		header.setLayout(new SpringLayout());
 		placeHeaderComponents();
@@ -77,7 +76,6 @@ public class LoginPanel extends JPanel implements ActionListener {
 		thisContainer.add(buttonPanel);
 		container2.add(thisContainer);
 
-
 		Frame.getInstance().addWindowListener(new WindowAdapter() {
 
 			@Override
@@ -89,7 +87,6 @@ public class LoginPanel extends JPanel implements ActionListener {
 
 	public void initializeVariables() {
 
-		user = "Usuario";
 		thisContainer = new JPanel();
 		container2 = this;
 		container2.setFocusable(true);
@@ -104,7 +101,15 @@ public class LoginPanel extends JPanel implements ActionListener {
 		thisContainer.setPreferredSize(new Dimension(560, 420));
 		header = new JPanel();
 		lHeader = new JLabel("PRODUCT FINDER");
-		getConnectionLabel();
+
+		if (Controller.checkStatus() == true) {
+			connectionStatus = new JLabel(new ImageIcon(getClass().getResource("/status-OK.png")));
+			connectionStatus.setToolTipText("Connection Status: OK");
+		} else {
+			connectionStatus = new JLabel(new ImageIcon(getClass().getResource("/status-ERR.png")));
+			connectionStatus.setToolTipText("Connection Status: ERROR");
+		}
+
 		textPanel = new JPanel();
 		lUsername = new JLabel("Username:");
 		tfUsername = new JTextField(20);
@@ -180,7 +185,7 @@ public class LoginPanel extends JPanel implements ActionListener {
 		bNewUser.setIcon(new ImageIcon(getClass().getResource("/register-icon.png")));
 		bNewUser.setText("New User");
 		bNewUser.addActionListener(this);
-		statusThread=new StatusThread(connectionStatus);
+		statusThread = new StatusThread(connectionStatus);
 
 	}
 
@@ -210,9 +215,10 @@ public class LoginPanel extends JPanel implements ActionListener {
 
 			Frame.getInstance().getContentPane().remove(0);
 			Frame.getInstance().getContentPane().add(new PasswordResetPanel());
+			Frame.getInstance().setMinimumSize(new Dimension(560, 400));
+			Frame.getInstance().setSize(560, 400);
 			Frame.getInstance().pack();
 			Frame.getInstance().repaint();
-			Frame.getInstance().setSize(560, 400);
 			Frame.getInstance().setLocationRelativeTo(null);
 		}
 
@@ -237,31 +243,23 @@ public class LoginPanel extends JPanel implements ActionListener {
 
 		if (e.getSource() == bNewUser) {
 			statusThread.interrupt();
+
 			Frame.getInstance().getContentPane().remove(0);
 			Frame.getInstance().getContentPane().add(new RegistryPanel());
-			Frame.getInstance().pack();
-			Frame.getInstance().repaint();
 			Frame.getInstance().setMinimumSize(new Dimension(480, 470));
 			Frame.getInstance().setSize(480, 470);
+			Frame.getInstance().pack();
+			Frame.getInstance().repaint();
 			Frame.getInstance().setLocationRelativeTo(null);
-		}
-	}
-
-	public void getConnectionLabel() {
-		if (Controller.checkStatus() == true) {
-			connectionStatus = new JLabel(new ImageIcon(getClass().getResource("/status-OK.png")));
-			connectionStatus.setToolTipText("Connection Status: OK");
-		} else {
-			connectionStatus = new JLabel(new ImageIcon(getClass().getResource("/status-ERR.png")));
-			connectionStatus.setToolTipText("Connection Status: ERROR");
 		}
 	}
 
 	public void login() {
 		String loginResponse = null;
+		final String username = tfUsername.getText();
 		if (Controller.checkStatus()) {
 			try {
-				loginResponse = Controller.login(tfUsername.getText(), tfPassword.getPassword());
+				loginResponse = Controller.login(username, tfPassword.getPassword());
 			} catch (final IOException e) {
 				connectionStatus =
 						new JLabel(new ImageIcon(getClass().getResource("/status-ERR.png")));
@@ -274,17 +272,19 @@ public class LoginPanel extends JPanel implements ActionListener {
 
 		if (loginResponse == null) {
 
-			welcomeMessage = "Welcome " + user + "!";
+			welcomeMessage = "Welcome " + username + "!";
 			JOptionPane.showMessageDialog(null, welcomeMessage, "",
 					JOptionPane.INFORMATION_MESSAGE,
 					new ImageIcon(getClass().getResource("/empty.png")));
+
 			statusThread.interrupt();
+
 			Frame.getInstance().getContentPane().remove(0);
 			Frame.getInstance().getContentPane().add(new SearchPanel());
-			Frame.getInstance().pack();
-			Frame.getInstance().repaint();
 			Frame.getInstance().setMinimumSize(new Dimension(600, 710));
 			Frame.getInstance().setSize(600, 710);
+			Frame.getInstance().pack();
+			Frame.getInstance().repaint();
 			Frame.getInstance().setLocationRelativeTo(null);
 		} else {
 			JOptionPane.showMessageDialog(null, loginResponse, "", JOptionPane.ERROR_MESSAGE,

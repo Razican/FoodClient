@@ -52,7 +52,7 @@ public class PasswordResetPanel extends JPanel implements ActionListener {
 
 	public PasswordResetPanel() {
 		initializeVartiables();
-		statusThread.run();
+		statusThread.start();
 		headerPanel.setLayout(new SpringLayout());
 		placeHeaderComponents();
 		SpringUtilities.makeCompactGrid(headerPanel, 1, 3, 30, 1, 70, 1);
@@ -83,8 +83,7 @@ public class PasswordResetPanel extends JPanel implements ActionListener {
 		container2.add(bReset);
 		container2.setPreferredSize(new Dimension(560, 400));
 		this.add(container2);
-		
-		
+
 		Frame.getInstance().addWindowListener(new WindowAdapter() {
 
 			@Override
@@ -113,7 +112,15 @@ public class PasswordResetPanel extends JPanel implements ActionListener {
 		backButton = new JButton(new ImageIcon(getClass().getResource("/back-icon.png")));
 		backButton.addActionListener(this);
 		headerTitle = new JLabel("USER/PASSWORD RESET");
-		getConnectionLabel();
+
+		if (Controller.checkStatus() == true) {
+			connectionStatus = new JLabel(new ImageIcon(getClass().getResource("/status-OK.png")));
+			connectionStatus.setToolTipText("Connection Status: OK");
+		} else {
+			connectionStatus = new JLabel(new ImageIcon(getClass().getResource("/status-ERR.png")));
+			connectionStatus.setToolTipText("Connection Status: ERROR");
+		}
+
 		lEmail = new JLabel("Email:");
 		tfEmail = new JTextField(15);
 		tfEmail.setText("Example:alvaro@gmail.com");
@@ -153,7 +160,7 @@ public class PasswordResetPanel extends JPanel implements ActionListener {
 		bReset.setText(" Reset ");
 		bReset.setIcon(new ImageIcon(getClass().getResource("/reset-icon.png")));
 		bReset.addActionListener(this);
-		statusThread=new StatusThread(connectionStatus);
+		statusThread = new StatusThread(connectionStatus);
 	}
 
 	public void placeHeaderComponents() {
@@ -187,24 +194,16 @@ public class PasswordResetPanel extends JPanel implements ActionListener {
 
 		if (e.getSource() == backButton) {
 			statusThread.interrupt();
+
 			Frame.getInstance().getContentPane().remove(0);
 			Frame.getInstance().getContentPane().add(new LoginPanel());
-			Frame.getInstance().pack();
 			Frame.getInstance().setMinimumSize(new Dimension(560, 400));
 			Frame.getInstance().setSize(560, 400);
+			Frame.getInstance().pack();
+			Frame.getInstance().repaint();
 			Frame.getInstance().setLocationRelativeTo(null);
 		}
 
-	}
-
-	public void getConnectionLabel() {
-		if (Controller.checkStatus() == true) {
-			connectionStatus = new JLabel(new ImageIcon(getClass().getResource("/status-OK.png")));
-			connectionStatus.setToolTipText("Connection Status: OK");
-		} else {
-			connectionStatus = new JLabel(new ImageIcon(getClass().getResource("/status-ERR.png")));
-			connectionStatus.setToolTipText("Connection Status: ERROR");
-		}
 	}
 
 	public void reset() {
@@ -233,10 +232,10 @@ public class PasswordResetPanel extends JPanel implements ActionListener {
 				statusThread.interrupt();
 				Frame.getInstance().getContentPane().remove(0);
 				Frame.getInstance().getContentPane().add(new LoginPanel());
-				Frame.getInstance().pack();
-				Frame.getInstance().repaint();
 				Frame.getInstance().setMinimumSize(new Dimension(560, 400));
 				Frame.getInstance().setSize(560, 400);
+				Frame.getInstance().pack();
+				Frame.getInstance().repaint();
 				Frame.getInstance().setLocationRelativeTo(null);
 			}
 		} else {
