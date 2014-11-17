@@ -29,6 +29,7 @@ import org.apache.uima.tools.util.gui.SpringUtilities;
 
 import foodfinder.client.api.Controller;
 import foodfinder.client.gui.components.Frame;
+import foodfinder.client.gui.components.Map;
 
 public class SearchPanel extends JPanel implements ActionListener {
 
@@ -77,6 +78,7 @@ public class SearchPanel extends JPanel implements ActionListener {
 	private Object[][] data;
 	private JScrollPane tablePanel;
 	private JLabel lSupermarketMap;
+	private Map map;
 	private StatusThread statusThread;
 
 	public SearchPanel() {
@@ -256,7 +258,8 @@ public class SearchPanel extends JPanel implements ActionListener {
 		modeloTabla = new DefaultTableModel(data, headers);
 		resultsTable = new JTable(modeloTabla);
 		resultsTable.setEnabled(true);
-		lSupermarketMap = new JLabel(new ImageIcon(getClass().getResource("/map.png")));
+		map = new Map(getClass().getResource("/map.png"));
+		lSupermarketMap = new JLabel(map);
 		statusThread = new StatusThread(connectionStatus);
 	}
 
