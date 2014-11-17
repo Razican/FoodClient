@@ -50,12 +50,12 @@ public class LoginPanel extends JPanel implements ActionListener {
 	private JPanel container2;
 	private String user;
 	private String welcomeMessage;
-	private Thread statusThread;
+	private StatusThread statusThread;
 
 	public LoginPanel() {
 		initializeVariables();
 
-		startStatusThread();
+		statusThread.run();
 
 		header.setLayout(new SpringLayout());
 		placeHeaderComponents();
@@ -77,32 +77,6 @@ public class LoginPanel extends JPanel implements ActionListener {
 		thisContainer.add(buttonPanel);
 		container2.add(thisContainer);
 
-	}
-
-	private void startStatusThread() {
-		(statusThread = new Thread() {
-
-			@Override
-			public void run() {
-				while (!Thread.currentThread().isInterrupted()) {
-					if (Controller.checkStatus() == true) {
-						connectionStatus =
-								new JLabel(new ImageIcon(getClass().getResource("/status-OK.png")));
-						connectionStatus.setToolTipText("Connection Status: OK");
-					} else {
-						connectionStatus =
-								new JLabel(new ImageIcon(getClass().getResource("/status-ERR.png")));
-						connectionStatus.setToolTipText("Connection Status: ERROR");
-					}
-
-					try {
-						Thread.sleep(1000);
-					} catch (final InterruptedException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		}).start();
 
 		Frame.getInstance().addWindowListener(new WindowAdapter() {
 
@@ -206,6 +180,7 @@ public class LoginPanel extends JPanel implements ActionListener {
 		bNewUser.setIcon(new ImageIcon(getClass().getResource("/register-icon.png")));
 		bNewUser.setText("New User");
 		bNewUser.addActionListener(this);
+		statusThread=new StatusThread(connectionStatus);
 
 	}
 
@@ -261,7 +236,7 @@ public class LoginPanel extends JPanel implements ActionListener {
 		}
 
 		if (e.getSource() == bNewUser) {
-
+			statusThread.interrupt();
 			Frame.getInstance().getContentPane().remove(0);
 			Frame.getInstance().getContentPane().add(new RegistryPanel());
 			Frame.getInstance().pack();
@@ -303,6 +278,7 @@ public class LoginPanel extends JPanel implements ActionListener {
 			JOptionPane.showMessageDialog(null, welcomeMessage, "",
 					JOptionPane.INFORMATION_MESSAGE,
 					new ImageIcon(getClass().getResource("/empty.png")));
+			statusThread.interrupt();
 			Frame.getInstance().getContentPane().remove(0);
 			Frame.getInstance().getContentPane().add(new SearchPanel());
 			Frame.getInstance().pack();

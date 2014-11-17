@@ -10,6 +10,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 
 import javax.swing.Box;
@@ -46,10 +48,11 @@ public class PasswordResetPanel extends JPanel implements ActionListener {
 	private JPanel checkBoxPanel;
 	private JPanel container;
 	private JPanel container2;
+	private StatusThread statusThread;
 
 	public PasswordResetPanel() {
 		initializeVartiables();
-
+		statusThread.run();
 		headerPanel.setLayout(new SpringLayout());
 		placeHeaderComponents();
 		SpringUtilities.makeCompactGrid(headerPanel, 1, 3, 30, 1, 70, 1);
@@ -80,6 +83,15 @@ public class PasswordResetPanel extends JPanel implements ActionListener {
 		container2.add(bReset);
 		container2.setPreferredSize(new Dimension(560, 400));
 		this.add(container2);
+		
+		
+		Frame.getInstance().addWindowListener(new WindowAdapter() {
+
+			@Override
+			public void windowClosing(final WindowEvent e) {
+				statusThread.interrupt();
+			}
+		});
 
 	}
 
@@ -141,7 +153,7 @@ public class PasswordResetPanel extends JPanel implements ActionListener {
 		bReset.setText(" Reset ");
 		bReset.setIcon(new ImageIcon(getClass().getResource("/reset-icon.png")));
 		bReset.addActionListener(this);
-
+		statusThread=new StatusThread(connectionStatus);
 	}
 
 	public void placeHeaderComponents() {
@@ -174,7 +186,7 @@ public class PasswordResetPanel extends JPanel implements ActionListener {
 		}
 
 		if (e.getSource() == backButton) {
-
+			statusThread.interrupt();
 			Frame.getInstance().getContentPane().remove(0);
 			Frame.getInstance().getContentPane().add(new LoginPanel());
 			Frame.getInstance().pack();
@@ -218,7 +230,7 @@ public class PasswordResetPanel extends JPanel implements ActionListener {
 							"Are you sure you want to reset user/password?", "", optionType,
 							messageType, icon, selValues, selValues[0]);
 			if (selection == 1) {
-
+				statusThread.interrupt();
 				Frame.getInstance().getContentPane().remove(0);
 				Frame.getInstance().getContentPane().add(new LoginPanel());
 				Frame.getInstance().pack();
