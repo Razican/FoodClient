@@ -10,8 +10,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -232,19 +230,11 @@ public class SearchPanel extends JPanel implements ActionListener {
 		headers = new Object[] { "Name", "Type", "Brand", "Price" };
 		data =
 				new Object[][] { { "Ariel", "Washing", "Ariel", "3,60" },
-						{ "Ariel", "Washing", "Ariel", "3,60" } };
+				{ "Ariel", "Washing", "Ariel", "3,60" } };
 		modeloTabla = new DefaultTableModel(data, headers);
 		resultsTable = new JTable(modeloTabla);
 		resultsTable.setEnabled(true);
 		lSupermarketMap = new JLabel(new ImageIcon(getClass().getResource("/map.png")));
-
-		Frame.getInstance().addWindowListener(new WindowAdapter() {
-
-			@Override
-			public void windowClosing(final WindowEvent e) {
-				Controller.logout();
-			}
-		});
 	}
 
 	public void placeHeaderObjects() {

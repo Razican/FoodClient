@@ -10,6 +10,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.util.Arrays;
 
@@ -48,9 +50,12 @@ public class LoginPanel extends JPanel implements ActionListener {
 	private JPanel container2;
 	private String user;
 	private String welcomeMessage;
+	private Thread statusThread;
 
 	public LoginPanel() {
 		initializeVariables();
+
+		startStatusThread();
 
 		header.setLayout(new SpringLayout());
 		placeHeaderComponents();
@@ -72,6 +77,40 @@ public class LoginPanel extends JPanel implements ActionListener {
 		thisContainer.add(buttonPanel);
 		container2.add(thisContainer);
 
+	}
+
+	private void startStatusThread() {
+		(statusThread = new Thread() {
+
+			@Override
+			public void run() {
+				while (!Thread.currentThread().isInterrupted()) {
+					if (Controller.checkStatus() == true) {
+						connectionStatus =
+								new JLabel(new ImageIcon(getClass().getResource("/status-OK.png")));
+						connectionStatus.setToolTipText("Connection Status: OK");
+					} else {
+						connectionStatus =
+								new JLabel(new ImageIcon(getClass().getResource("/status-ERR.png")));
+						connectionStatus.setToolTipText("Connection Status: ERROR");
+					}
+
+					try {
+						Thread.sleep(1000);
+					} catch (final InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}).start();
+
+		Frame.getInstance().addWindowListener(new WindowAdapter() {
+
+			@Override
+			public void windowClosing(final WindowEvent e) {
+				statusThread.interrupt();
+			}
+		});
 	}
 
 	public void initializeVariables() {
@@ -249,9 +288,15 @@ public class LoginPanel extends JPanel implements ActionListener {
 			try {
 				loginResponse = Controller.login(tfUsername.getText(), tfPassword.getPassword());
 			} catch (final IOException e) {
-				e.printStackTrace();
+				connectionStatus =
+						new JLabel(new ImageIcon(getClass().getResource("/status-ERR.png")));
+				connectionStatus.setToolTipText("Connection Status: ERROR");
 			}
+		} else {
+			connectionStatus = new JLabel(new ImageIcon(getClass().getResource("/status-ERR.png")));
+			connectionStatus.setToolTipText("Connection Status: ERROR");
 		}
+
 		if (loginResponse == null) {
 
 			welcomeMessage = "Welcome " + user + "!";
