@@ -8,8 +8,6 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
@@ -127,17 +125,6 @@ public class RegistryPanel extends JPanel implements ActionListener {
 		checkBoxIssuePanel2 = new JPanel();
 		tfName = new JTextField(20);
 		tfName.setText("Example:Patxi");
-		tfName.addMouseListener(new MouseAdapter() {
-
-			@Override
-			public void mousePressed(final MouseEvent e) {
-				if (tfName.getText().equals("Example:Patxi")) {
-					tfName.setText("");
-				}
-
-			}
-
-		});
 		tfName.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(final KeyEvent e) {
@@ -155,18 +142,16 @@ public class RegistryPanel extends JPanel implements ActionListener {
 				}
 
 			}
-		});
-		tfLastName = new JTextField(20);
-		tfLastName.setText("Example:Lopez");
-		tfLastName.addMouseListener(new MouseAdapter() {
-
 			@Override
-			public void mousePressed(final MouseEvent e) {
-				if (tfLastName.getText().equals("Example:Lopez")) {
-					tfLastName.setText("");
+			public void focusGained(final FocusEvent e)
+			{
+				if (tfName.getText().equals("Example:Patxi")) {
+					tfName.setText("");
 				}
 			}
 		});
+		tfLastName = new JTextField(20);
+		tfLastName.setText("Example:Lopez");
 		tfLastName.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(final KeyEvent e) {
@@ -184,19 +169,16 @@ public class RegistryPanel extends JPanel implements ActionListener {
 				}
 
 			}
+			@Override
+			public void focusGained(final FocusEvent e)
+			{
+				if (tfLastName.getText().equals("Example:Lopez")) {
+					tfLastName.setText("");
+				}
+			}
 		});
 		tfEmail = new JTextField(20);
 		tfEmail.setText("Example:alvaro@gmail.com");
-		tfEmail.addMouseListener(new MouseAdapter() {
-
-			@Override
-			public void mousePressed(final MouseEvent e) {
-				if (tfEmail.getText().equals("Example:alvaro@gmail.com")) {
-					tfEmail.setText("");
-				}
-
-			}
-		});
 		tfEmail.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(final KeyEvent e) {
@@ -214,18 +196,16 @@ public class RegistryPanel extends JPanel implements ActionListener {
 				}
 
 			}
-		});
-		tfUsername = new JTextField(20);
-		tfUsername.setText("Example:Peio");
-		tfUsername.addMouseListener(new MouseAdapter() {
-
 			@Override
-			public void mousePressed(final MouseEvent e) {
-				if (tfUsername.getText().equals("Example:Peio")) {
-					tfUsername.setText("");
+			public void focusGained(final FocusEvent e)
+			{
+				if (tfEmail.getText().equals("Example:alvaro@gmail.com")) {
+					tfEmail.setText("");
 				}
 			}
 		});
+		tfUsername = new JTextField(20);
+		tfUsername.setText("Example:Peio");
 		tfUsername.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(final KeyEvent e) {
@@ -243,22 +223,17 @@ public class RegistryPanel extends JPanel implements ActionListener {
 				}
 
 			}
+			@Override
+			public void focusGained(final FocusEvent e)
+			{
+				if (tfUsername.getText().equals("Example:Peio")) {
+					tfUsername.setText("");
+				}
+			}
 		});
 		tfPassword = new JPasswordField(20);
 		tfPassword.setText("Example:1234");
 		tfPassword.setEchoChar((char) 0);
-		tfPassword.addMouseListener(new MouseAdapter() {
-
-			@Override
-			public void mousePressed(final MouseEvent e) {
-				if (Arrays.equals(tfPassword.getPassword(), "Example:1234".toCharArray())) {
-					tfPassword.setText("");
-					tfPassword.setEchoChar('*');
-				}
-
-			}
-
-		});
 		tfPassword.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(final KeyEvent e) {
@@ -277,21 +252,18 @@ public class RegistryPanel extends JPanel implements ActionListener {
 				}
 
 			}
+			@Override
+			public void focusGained(final FocusEvent e)
+			{
+				if (Arrays.equals(tfPassword.getPassword(), "Example:1234".toCharArray())) {
+					tfPassword.setText("");
+					tfPassword.setEchoChar('*');
+				}
+			}
 		});
 		tfPassword2 = new JPasswordField(20);
 		tfPassword2.setText("Example:1234");
 		tfPassword2.setEchoChar((char) 0);
-		tfPassword2.addMouseListener(new MouseAdapter() {
-
-			@Override
-			public void mousePressed(final MouseEvent e) {
-				if (Arrays.equals(tfPassword2.getPassword(), "Example:1234".toCharArray())) {
-					tfPassword2.setText("");
-					tfPassword2.setEchoChar('*');
-				}
-
-			}
-		});
 		tfPassword2.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(final KeyEvent e) {
@@ -309,6 +281,14 @@ public class RegistryPanel extends JPanel implements ActionListener {
 					tfPassword2.setEchoChar((char) 0);
 				}
 
+			}
+			@Override
+			public void focusGained(final FocusEvent e)
+			{
+				if (Arrays.equals(tfPassword2.getPassword(), "Example:1234".toCharArray())) {
+					tfPassword2.setText("");
+					tfPassword2.setEchoChar('*');
+				}
 			}
 		});
 		cbGluten = new JCheckBox("Gluten");

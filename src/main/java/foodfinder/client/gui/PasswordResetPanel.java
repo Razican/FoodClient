@@ -8,8 +8,6 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
@@ -124,17 +122,6 @@ public class PasswordResetPanel extends JPanel implements ActionListener {
 		lEmail = new JLabel("Email:");
 		tfEmail = new JTextField(15);
 		tfEmail.setText("Example:alvaro@gmail.com");
-		tfEmail.addMouseListener(new MouseAdapter() {
-
-			@Override
-			public void mousePressed(final MouseEvent e) {
-				if (tfEmail.getText().equals("Example:alvaro@gmail.com"))
-					;
-				{
-					tfEmail.setText("");
-				}
-			}
-		});
 		tfEmail.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(final KeyEvent e) {
@@ -152,6 +139,15 @@ public class PasswordResetPanel extends JPanel implements ActionListener {
 				}
 
 			}
+			@Override
+			public void focusGained(final FocusEvent e) {
+				if (tfEmail.getText().equals("Example:alvaro@gmail.com"))
+				{
+					tfEmail.setText("");
+				}
+
+			}
+			
 		});
 		cbUsername = new JCheckBox("Username");
 		cbPassword = new JCheckBox("Password");

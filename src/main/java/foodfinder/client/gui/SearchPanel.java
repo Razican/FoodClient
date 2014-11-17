@@ -148,15 +148,6 @@ public class SearchPanel extends JPanel implements ActionListener {
 		bSearch.addActionListener(this);
 		lName = new JLabel("Name:");
 		tfName = new JTextField("Example:Washer");
-		tfName.addMouseListener(new MouseAdapter() {
-
-			@Override
-			public void mousePressed(final MouseEvent e) {
-				if (tfName.getText().equals("Example:Washer")) {
-					tfName.setText("");
-				}
-			}
-		});
 		tfName.addFocusListener(new FocusAdapter() {
 
 			@Override
@@ -166,24 +157,29 @@ public class SearchPanel extends JPanel implements ActionListener {
 				}
 
 			}
-		});
-		lBrand = new JLabel("Brand:");
-		tfBrand = new JTextField("Example:Ariel");
-		tfBrand.addMouseListener(new MouseAdapter() {
-
 			@Override
-			public void mousePressed(final MouseEvent e) {
-				if (tfBrand.getText().equals("Example:Ariel")) {
-					tfBrand.setText("");
+			public void focusGained(final FocusEvent e)
+			{
+				if (tfName.getText().equals("Example:Washer")) {
+					tfName.setText("");
 				}
 			}
 		});
+		lBrand = new JLabel("Brand:");
+		tfBrand = new JTextField("Example:Ariel");
 		tfBrand.addFocusListener(new FocusAdapter() {
 
 			@Override
 			public void focusLost(final FocusEvent e) {
 				if (tfBrand.getText().equals("")) {
 					tfBrand.setText("Example:Ariel");
+				}
+
+			}
+			@Override
+			public void focusGained(final FocusEvent e) {
+				if (tfBrand.getText().equals("Example:Ariel")) {
+					tfBrand.setText("");
 				}
 
 			}
@@ -196,15 +192,6 @@ public class SearchPanel extends JPanel implements ActionListener {
 		lPrice1 = new JLabel(" between ");
 		tfPrice2 = new JTextField(5);
 		tfPrice2.setText("0.00");
-		tfPrice2.addMouseListener(new MouseAdapter() {
-
-			@Override
-			public void mousePressed(final MouseEvent e) {
-				if (tfPrice2.getText().equals("0.00")) {
-					tfPrice2.setText("");
-				}
-			}
-		});
 		tfPrice2.addFocusListener(new FocusAdapter() {
 
 			@Override
@@ -214,25 +201,30 @@ public class SearchPanel extends JPanel implements ActionListener {
 				}
 
 			}
+			@Override
+			public void focusGained(final FocusEvent e) {
+				if (tfPrice2.getText().equals("0.00")) {
+					tfPrice2.setText("");
+				}
+
+			}
 		});
 		lPrice3 = new JLabel("€  and ");
 		tfPrice4 = new JTextField(5);
 		tfPrice4.setText("99.00");
-		tfPrice4.addMouseListener(new MouseAdapter() {
-
-			@Override
-			public void mousePressed(final MouseEvent e) {
-				if (tfPrice4.getText().equals("99.00")) {
-					tfPrice4.setText("");
-				}
-			}
-		});
 		tfPrice4.addFocusListener(new FocusAdapter() {
 
 			@Override
 			public void focusLost(final FocusEvent e) {
 				if (tfPrice4.getText().equals("")) {
 					tfPrice4.setText("99.00");
+				}
+
+			}
+			@Override
+			public void focusGained(final FocusEvent e) {
+				if (tfPrice4.getText().equals("99.00")) {
+					tfPrice4.setText("");
 				}
 
 			}

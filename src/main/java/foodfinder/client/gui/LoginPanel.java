@@ -8,8 +8,6 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
@@ -114,14 +112,6 @@ public class LoginPanel extends JPanel implements ActionListener {
 		lUsername = new JLabel("Username:");
 		tfUsername = new JTextField(20);
 		tfUsername.setText("Example:Peio");
-		tfUsername.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(final MouseEvent e) {
-				if (tfUsername.getText().equals("Example:Peio")) {
-					tfUsername.setText("");
-				}
-			}
-		});
 		tfUsername.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(final KeyEvent e) {
@@ -137,21 +127,18 @@ public class LoginPanel extends JPanel implements ActionListener {
 					tfUsername.setText("Example:Peio");
 				}
 			}
+			@Override
+			public void focusGained(final FocusEvent e)
+			{
+				if (tfUsername.getText().equals("Example:Peio")) {
+					tfUsername.setText("");
+				}
+			}
 		});
 		lPassword = new JLabel("Password:");
 		tfPassword = new JPasswordField(20);
 		tfPassword.setEchoChar((char) 0);
 		tfPassword.setText("Example:1234");
-		tfPassword.addMouseListener(new MouseAdapter() {
-
-			@Override
-			public void mousePressed(final MouseEvent e) {
-				if (Arrays.equals(tfPassword.getPassword(), "Example:1234".toCharArray())) {
-					tfPassword.setText("");
-					tfPassword.setEchoChar('*');
-				}
-			}
-		});
 		tfPassword.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(final KeyEvent e) {
@@ -167,6 +154,14 @@ public class LoginPanel extends JPanel implements ActionListener {
 				if (Arrays.equals(tfPassword.getPassword(), "".toCharArray())) {
 					tfPassword.setText("Example:1234");
 					tfPassword.setEchoChar((char) 0);
+				}
+			}
+			@Override
+			public void focusGained(final FocusEvent e)
+			{
+				if (Arrays.equals(tfPassword.getPassword(), "Example:1234".toCharArray())) {
+					tfPassword.setText("");
+					tfPassword.setEchoChar('*');
 				}
 			}
 		});
