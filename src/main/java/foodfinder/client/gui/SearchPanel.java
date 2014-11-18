@@ -8,8 +8,6 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -157,9 +155,9 @@ public class SearchPanel extends JPanel implements ActionListener {
 				}
 
 			}
+
 			@Override
-			public void focusGained(final FocusEvent e)
-			{
+			public void focusGained(final FocusEvent e) {
 				if (tfName.getText().equals("Example:Washer")) {
 					tfName.setText("");
 				}
@@ -176,6 +174,7 @@ public class SearchPanel extends JPanel implements ActionListener {
 				}
 
 			}
+
 			@Override
 			public void focusGained(final FocusEvent e) {
 				if (tfBrand.getText().equals("Example:Ariel")) {
@@ -201,6 +200,7 @@ public class SearchPanel extends JPanel implements ActionListener {
 				}
 
 			}
+
 			@Override
 			public void focusGained(final FocusEvent e) {
 				if (tfPrice2.getText().equals("0.00")) {
@@ -221,6 +221,7 @@ public class SearchPanel extends JPanel implements ActionListener {
 				}
 
 			}
+
 			@Override
 			public void focusGained(final FocusEvent e) {
 				if (tfPrice4.getText().equals("99.00")) {
@@ -246,7 +247,7 @@ public class SearchPanel extends JPanel implements ActionListener {
 		headers = new Object[] { "Name", "Type", "Brand", "Price" };
 		data =
 				new Object[][] { { "Ariel", "Washing", "Ariel", "3,60" },
-						{ "Ariel", "Washing", "Ariel", "3,60" } };
+				{ "Ariel", "Washing", "Ariel", "3,60" } };
 		modeloTabla = new DefaultTableModel(data, headers);
 		resultsTable = new JTable(modeloTabla);
 		resultsTable.setEnabled(true);
