@@ -1,5 +1,6 @@
 package foodfinder.client.gui;
 
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -142,9 +143,9 @@ public class RegistryPanel extends JPanel implements ActionListener {
 				}
 
 			}
+
 			@Override
-			public void focusGained(final FocusEvent e)
-			{
+			public void focusGained(final FocusEvent e) {
 				if (tfName.getText().equals("Example:Patxi")) {
 					tfName.setText("");
 				}
@@ -169,9 +170,9 @@ public class RegistryPanel extends JPanel implements ActionListener {
 				}
 
 			}
+
 			@Override
-			public void focusGained(final FocusEvent e)
-			{
+			public void focusGained(final FocusEvent e) {
 				if (tfLastName.getText().equals("Example:Lopez")) {
 					tfLastName.setText("");
 				}
@@ -196,9 +197,9 @@ public class RegistryPanel extends JPanel implements ActionListener {
 				}
 
 			}
+
 			@Override
-			public void focusGained(final FocusEvent e)
-			{
+			public void focusGained(final FocusEvent e) {
 				if (tfEmail.getText().equals("Example:alvaro@gmail.com")) {
 					tfEmail.setText("");
 				}
@@ -223,9 +224,9 @@ public class RegistryPanel extends JPanel implements ActionListener {
 				}
 
 			}
+
 			@Override
-			public void focusGained(final FocusEvent e)
-			{
+			public void focusGained(final FocusEvent e) {
 				if (tfUsername.getText().equals("Example:Peio")) {
 					tfUsername.setText("");
 				}
@@ -252,9 +253,9 @@ public class RegistryPanel extends JPanel implements ActionListener {
 				}
 
 			}
+
 			@Override
-			public void focusGained(final FocusEvent e)
-			{
+			public void focusGained(final FocusEvent e) {
 				if (Arrays.equals(tfPassword.getPassword(), "Example:1234".toCharArray())) {
 					tfPassword.setText("");
 					tfPassword.setEchoChar('*');
@@ -282,9 +283,9 @@ public class RegistryPanel extends JPanel implements ActionListener {
 				}
 
 			}
+
 			@Override
-			public void focusGained(final FocusEvent e)
-			{
+			public void focusGained(final FocusEvent e) {
 				if (Arrays.equals(tfPassword2.getPassword(), "Example:1234".toCharArray())) {
 					tfPassword2.setText("");
 					tfPassword2.setEchoChar('*');
@@ -305,6 +306,7 @@ public class RegistryPanel extends JPanel implements ActionListener {
 		headerPanel = new JPanel();
 		backButton = new JButton(new ImageIcon(getClass().getResource("/back-icon.png")));
 		backButton.addActionListener(this);
+		backButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		headerTitle = new JLabel("REGISTER");
 
 		if (Controller.checkStatus() == true) {
@@ -320,8 +322,8 @@ public class RegistryPanel extends JPanel implements ActionListener {
 		registerButton.setIcon(new ImageIcon(getClass().getResource("/register-icon.png")));
 		registerButton.setText("Register");
 		registerButton.addActionListener(this);
+		registerButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		statusThread = new StatusThread(connectionStatus);
-
 	}
 
 	public void placeHeaderComponents() {
@@ -404,7 +406,8 @@ public class RegistryPanel extends JPanel implements ActionListener {
 			Frame.getInstance().setLocationRelativeTo(null);
 
 		} else {
-			JOptionPane.showMessageDialog(null, registerResponse, "", JOptionPane.ERROR_MESSAGE,
+			JOptionPane.showMessageDialog(null, registerResponse, "Error",
+					JOptionPane.ERROR_MESSAGE,
 					new ImageIcon(getClass().getResource("/error-icon.png")));
 
 		}

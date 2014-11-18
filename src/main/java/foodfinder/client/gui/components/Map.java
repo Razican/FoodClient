@@ -39,12 +39,16 @@ public class Map extends ImageIcon {
 
 	@Override
 	public synchronized void
-	paintIcon(final Component c, final Graphics g, final int x, final int y) {
+			paintIcon(final Component c, final Graphics g, final int x, final int y) {
 		super.paintIcon(c, g, x, y);
 
 		if (mark != null) {
 			g.setColor(Color.RED);
 			g.fillOval(mark.x - 4, mark.y - 4, 8, 8);
 		}
+	}
+
+	public void deleteMark() {
+		mark = null;
 	}
 }

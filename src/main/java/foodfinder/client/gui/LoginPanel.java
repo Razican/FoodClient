@@ -1,5 +1,6 @@
 package foodfinder.client.gui;
 
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -127,9 +128,9 @@ public class LoginPanel extends JPanel implements ActionListener {
 					tfUsername.setText("Example:Peio");
 				}
 			}
+
 			@Override
-			public void focusGained(final FocusEvent e)
-			{
+			public void focusGained(final FocusEvent e) {
 				if (tfUsername.getText().equals("Example:Peio")) {
 					tfUsername.setText("");
 				}
@@ -156,9 +157,9 @@ public class LoginPanel extends JPanel implements ActionListener {
 					tfPassword.setEchoChar((char) 0);
 				}
 			}
+
 			@Override
-			public void focusGained(final FocusEvent e)
-			{
+			public void focusGained(final FocusEvent e) {
 				if (Arrays.equals(tfPassword.getPassword(), "Example:1234".toCharArray())) {
 					tfPassword.setText("");
 					tfPassword.setEchoChar('*');
@@ -172,16 +173,18 @@ public class LoginPanel extends JPanel implements ActionListener {
 		bUserPasswordReset.setIcon(new ImageIcon(getClass().getResource("/question-icon.png")));
 		bUserPasswordReset.setText("Forgotten User/Password");
 		bUserPasswordReset.addActionListener(this);
+		bUserPasswordReset.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		bLogin = new JButton();
 		bLogin.setIcon(new ImageIcon(getClass().getResource("/key-icon.png")));
 		bLogin.setText("Login");
 		bLogin.addActionListener(this);
+		bLogin.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		bNewUser = new JButton();
 		bNewUser.setIcon(new ImageIcon(getClass().getResource("/register-icon.png")));
 		bNewUser.setText("New User");
 		bNewUser.addActionListener(this);
+		bNewUser.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		statusThread = new StatusThread(connectionStatus);
-
 	}
 
 	public void placeHeaderComponents() {
@@ -268,7 +271,7 @@ public class LoginPanel extends JPanel implements ActionListener {
 		if (loginResponse == null) {
 
 			welcomeMessage = "Welcome " + username + "!";
-			JOptionPane.showMessageDialog(null, welcomeMessage, "",
+			JOptionPane.showMessageDialog(null, welcomeMessage, "Welcome",
 					JOptionPane.INFORMATION_MESSAGE,
 					new ImageIcon(getClass().getResource("/empty.png")));
 
@@ -282,7 +285,7 @@ public class LoginPanel extends JPanel implements ActionListener {
 			Frame.getInstance().repaint();
 			Frame.getInstance().setLocationRelativeTo(null);
 		} else {
-			JOptionPane.showMessageDialog(null, loginResponse, "", JOptionPane.ERROR_MESSAGE,
+			JOptionPane.showMessageDialog(null, loginResponse, "Error", JOptionPane.ERROR_MESSAGE,
 					new ImageIcon(getClass().getResource("/error-icon.png")));
 		}
 	}

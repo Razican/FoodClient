@@ -1,5 +1,6 @@
 package foodfinder.client.gui;
 
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -10,24 +11,34 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
+import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.SpringLayout;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import org.apache.uima.tools.util.gui.SpringUtilities;
 
 import foodfinder.client.api.Controller;
+import foodfinder.client.api.PriceMismatchException;
+import foodfinder.client.api.SearchResult;
+import foodfinder.client.api.UserNotSetException;
 import foodfinder.client.gui.components.Frame;
 import foodfinder.client.gui.components.Map;
+import foodfinder.client.gui.components.SearchTableModel;
 
 public class SearchPanel extends JPanel implements ActionListener {
 
@@ -78,6 +89,7 @@ public class SearchPanel extends JPanel implements ActionListener {
 	private JLabel lSupermarketMap;
 	private Map map;
 	private StatusThread statusThread;
+	private List<SearchResult> results;
 
 	public SearchPanel() {
 
@@ -121,6 +133,7 @@ public class SearchPanel extends JPanel implements ActionListener {
 		blogout.setIcon(new ImageIcon(getClass().getResource("/logout-icon.png")));
 		blogout.addActionListener(this);
 		blogout.setText("Logout");
+		blogout.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		lHeader = new JLabel("SEARCH");
 
 		if (Controller.checkStatus() == true) {
@@ -142,42 +155,43 @@ public class SearchPanel extends JPanel implements ActionListener {
 				new JLabel(new ImageIcon(getClass().getResource("/search-icon.png")));
 		bSearch.add(searchImage);
 		bSearch.add(new JLabel("Search"));
+		bSearch.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		SpringUtilities.makeCompactGrid(bSearch, 2, 1, 6, 6, 6, 6);
 		bSearch.addActionListener(this);
 		lName = new JLabel("Name:");
-		tfName = new JTextField("Example:Washer");
+		tfName = new JTextField("Example: Washer");
 		tfName.addFocusListener(new FocusAdapter() {
 
 			@Override
 			public void focusLost(final FocusEvent e) {
 				if (tfName.getText().equals("")) {
-					tfName.setText("Example:Washer");
+					tfName.setText("Example: Washer");
 				}
 
 			}
 
 			@Override
 			public void focusGained(final FocusEvent e) {
-				if (tfName.getText().equals("Example:Washer")) {
+				if (tfName.getText().equals("Example: Washer")) {
 					tfName.setText("");
 				}
 			}
 		});
 		lBrand = new JLabel("Brand:");
-		tfBrand = new JTextField("Example:Ariel");
+		tfBrand = new JTextField("Example: Ariel");
 		tfBrand.addFocusListener(new FocusAdapter() {
 
 			@Override
 			public void focusLost(final FocusEvent e) {
 				if (tfBrand.getText().equals("")) {
-					tfBrand.setText("Example:Ariel");
+					tfBrand.setText("Example: Ariel");
 				}
 
 			}
 
 			@Override
 			public void focusGained(final FocusEvent e) {
-				if (tfBrand.getText().equals("Example:Ariel")) {
+				if (tfBrand.getText().equals("Example: Ariel")) {
 					tfBrand.setText("");
 				}
 
@@ -231,28 +245,39 @@ public class SearchPanel extends JPanel implements ActionListener {
 			}
 		});
 		lPrice4 = new JLabel("€");
-		lNameInfo = new JLabel("_______");
-		lTypeInfo = new JLabel("_______");
-		lBrandInfo = new JLabel("_______");
-		lPriceInfo = new JLabel("_______");
-		lTypeInfo = new JLabel("______");
+		map = new Map(getClass().getResource("/map.png"));
+		lSupermarketMap = new JLabel(map);
+		lImageInfo = new JLabel();
+
 		lDesc = new JLabel("Desc:");
-		lDescInfo = new JLabel("______");
-		lImageInfo = new JLabel(new ImageIcon(getClass().getResource("/missing.png")));
 		lName1 = new JLabel("Name:");
 		lType1 = new JLabel("Type:");
 		lBrand1 = new JLabel("Brand:");
 		lPrice11 = new JLabel("Price");
+
+		lNameInfo = new JLabel();
+		lTypeInfo = new JLabel();
+		lBrandInfo = new JLabel();
+		lPriceInfo = new JLabel();
+		lDescInfo = new JLabel();
+		showProduct(null);
+
 		tableInfoPanel = new JPanel();
 		headers = new Object[] { "Name", "Type", "Brand", "Price" };
-		data =
-				new Object[][] { { "Ariel", "Washing", "Ariel", "3,60" },
-				{ "Ariel", "Washing", "Ariel", "3,60" } };
-		modeloTabla = new DefaultTableModel(data, headers);
+		data = null;
+		modeloTabla = new SearchTableModel(data, headers);
 		resultsTable = new JTable(modeloTabla);
 		resultsTable.setEnabled(true);
-		map = new Map(getClass().getResource("/map.png"));
-		lSupermarketMap = new JLabel(map);
+		resultsTable.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		final ListSelectionModel selectionModel = resultsTable.getSelectionModel();
+		selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		selectionModel.addListSelectionListener(new ListSelectionListener() {
+			@Override
+			public void valueChanged(final ListSelectionEvent e) {
+				if (resultsTable.getSelectedRow() >= 0)
+					showProduct(results.get(resultsTable.getSelectedRow()));
+			}
+		});
 		statusThread = new StatusThread(connectionStatus);
 	}
 
@@ -262,7 +287,6 @@ public class SearchPanel extends JPanel implements ActionListener {
 		headerPanel.add(lHeader);
 		headerPanel.add(connectionStatus);
 		SpringUtilities.makeCompactGrid(headerPanel, 1, 3, 70, 6, 130, 1);
-
 	}
 
 	public void placeFieldObjects() {
@@ -351,6 +375,67 @@ public class SearchPanel extends JPanel implements ActionListener {
 	}
 
 	public void search() {
-		// TODO
+		modeloTabla.setRowCount(0);
+		showProduct(null);
+
+		final String name = tfName.getText().equals("Example: Washer") ? "" : tfName.getText();
+		final int type = cbType.getSelectedIndex();
+		final String brand = tfBrand.getText().equals("Example: Ariel") ? "" : tfBrand.getText();
+		final double price_min = Double.parseDouble(tfPrice2.getText());
+		final double price_max = Double.parseDouble(tfPrice4.getText());
+
+		if (Controller.checkStatus()) {
+			try {
+				results = Controller.search(name, type, brand, price_min, price_max);
+			} catch (UserNotSetException | PriceMismatchException e) {
+				e.printStackTrace();
+			} catch (final IOException e) {
+				connectionStatus =
+						new JLabel(new ImageIcon(getClass().getResource("/status-ERR.png")));
+				connectionStatus.setToolTipText("Connection Status: ERROR");
+			}
+		}
+
+		if (results != null) {
+
+			data = new String[results.size()][4];
+			int i = 0;
+			for (final SearchResult r : results) {
+				data[i][0] = r.getName();
+				data[i][1] = r.getType();
+				data[i][2] = r.getBrand();
+				data[i++][3] = String.valueOf(r.getPrice()) + "€";
+			}
+			modeloTabla.setDataVector(data, headers);
+		} else {
+			JOptionPane.showMessageDialog(null, "Nothing found for the search criteria.", "Error",
+					JOptionPane.ERROR_MESSAGE,
+					new ImageIcon(getClass().getResource("/error-icon.png")));
+		}
+	}
+
+	protected void showProduct(final SearchResult result) {
+		if (result == null) {
+			lNameInfo.setText("_______");
+			lTypeInfo.setText("_______");
+			lBrandInfo.setText("_______");
+			lPriceInfo.setText("_______");
+			lDescInfo.setText("______");
+			lImageInfo.setIcon(new ImageIcon(getClass().getResource("/missing.png")));
+
+			map.deleteMark();
+			lSupermarketMap.repaint();
+		} else {
+			lNameInfo.setText(result.getName());
+			lTypeInfo.setText(result.getType());
+			lBrandInfo.setText(result.getBrand());
+			lPriceInfo.setText(String.valueOf(result.getPrice()));
+			lDescInfo.setText("<html>" + result.getDescription() + "<html>");
+			lImageInfo.setIcon(new ImageIcon(getClass().getResource(
+					"/products/" + result.getId() + ".jpg")));
+
+			map.setMark(result.getHall(), result.getShelf());
+			lSupermarketMap.repaint();
+		}
 	}
 }

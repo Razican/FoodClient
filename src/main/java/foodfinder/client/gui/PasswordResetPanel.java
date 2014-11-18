@@ -1,5 +1,6 @@
 package foodfinder.client.gui;
 
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -109,6 +110,7 @@ public class PasswordResetPanel extends JPanel implements ActionListener {
 		container = new JPanel();
 		backButton = new JButton(new ImageIcon(getClass().getResource("/back-icon.png")));
 		backButton.addActionListener(this);
+		backButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		headerTitle = new JLabel("USER/PASSWORD RESET");
 
 		if (Controller.checkStatus() == true) {
@@ -139,15 +141,15 @@ public class PasswordResetPanel extends JPanel implements ActionListener {
 				}
 
 			}
+
 			@Override
 			public void focusGained(final FocusEvent e) {
-				if (tfEmail.getText().equals("Example:alvaro@gmail.com"))
-				{
+				if (tfEmail.getText().equals("Example:alvaro@gmail.com")) {
 					tfEmail.setText("");
 				}
 
 			}
-			
+
 		});
 		cbUsername = new JCheckBox("Username");
 		cbPassword = new JCheckBox("Password");
@@ -156,6 +158,7 @@ public class PasswordResetPanel extends JPanel implements ActionListener {
 		bReset.setText(" Reset ");
 		bReset.setIcon(new ImageIcon(getClass().getResource("/reset-icon.png")));
 		bReset.addActionListener(this);
+		bReset.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		statusThread = new StatusThread(connectionStatus);
 	}
 
@@ -222,8 +225,8 @@ public class PasswordResetPanel extends JPanel implements ActionListener {
 			final Object[] selValues = { "No", "Yes" };
 			final int selection =
 					JOptionPane.showOptionDialog(null,
-							"Are you sure you want to reset user/password?", "", optionType,
-							messageType, icon, selValues, selValues[0]);
+							"Are you sure you want to reset user/password?", "Confirmation",
+							optionType, messageType, icon, selValues, selValues[0]);
 			if (selection == 1) {
 				statusThread.interrupt();
 				Frame.getInstance().getContentPane().remove(0);
@@ -235,10 +238,9 @@ public class PasswordResetPanel extends JPanel implements ActionListener {
 				Frame.getInstance().setLocationRelativeTo(null);
 			}
 		} else {
-			JOptionPane.showMessageDialog(null, resetResponse, "", JOptionPane.ERROR_MESSAGE,
+			JOptionPane.showMessageDialog(null, resetResponse, "Error", JOptionPane.ERROR_MESSAGE,
 					new ImageIcon(getClass().getResource("/error-icon.png")));
 
 		}
 	}
-
 }
