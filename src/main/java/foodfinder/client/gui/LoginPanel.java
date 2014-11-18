@@ -57,8 +57,8 @@ public class LoginPanel extends JPanel implements ActionListener {
 
 		header.setLayout(new SpringLayout());
 		placeHeaderComponents();
-		SpringUtilities.makeCompactGrid(header, 1, 2, ((Frame.frame.getWidth() / 2) + 25), 1,
-				Frame.frame.getWidth() / 4, 0);
+		SpringUtilities.makeCompactGrid(header, 1, 2, ((Frame.getInstance().getWidth() / 2) + 25), 1,
+				Frame.getInstance().getWidth() / 4, 0);
 
 		textPanel.setLayout(new SpringLayout());
 		placeTextComponents();
@@ -97,7 +97,7 @@ public class LoginPanel extends JPanel implements ActionListener {
 					login();
 			}
 		});
-		thisContainer.setPreferredSize(new Dimension(560, 420));
+		thisContainer.setPreferredSize(new Dimension(560, 400));
 		header = new JPanel();
 		lHeader = new JLabel("PRODUCT FINDER");
 
@@ -167,7 +167,7 @@ public class LoginPanel extends JPanel implements ActionListener {
 			}
 		});
 		flowLayout = new FlowLayout();
-		flowLayout.setVgap(Frame.frame.getHeight() / 10);
+		flowLayout.setVgap(Frame.getInstance().getHeight() / 10);
 		buttonPanel = new JPanel();
 		bUserPasswordReset = new JButton();
 		bUserPasswordReset.setIcon(new ImageIcon(getClass().getResource("/question-icon.png")));

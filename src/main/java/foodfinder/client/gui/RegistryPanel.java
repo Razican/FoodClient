@@ -370,8 +370,8 @@ public class RegistryPanel extends JPanel implements ActionListener {
 			statusThread.interrupt();
 			Frame.getInstance().getContentPane().remove(0);
 			Frame.getInstance().getContentPane().add(new LoginPanel());
-			Frame.getInstance().setMinimumSize(new Dimension(560, 420));
-			Frame.getInstance().setSize(560, 420);
+			Frame.getInstance().setMinimumSize(new Dimension(560, 400));
+			Frame.getInstance().setSize(560, 400);
 			Frame.getInstance().pack();
 			Frame.getInstance().repaint();
 			Frame.getInstance().setLocationRelativeTo(null);
