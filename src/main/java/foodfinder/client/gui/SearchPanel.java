@@ -335,6 +335,7 @@ public class SearchPanel extends JPanel implements ActionListener {
 		SpringUtilities.makeCompactGrid(informationPanel2, 5, 2, 6, 6, 6, 6);
 		informationPanel.setLayout(new SpringLayout());
 		informationPanel.add(lImageInfo);
+		informationPanel2.setPreferredSize(new Dimension(180,250));
 		informationPanel.add(informationPanel2);
 		SpringUtilities.makeCompactGrid(informationPanel, 2, 1, 6, 6, 6, 6);
 
@@ -346,10 +347,12 @@ public class SearchPanel extends JPanel implements ActionListener {
 		resultsTable.setFillsViewportHeight(true);
 		tablePanel = new JScrollPane(resultsTable);
 		tablePanel.setViewportView(resultsTable);
-
+		tablePanel.setSize(new Dimension(306, 320));
 		tableInfoPanel.add(tablePanel);
+		informationPanel.setPreferredSize(new Dimension(180, 320));
 		tableInfoPanel.add(informationPanel);
 		SpringUtilities.makeCompactGrid(tableInfoPanel, 1, 2, 6, 6, 6, 6);
+		tableInfoPanel.setPreferredSize(new Dimension(490, 320));
 
 	}
 
