@@ -57,8 +57,8 @@ public class LoginPanel extends JPanel implements ActionListener {
 
 		header.setLayout(new SpringLayout());
 		placeHeaderComponents();
-		SpringUtilities.makeCompactGrid(header, 1, 2, ((Frame.getInstance().getWidth() / 2) + 25), 1,
-				Frame.getInstance().getWidth() / 4, 0);
+		SpringUtilities.makeCompactGrid(header, 1, 2, ((Frame.getInstance().getWidth() / 2) + 25),
+				1, Frame.getInstance().getWidth() / 4, 0);
 
 		textPanel.setLayout(new SpringLayout());
 		placeTextComponents();
@@ -112,7 +112,7 @@ public class LoginPanel extends JPanel implements ActionListener {
 		textPanel = new JPanel();
 		lUsername = new JLabel("Username:");
 		tfUsername = new JTextField(20);
-		tfUsername.setText("Example:Peio");
+		tfUsername.setText("Example: Peio");
 		tfUsername.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(final KeyEvent e) {
@@ -125,13 +125,13 @@ public class LoginPanel extends JPanel implements ActionListener {
 			@Override
 			public void focusLost(final FocusEvent e) {
 				if (tfUsername.getText().equals("")) {
-					tfUsername.setText("Example:Peio");
+					tfUsername.setText("Example: Peio");
 				}
 			}
 
 			@Override
 			public void focusGained(final FocusEvent e) {
-				if (tfUsername.getText().equals("Example:Peio")) {
+				if (tfUsername.getText().equals("Example: Peio")) {
 					tfUsername.setText("");
 				}
 			}
@@ -139,7 +139,7 @@ public class LoginPanel extends JPanel implements ActionListener {
 		lPassword = new JLabel("Password:");
 		tfPassword = new JPasswordField(20);
 		tfPassword.setEchoChar((char) 0);
-		tfPassword.setText("Example:1234");
+		tfPassword.setText("Example: 1234");
 		tfPassword.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(final KeyEvent e) {
@@ -153,14 +153,14 @@ public class LoginPanel extends JPanel implements ActionListener {
 			@Override
 			public void focusLost(final FocusEvent e) {
 				if (Arrays.equals(tfPassword.getPassword(), "".toCharArray())) {
-					tfPassword.setText("Example:1234");
+					tfPassword.setText("Example: 1234");
 					tfPassword.setEchoChar((char) 0);
 				}
 			}
 
 			@Override
 			public void focusGained(final FocusEvent e) {
-				if (Arrays.equals(tfPassword.getPassword(), "Example:1234".toCharArray())) {
+				if (Arrays.equals(tfPassword.getPassword(), "Example: 1234".toCharArray())) {
 					tfPassword.setText("");
 					tfPassword.setEchoChar('*');
 				}
@@ -221,22 +221,7 @@ public class LoginPanel extends JPanel implements ActionListener {
 		}
 
 		if (e.getSource() == bLogin) {
-			boolean example = false;
-			if (tfUsername.getText().equals("Example:Peio")
-					|| Arrays.equals(tfPassword.getPassword(), "Example:1234".toCharArray())) {
-				example = true;
-				tfUsername.setText("");
-				tfPassword.setText("");
-				tfPassword.setEchoChar('*');
-			}
-
 			login();
-
-			if (example) {
-				tfUsername.setText("Example:Peio");
-				tfPassword.setText("Example:1234");
-				tfPassword.setEchoChar((char) 0);
-			}
 		}
 
 		if (e.getSource() == bNewUser) {
@@ -254,10 +239,15 @@ public class LoginPanel extends JPanel implements ActionListener {
 
 	public void login() {
 		String loginResponse = null;
-		final String username = tfUsername.getText();
+		final String username =
+				tfUsername.getText().equals("Example: Peio") ? "" : tfUsername.getText();
+		final char[] password =
+				Arrays.equals(tfPassword.getPassword(), "Example: 1234".toCharArray()) ? null
+						: tfPassword.getPassword();
+
 		if (Controller.checkStatus()) {
 			try {
-				loginResponse = Controller.login(username, tfPassword.getPassword());
+				loginResponse = Controller.login(username, password);
 			} catch (final IOException e) {
 				connectionStatus =
 						new JLabel(new ImageIcon(getClass().getResource("/status-ERR.png")));

@@ -125,7 +125,7 @@ public class RegistryPanel extends JPanel implements ActionListener {
 		checkBoxIssuePanel1 = new JPanel();
 		checkBoxIssuePanel2 = new JPanel();
 		tfName = new JTextField(20);
-		tfName.setText("Example:Patxi");
+		tfName.setText("Example: Patxi");
 		tfName.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(final KeyEvent e) {
@@ -139,20 +139,20 @@ public class RegistryPanel extends JPanel implements ActionListener {
 			@Override
 			public void focusLost(final FocusEvent e) {
 				if (tfName.getText().equals("")) {
-					tfName.setText("Example:Patxi");
+					tfName.setText("Example: Patxi");
 				}
 
 			}
 
 			@Override
 			public void focusGained(final FocusEvent e) {
-				if (tfName.getText().equals("Example:Patxi")) {
+				if (tfName.getText().equals("Example: Patxi")) {
 					tfName.setText("");
 				}
 			}
 		});
 		tfLastName = new JTextField(20);
-		tfLastName.setText("Example:Lopez");
+		tfLastName.setText("Example: Lopez");
 		tfLastName.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(final KeyEvent e) {
@@ -166,20 +166,20 @@ public class RegistryPanel extends JPanel implements ActionListener {
 			@Override
 			public void focusLost(final FocusEvent e) {
 				if (tfLastName.getText().equals("")) {
-					tfLastName.setText("Example:Lopez");
+					tfLastName.setText("Example: Lopez");
 				}
 
 			}
 
 			@Override
 			public void focusGained(final FocusEvent e) {
-				if (tfLastName.getText().equals("Example:Lopez")) {
+				if (tfLastName.getText().equals("Example: Lopez")) {
 					tfLastName.setText("");
 				}
 			}
 		});
 		tfEmail = new JTextField(20);
-		tfEmail.setText("Example:alvaro@gmail.com");
+		tfEmail.setText("Example: alvaro@gmail.com");
 		tfEmail.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(final KeyEvent e) {
@@ -193,20 +193,20 @@ public class RegistryPanel extends JPanel implements ActionListener {
 			@Override
 			public void focusLost(final FocusEvent e) {
 				if (tfEmail.getText().equals("")) {
-					tfEmail.setText("Example:alvaro@gmail.com");
+					tfEmail.setText("Example: alvaro@gmail.com");
 				}
 
 			}
 
 			@Override
 			public void focusGained(final FocusEvent e) {
-				if (tfEmail.getText().equals("Example:alvaro@gmail.com")) {
+				if (tfEmail.getText().equals("Example: alvaro@gmail.com")) {
 					tfEmail.setText("");
 				}
 			}
 		});
 		tfUsername = new JTextField(20);
-		tfUsername.setText("Example:Peio");
+		tfUsername.setText("Example: Peio");
 		tfUsername.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(final KeyEvent e) {
@@ -220,20 +220,20 @@ public class RegistryPanel extends JPanel implements ActionListener {
 			@Override
 			public void focusLost(final FocusEvent e) {
 				if (tfUsername.getText().equals("")) {
-					tfUsername.setText("Example:Peio");
+					tfUsername.setText("Example: Peio");
 				}
 
 			}
 
 			@Override
 			public void focusGained(final FocusEvent e) {
-				if (tfUsername.getText().equals("Example:Peio")) {
+				if (tfUsername.getText().equals("Example: Peio")) {
 					tfUsername.setText("");
 				}
 			}
 		});
 		tfPassword = new JPasswordField(20);
-		tfPassword.setText("Example:1234");
+		tfPassword.setText("Example: 1234");
 		tfPassword.setEchoChar((char) 0);
 		tfPassword.addKeyListener(new KeyAdapter() {
 			@Override
@@ -248,7 +248,7 @@ public class RegistryPanel extends JPanel implements ActionListener {
 			@Override
 			public void focusLost(final FocusEvent e) {
 				if (Arrays.equals(tfPassword.getPassword(), "".toCharArray())) {
-					tfPassword.setText("Example:1234");
+					tfPassword.setText("Example: 1234");
 					tfPassword.setEchoChar((char) 0);
 				}
 
@@ -256,14 +256,14 @@ public class RegistryPanel extends JPanel implements ActionListener {
 
 			@Override
 			public void focusGained(final FocusEvent e) {
-				if (Arrays.equals(tfPassword.getPassword(), "Example:1234".toCharArray())) {
+				if (Arrays.equals(tfPassword.getPassword(), "Example: 1234".toCharArray())) {
 					tfPassword.setText("");
 					tfPassword.setEchoChar('*');
 				}
 			}
 		});
 		tfPassword2 = new JPasswordField(20);
-		tfPassword2.setText("Example:1234");
+		tfPassword2.setText("Example: 1234");
 		tfPassword2.setEchoChar((char) 0);
 		tfPassword2.addKeyListener(new KeyAdapter() {
 			@Override
@@ -278,7 +278,7 @@ public class RegistryPanel extends JPanel implements ActionListener {
 			@Override
 			public void focusLost(final FocusEvent e) {
 				if (Arrays.equals(tfPassword2.getPassword(), "".toCharArray())) {
-					tfPassword2.setText("Example:1234");
+					tfPassword2.setText("Example: 1234");
 					tfPassword2.setEchoChar((char) 0);
 				}
 
@@ -286,7 +286,7 @@ public class RegistryPanel extends JPanel implements ActionListener {
 
 			@Override
 			public void focusGained(final FocusEvent e) {
-				if (Arrays.equals(tfPassword2.getPassword(), "Example:1234".toCharArray())) {
+				if (Arrays.equals(tfPassword2.getPassword(), "Example: 1234".toCharArray())) {
 					tfPassword2.setText("");
 					tfPassword2.setEchoChar('*');
 				}
@@ -381,14 +381,27 @@ public class RegistryPanel extends JPanel implements ActionListener {
 
 	public void register() {
 		String registerResponse = null;
+
+		final String name = tfName.getText().equals("Example: Patxi") ? "" : tfName.getText();
+		final String lastName =
+				tfLastName.getText().equals("Example: Lopez") ? "" : tfLastName.getText();
+		final String email =
+				tfEmail.getText().equals("Example: alvaro@gmail.com") ? "" : tfEmail.getText();
+		final String username =
+				tfUsername.getText().equals("Example: Peio") ? "" : tfUsername.getText();
+		final char[] password =
+				Arrays.equals(tfPassword.getPassword(), "Example: 1234".toCharArray()) ? null
+						: tfPassword.getPassword();
+		final char[] passconf =
+				Arrays.equals(tfPassword2.getPassword(), "Example: 1234".toCharArray()) ? null
+						: tfPassword2.getPassword();
+
 		if (Controller.checkStatus()) {
 			try {
 				registerResponse =
-						Controller.register(tfName.getText(), tfLastName.getText(),
-								tfEmail.getText(), tfUsername.getText(), tfPassword.getPassword(),
-								tfPassword2.getPassword(), cbGluten.isSelected(),
-								cbDiabetes.isSelected(), cbVegetables.isSelected(),
-								cbMilk.isSelected());
+						Controller.register(name, lastName, email, username, password, passconf,
+								cbGluten.isSelected(), cbDiabetes.isSelected(),
+								cbVegetables.isSelected(), cbMilk.isSelected());
 			} catch (final IOException e) {
 				e.printStackTrace();
 			}
@@ -409,8 +422,6 @@ public class RegistryPanel extends JPanel implements ActionListener {
 			JOptionPane.showMessageDialog(null, registerResponse, "Error",
 					JOptionPane.ERROR_MESSAGE,
 					new ImageIcon(getClass().getResource("/error-icon.png")));
-
 		}
-		// TODO Username exists or email exist validation missing.
 	}
 }
