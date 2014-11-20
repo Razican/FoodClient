@@ -28,7 +28,7 @@ public class Launcher {
 				}
 				Frame.getInstance().setSize(new Dimension(560, 420));
 				Frame.getInstance().setMinimumSize(new Dimension(560, 420));
-				Frame.getInstance().setMaximumSize(new Dimension(900, 700));
+				Frame.getInstance().setMaximumSize(new Dimension(900, 550));
 				Frame.getInstance().setLocationRelativeTo(null);
 
 				Frame.getInstance().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

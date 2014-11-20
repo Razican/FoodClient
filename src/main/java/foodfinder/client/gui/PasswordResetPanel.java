@@ -198,6 +198,7 @@ public class PasswordResetPanel extends JPanel implements ActionListener {
 			Frame.getInstance().getContentPane().add(new LoginPanel());
 			Frame.getInstance().setMinimumSize(new Dimension(560, 400));
 			Frame.getInstance().setSize(560, 400);
+			Frame.getInstance().setMaximumSize(new Dimension(700, 550));
 			Frame.getInstance().pack();
 			Frame.getInstance().repaint();
 			Frame.getInstance().setLocationRelativeTo(null);
@@ -233,6 +234,7 @@ public class PasswordResetPanel extends JPanel implements ActionListener {
 				Frame.getInstance().getContentPane().add(new LoginPanel());
 				Frame.getInstance().setMinimumSize(new Dimension(560, 400));
 				Frame.getInstance().setSize(560, 400);
+				Frame.getInstance().setMaximumSize(new Dimension(700, 550));
 				Frame.getInstance().pack();
 				Frame.getInstance().repaint();
 				Frame.getInstance().setLocationRelativeTo(null);

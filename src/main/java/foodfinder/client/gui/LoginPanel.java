@@ -215,6 +215,7 @@ public class LoginPanel extends JPanel implements ActionListener {
 			Frame.getInstance().getContentPane().add(new PasswordResetPanel());
 			Frame.getInstance().setMinimumSize(new Dimension(560, 400));
 			Frame.getInstance().setSize(560, 400);
+			Frame.getInstance().setMaximumSize(new Dimension(700, 550));
 			Frame.getInstance().pack();
 			Frame.getInstance().repaint();
 			Frame.getInstance().setLocationRelativeTo(null);
@@ -231,6 +232,7 @@ public class LoginPanel extends JPanel implements ActionListener {
 			Frame.getInstance().getContentPane().add(new RegistryPanel());
 			Frame.getInstance().setMinimumSize(new Dimension(480, 470));
 			Frame.getInstance().setSize(480, 470);
+			Frame.getInstance().setMaximumSize(new Dimension(700, 550));
 			Frame.getInstance().pack();
 			Frame.getInstance().repaint();
 			Frame.getInstance().setLocationRelativeTo(null);
@@ -271,6 +273,7 @@ public class LoginPanel extends JPanel implements ActionListener {
 			Frame.getInstance().getContentPane().add(new SearchPanel());
 			Frame.getInstance().setMinimumSize(new Dimension(600, 710));
 			Frame.getInstance().setSize(600, 710);
+			Frame.getInstance().setMaximumSize(new Dimension(700, 710));
 			Frame.getInstance().pack();
 			Frame.getInstance().repaint();
 			Frame.getInstance().setLocationRelativeTo(null);

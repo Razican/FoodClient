@@ -305,7 +305,6 @@ public class SearchPanel extends JPanel implements ActionListener {
 		searchButtonPanel.add(bSearch);
 		fieldContainer.add(searchButtonPanel);
 
-		// SpringUtilities.makeCompactGrid(fieldContainer, 1, 2, 6, 6, 6, 6);
 	}
 
 	public void placePriceObjects() {
@@ -366,10 +365,12 @@ public class SearchPanel extends JPanel implements ActionListener {
 			Frame.getInstance().setMinimumSize(new Dimension(560, 400));
 			Frame.getInstance().setSize(560, 400);
 			Frame.getInstance().getContentPane().add(new LoginPanel());
+			Frame.getInstance().setMaximumSize(new Dimension(700, 550));
+			Frame.getInstance().setLocationRelativeTo(null);
 			Frame.getInstance().pack();
 			Frame.getInstance().repaint();
 
-			Frame.getInstance().setLocationRelativeTo(null);
+			
 		}
 		if (e.getSource() == bSearch) {
 			search();
