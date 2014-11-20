@@ -335,7 +335,7 @@ public class SearchPanel extends JPanel implements ActionListener {
 		SpringUtilities.makeCompactGrid(informationPanel2, 5, 2, 6, 6, 6, 6);
 		informationPanel.setLayout(new SpringLayout());
 		informationPanel.add(lImageInfo);
-		informationPanel2.setPreferredSize(new Dimension(180,250));
+		informationPanel2.setPreferredSize(new Dimension(180,225));
 		informationPanel.add(informationPanel2);
 		SpringUtilities.makeCompactGrid(informationPanel, 2, 1, 6, 6, 6, 6);
 
@@ -347,12 +347,12 @@ public class SearchPanel extends JPanel implements ActionListener {
 		resultsTable.setFillsViewportHeight(true);
 		tablePanel = new JScrollPane(resultsTable);
 		tablePanel.setViewportView(resultsTable);
-		tablePanel.setSize(new Dimension(306, 320));
+		tablePanel.setSize(new Dimension(306, 295));
 		tableInfoPanel.add(tablePanel);
-		informationPanel.setPreferredSize(new Dimension(180, 320));
+		informationPanel.setPreferredSize(new Dimension(180, 295));
 		tableInfoPanel.add(informationPanel);
 		SpringUtilities.makeCompactGrid(tableInfoPanel, 1, 2, 6, 6, 6, 6);
-		tableInfoPanel.setPreferredSize(new Dimension(490, 320));
+		tableInfoPanel.setPreferredSize(new Dimension(490, 295));
 
 	}
 
@@ -432,7 +432,7 @@ public class SearchPanel extends JPanel implements ActionListener {
 			lNameInfo.setText(result.getName());
 			lTypeInfo.setText(result.getType());
 			lBrandInfo.setText(result.getBrand());
-			lPriceInfo.setText(String.valueOf(result.getPrice()));
+			lPriceInfo.setText(String.valueOf(result.getPrice())+"€");
 			lDescInfo.setText("<html>" + result.getDescription() + "<html>");
 			lImageInfo.setIcon(new ImageIcon(getClass().getResource(
 					"/products/" + result.getId() + ".jpg")));
