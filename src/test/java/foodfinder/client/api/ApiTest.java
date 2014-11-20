@@ -69,7 +69,7 @@ public class ApiTest {
 							+ RandomStringUtils.randomNumeric(5) + ".com";
 
 			result =
-					Api.register(name, lastName, email2, username, password, gluten, diabetes,
+					Api.register(name, lastName, email2, "testUser", password, gluten, diabetes,
 							vegetables, milk);
 
 			Assert.assertEquals("ERR", result.get("status"));
@@ -78,8 +78,8 @@ public class ApiTest {
 			final String username2 = "test_" + RandomStringUtils.randomNumeric(8);
 
 			result =
-					Api.register(name, lastName, email, username2, password, gluten, diabetes,
-							vegetables, milk);
+					Api.register(name, lastName, "testUser@example.com", username2, password,
+							gluten, diabetes, vegetables, milk);
 
 			Assert.assertEquals("ERR", result.get("status"));
 			Assert.assertEquals("Email already exists.", result.get("error"));
