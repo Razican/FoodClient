@@ -33,5 +33,4 @@ public class StatusThread extends Thread {
 			}
 		}
 	}
-
 }

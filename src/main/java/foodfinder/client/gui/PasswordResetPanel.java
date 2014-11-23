@@ -45,8 +45,7 @@ public class PasswordResetPanel extends JPanel implements ActionListener {
 	private JPanel headerPanel;
 	private JPanel textPanel;
 	private JPanel checkBoxPanel;
-	private JPanel container;
-	private JPanel container2;
+	private JPanel formPanel;
 	private StatusThread statusThread;
 
 	public PasswordResetPanel() {
@@ -64,24 +63,23 @@ public class PasswordResetPanel extends JPanel implements ActionListener {
 		placeCheckBoxComponents();
 		SpringUtilities.makeCompactGrid(checkBoxPanel, 1, 2, 125, 6, 50, 6);
 
-		container.setLayout(new SpringLayout());
-		container.add(headerPanel);
-		container.add(Box.createVerticalStrut(20));
-		container.add(textPanel);
-		container.add(Box.createVerticalStrut(20));
-		container.add(lQuestion);
+		formPanel.setLayout(new SpringLayout());
+		formPanel.add(headerPanel);
+		formPanel.add(Box.createVerticalStrut(20));
+		formPanel.add(textPanel);
+		formPanel.add(Box.createVerticalStrut(20));
+		formPanel.add(lQuestion);
 		lQuestion.setHorizontalAlignment(SwingConstants.CENTER);
-		container.add(Box.createVerticalStrut(20));
-		container.add(checkBoxPanel);
-		container.add(Box.createVerticalStrut(20));
+		formPanel.add(Box.createVerticalStrut(20));
+		formPanel.add(checkBoxPanel);
+		formPanel.add(Box.createVerticalStrut(20));
 		bReset.setHorizontalAlignment(SwingConstants.CENTER);
-		SpringUtilities.makeCompactGrid(container, 8, 1, 6, 6, 6, 6);
+		SpringUtilities.makeCompactGrid(formPanel, 8, 1, 6, 6, 6, 6);
 
-		container2.setLayout(new FlowLayout());
-		container2.add(container);
-		container2.add(bReset);
-		container2.setPreferredSize(new Dimension(560, 400));
-		this.add(container2);
+		setLayout(new FlowLayout());
+		add(formPanel);
+		add(bReset);
+		setPreferredSize(new Dimension(560, 400));
 
 		Frame.getInstance().addWindowListener(new WindowAdapter() {
 
@@ -90,7 +88,6 @@ public class PasswordResetPanel extends JPanel implements ActionListener {
 				statusThread.interrupt();
 			}
 		});
-
 	}
 
 	public void initializeVartiables() {
@@ -103,11 +100,10 @@ public class PasswordResetPanel extends JPanel implements ActionListener {
 					reset();
 			}
 		});
-		container2 = new JPanel();
 		headerPanel = new JPanel();
 		textPanel = new JPanel();
 		checkBoxPanel = new JPanel();
-		container = new JPanel();
+		formPanel = new JPanel();
 		backButton = new JButton(new ImageIcon(getClass().getResource("/back-icon.png")));
 		backButton.addActionListener(this);
 		backButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -139,7 +135,6 @@ public class PasswordResetPanel extends JPanel implements ActionListener {
 				if (tfEmail.getText().equals("")) {
 					tfEmail.setText("Example:alvaro@gmail.com");
 				}
-
 			}
 
 			@Override
@@ -147,9 +142,7 @@ public class PasswordResetPanel extends JPanel implements ActionListener {
 				if (tfEmail.getText().equals("Example:alvaro@gmail.com")) {
 					tfEmail.setText("");
 				}
-
 			}
-
 		});
 		cbUsername = new JCheckBox("Username");
 		cbPassword = new JCheckBox("Password");
@@ -187,7 +180,6 @@ public class PasswordResetPanel extends JPanel implements ActionListener {
 			}
 
 			reset();
-
 			tfEmail.setText("Example:alvaro@gmail.com");
 		}
 
@@ -203,7 +195,6 @@ public class PasswordResetPanel extends JPanel implements ActionListener {
 			Frame.getInstance().repaint();
 			Frame.getInstance().setLocationRelativeTo(null);
 		}
-
 	}
 
 	public void reset() {
@@ -242,7 +233,6 @@ public class PasswordResetPanel extends JPanel implements ActionListener {
 		} else {
 			JOptionPane.showMessageDialog(null, resetResponse, "Error", JOptionPane.ERROR_MESSAGE,
 					new ImageIcon(getClass().getResource("/error-icon.png")));
-
 		}
 	}
 }

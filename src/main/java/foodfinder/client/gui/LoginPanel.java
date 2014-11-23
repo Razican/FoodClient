@@ -164,6 +164,7 @@ public class LoginPanel extends JPanel implements ActionListener {
 				}
 			}
 		});
+
 		buttonPanel = new JPanel();
 		bUserPasswordReset = new JButton();
 		bUserPasswordReset.setIcon(new ImageIcon(getClass().getResource("/question-icon.png")));
