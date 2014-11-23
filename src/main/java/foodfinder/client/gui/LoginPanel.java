@@ -40,13 +40,10 @@ public class LoginPanel extends JPanel implements ActionListener {
 	private JButton bLogin;
 	private JButton bNewUser;
 	private JLabel lHeader;
-	private JLabel connectionStatus;
-	private JPanel header;
-	private JPanel textPanel;
-	private FlowLayout flowLayout;
+	private JLabel lconnectionStatus;
+	private JPanel headerPanel;
+	private JPanel formPanel;
 	private JPanel buttonPanel;
-	private JPanel thisContainer;
-	private JPanel container2;
 	private String welcomeMessage;
 	private StatusThread statusThread;
 
@@ -55,25 +52,27 @@ public class LoginPanel extends JPanel implements ActionListener {
 
 		statusThread.start();
 
-		header.setLayout(new SpringLayout());
+		headerPanel.setLayout(new SpringLayout());
 		placeHeaderComponents();
-		SpringUtilities.makeCompactGrid(header, 1, 2, ((Frame.getInstance().getWidth() / 2) + 25),
-				1, Frame.getInstance().getWidth() / 4, 0);
+		SpringUtilities.makeCompactGrid(headerPanel, 1, 2,
+				((Frame.getInstance().getWidth() / 2) + 25), 1, Frame.getInstance().getWidth() / 4,
+				0);
 
-		textPanel.setLayout(new SpringLayout());
+		formPanel.setLayout(new SpringLayout());
 		placeTextComponents();
-		SpringUtilities.makeCompactGrid(textPanel, 2, 2, 6, 6, 6, 6);
+		SpringUtilities.makeCompactGrid(formPanel, 2, 2, 6, 6, 6, 6);
 
 		buttonPanel.setLayout(new FlowLayout());
 		placeButtons();
 
-		thisContainer.setLayout(flowLayout);
-		thisContainer.add(header);
-		thisContainer.add(Box.createVerticalStrut(40));
-		thisContainer.add(textPanel);
-		thisContainer.add(Box.createVerticalStrut(40));
-		thisContainer.add(buttonPanel);
-		container2.add(thisContainer);
+		final FlowLayout layout = new FlowLayout();
+		layout.setVgap(Frame.getInstance().getHeight() / 10);
+		setLayout(layout);
+		add(headerPanel);
+		add(Box.createVerticalStrut(40));
+		add(formPanel);
+		add(Box.createVerticalStrut(40));
+		add(buttonPanel);
 
 		Frame.getInstance().addWindowListener(new WindowAdapter() {
 
@@ -86,10 +85,8 @@ public class LoginPanel extends JPanel implements ActionListener {
 
 	public void initializeVariables() {
 
-		thisContainer = new JPanel();
-		container2 = this;
-		container2.setFocusable(true);
-		container2.addKeyListener(new KeyAdapter() {
+		setFocusable(true);
+		addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(final KeyEvent e) {
 				final int key = e.getKeyCode();
@@ -97,19 +94,20 @@ public class LoginPanel extends JPanel implements ActionListener {
 					login();
 			}
 		});
-		thisContainer.setPreferredSize(new Dimension(560, 400));
-		header = new JPanel();
+		setPreferredSize(new Dimension(560, 400));
+		headerPanel = new JPanel();
 		lHeader = new JLabel("PRODUCT FINDER");
 
 		if (Controller.checkStatus() == true) {
-			connectionStatus = new JLabel(new ImageIcon(getClass().getResource("/status-OK.png")));
-			connectionStatus.setToolTipText("Connection Status: OK");
+			lconnectionStatus = new JLabel(new ImageIcon(getClass().getResource("/status-OK.png")));
+			lconnectionStatus.setToolTipText("Connection Status: OK");
 		} else {
-			connectionStatus = new JLabel(new ImageIcon(getClass().getResource("/status-ERR.png")));
-			connectionStatus.setToolTipText("Connection Status: ERROR");
+			lconnectionStatus =
+					new JLabel(new ImageIcon(getClass().getResource("/status-ERR.png")));
+			lconnectionStatus.setToolTipText("Connection Status: ERROR");
 		}
 
-		textPanel = new JPanel();
+		formPanel = new JPanel();
 		lUsername = new JLabel("Username:");
 		tfUsername = new JTextField(20);
 		tfUsername.setText("Example: Peio");
@@ -166,8 +164,6 @@ public class LoginPanel extends JPanel implements ActionListener {
 				}
 			}
 		});
-		flowLayout = new FlowLayout();
-		flowLayout.setVgap(Frame.getInstance().getHeight() / 10);
 		buttonPanel = new JPanel();
 		bUserPasswordReset = new JButton();
 		bUserPasswordReset.setIcon(new ImageIcon(getClass().getResource("/question-icon.png")));
@@ -184,21 +180,21 @@ public class LoginPanel extends JPanel implements ActionListener {
 		bNewUser.setText("New User");
 		bNewUser.addActionListener(this);
 		bNewUser.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		statusThread = new StatusThread(connectionStatus);
+		statusThread = new StatusThread(lconnectionStatus);
 	}
 
 	public void placeHeaderComponents() {
 
-		header.add(lHeader);
-		header.add(connectionStatus);
+		headerPanel.add(lHeader);
+		headerPanel.add(lconnectionStatus);
 
 	}
 
 	public void placeTextComponents() {
-		textPanel.add(lUsername);
-		textPanel.add(tfUsername);
-		textPanel.add(lPassword);
-		textPanel.add(tfPassword);
+		formPanel.add(lUsername);
+		formPanel.add(tfUsername);
+		formPanel.add(lPassword);
+		formPanel.add(tfPassword);
 	}
 
 	public void placeButtons() {
@@ -251,13 +247,14 @@ public class LoginPanel extends JPanel implements ActionListener {
 			try {
 				loginResponse = Controller.login(username, password);
 			} catch (final IOException e) {
-				connectionStatus =
+				lconnectionStatus =
 						new JLabel(new ImageIcon(getClass().getResource("/status-ERR.png")));
-				connectionStatus.setToolTipText("Connection Status: ERROR");
+				lconnectionStatus.setToolTipText("Connection Status: ERROR");
 			}
 		} else {
-			connectionStatus = new JLabel(new ImageIcon(getClass().getResource("/status-ERR.png")));
-			connectionStatus.setToolTipText("Connection Status: ERROR");
+			lconnectionStatus =
+					new JLabel(new ImageIcon(getClass().getResource("/status-ERR.png")));
+			lconnectionStatus.setToolTipText("Connection Status: ERROR");
 		}
 
 		if (loginResponse == null) {
