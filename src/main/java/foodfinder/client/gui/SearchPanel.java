@@ -202,6 +202,11 @@ public class SearchPanel extends JPanel implements ActionListener {
 			public void focusLost(final FocusEvent e) {
 				if (tfPriceMin.getText().equals("")) {
 					tfPriceMin.setText("0.00");
+				} else if (Double.parseDouble(tfPriceMin.getText()) < 0) {
+					tfPriceMin.setText("0.00");
+				} else if (Double.parseDouble(tfPriceMin.getText()) > Double.parseDouble(tfPriceMax
+						.getText())) {
+					tfPriceMax.setText(tfPriceMin.getText());
 				}
 			}
 
@@ -221,6 +226,11 @@ public class SearchPanel extends JPanel implements ActionListener {
 			public void focusLost(final FocusEvent e) {
 				if (tfPriceMax.getText().equals("")) {
 					tfPriceMax.setText("99.00");
+				} else if (Double.parseDouble(tfPriceMax.getText()) < 0) {
+					tfPriceMax.setText("0.00");
+				} else if (Double.parseDouble(tfPriceMin.getText()) > Double.parseDouble(tfPriceMax
+						.getText())) {
+					tfPriceMin.setText(tfPriceMax.getText());
 				}
 			}
 
