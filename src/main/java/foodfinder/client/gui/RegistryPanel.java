@@ -37,7 +37,7 @@ public class RegistryPanel extends JPanel implements ActionListener {
 	private JTextField tfEmail;
 	private JTextField tfUsername;
 	private JPasswordField tfPassword;
-	private JPasswordField tfPassword2;
+	private JPasswordField tfPassConf;
 	private JCheckBox cbGluten;
 	private JCheckBox cbDiabetes;
 	private JCheckBox cbVegetables;
@@ -47,7 +47,7 @@ public class RegistryPanel extends JPanel implements ActionListener {
 	private JLabel lEmail;
 	private JLabel lUsername;
 	private JLabel lPassword;
-	private JLabel lPassword2;
+	private JLabel lPassConf;
 	private JLabel lHealthIssues;
 	private JPanel textFieldPanel;
 	private JPanel checkBoxIssuePanel;
@@ -58,8 +58,7 @@ public class RegistryPanel extends JPanel implements ActionListener {
 	private JLabel headerTitle;
 	private JLabel connectionStatus;
 	private JButton registerButton;
-	private JPanel container;
-	private JPanel container2;
+	private JPanel formPanel;
 	private StatusThread statusThread;
 
 	public RegistryPanel() {
@@ -87,16 +86,15 @@ public class RegistryPanel extends JPanel implements ActionListener {
 		checkBoxIssuePanel.add(checkBoxIssuePanel2);
 		SpringUtilities.makeCompactGrid(checkBoxIssuePanel, 1, 2, 6, 6, 6, 6);
 
-		container.setLayout(new SpringLayout());
-		container.add(headerPanel);
-		container.add(textFieldPanel);
-		container.add(checkBoxIssuePanel);
-		SpringUtilities.makeCompactGrid(container, 3, 1, 6, 6, 6, 6);
+		formPanel.setLayout(new SpringLayout());
+		formPanel.add(headerPanel);
+		formPanel.add(textFieldPanel);
+		formPanel.add(checkBoxIssuePanel);
+		SpringUtilities.makeCompactGrid(formPanel, 3, 1, 6, 6, 6, 6);
 
-		container2.setLayout(new FlowLayout());
-		container2.add(container);
-		container2.add(registerButton);
-		this.add(container2);
+		setLayout(new FlowLayout());
+		add(formPanel);
+		add(registerButton);
 
 		Frame.getInstance().addWindowListener(new WindowAdapter() {
 
@@ -105,7 +103,6 @@ public class RegistryPanel extends JPanel implements ActionListener {
 				statusThread.interrupt();
 			}
 		});
-
 	}
 
 	public void initializeVariables() {
@@ -118,8 +115,8 @@ public class RegistryPanel extends JPanel implements ActionListener {
 					register();
 			}
 		});
-		container2 = new JPanel();
-		container2.setPreferredSize(new Dimension(480, 470));
+
+		setPreferredSize(new Dimension(480, 470));
 		textFieldPanel = new JPanel();
 		checkBoxIssuePanel = new JPanel();
 		checkBoxIssuePanel1 = new JPanel();
@@ -141,7 +138,6 @@ public class RegistryPanel extends JPanel implements ActionListener {
 				if (tfName.getText().equals("")) {
 					tfName.setText("Example: Patxi");
 				}
-
 			}
 
 			@Override
@@ -168,7 +164,6 @@ public class RegistryPanel extends JPanel implements ActionListener {
 				if (tfLastName.getText().equals("")) {
 					tfLastName.setText("Example: Lopez");
 				}
-
 			}
 
 			@Override
@@ -195,7 +190,6 @@ public class RegistryPanel extends JPanel implements ActionListener {
 				if (tfEmail.getText().equals("")) {
 					tfEmail.setText("Example: alvaro@gmail.com");
 				}
-
 			}
 
 			@Override
@@ -222,7 +216,6 @@ public class RegistryPanel extends JPanel implements ActionListener {
 				if (tfUsername.getText().equals("")) {
 					tfUsername.setText("Example: Peio");
 				}
-
 			}
 
 			@Override
@@ -251,7 +244,6 @@ public class RegistryPanel extends JPanel implements ActionListener {
 					tfPassword.setText("Example: 1234");
 					tfPassword.setEchoChar((char) 0);
 				}
-
 			}
 
 			@Override
@@ -262,10 +254,10 @@ public class RegistryPanel extends JPanel implements ActionListener {
 				}
 			}
 		});
-		tfPassword2 = new JPasswordField(20);
-		tfPassword2.setText("Example: 1234");
-		tfPassword2.setEchoChar((char) 0);
-		tfPassword2.addKeyListener(new KeyAdapter() {
+		tfPassConf = new JPasswordField(20);
+		tfPassConf.setText("Example: 1234");
+		tfPassConf.setEchoChar((char) 0);
+		tfPassConf.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(final KeyEvent e) {
 				final int key = e.getKeyCode();
@@ -273,22 +265,21 @@ public class RegistryPanel extends JPanel implements ActionListener {
 					register();
 			}
 		});
-		tfPassword2.addFocusListener(new FocusAdapter() {
+		tfPassConf.addFocusListener(new FocusAdapter() {
 
 			@Override
 			public void focusLost(final FocusEvent e) {
-				if (Arrays.equals(tfPassword2.getPassword(), "".toCharArray())) {
-					tfPassword2.setText("Example: 1234");
-					tfPassword2.setEchoChar((char) 0);
+				if (Arrays.equals(tfPassConf.getPassword(), "".toCharArray())) {
+					tfPassConf.setText("Example: 1234");
+					tfPassConf.setEchoChar((char) 0);
 				}
-
 			}
 
 			@Override
 			public void focusGained(final FocusEvent e) {
-				if (Arrays.equals(tfPassword2.getPassword(), "Example: 1234".toCharArray())) {
-					tfPassword2.setText("");
-					tfPassword2.setEchoChar('*');
+				if (Arrays.equals(tfPassConf.getPassword(), "Example: 1234".toCharArray())) {
+					tfPassConf.setText("");
+					tfPassConf.setEchoChar('*');
 				}
 			}
 		});
@@ -301,7 +292,7 @@ public class RegistryPanel extends JPanel implements ActionListener {
 		lEmail = new JLabel("Email:");
 		lUsername = new JLabel("Username:");
 		lPassword = new JLabel("Password:");
-		lPassword2 = new JLabel("Repeat Password:");
+		lPassConf = new JLabel("Repeat Password:");
 		lHealthIssues = new JLabel("Health Issues:");
 		headerPanel = new JPanel();
 		backButton = new JButton(new ImageIcon(getClass().getResource("/back-icon.png")));
@@ -317,7 +308,7 @@ public class RegistryPanel extends JPanel implements ActionListener {
 			connectionStatus.setToolTipText("Connection Status: ERROR");
 		}
 
-		container = new JPanel();
+		formPanel = new JPanel();
 		registerButton = new JButton();
 		registerButton.setIcon(new ImageIcon(getClass().getResource("/register-icon.png")));
 		registerButton.setText("Register");
@@ -343,8 +334,8 @@ public class RegistryPanel extends JPanel implements ActionListener {
 		textFieldPanel.add(tfUsername);
 		textFieldPanel.add(lPassword);
 		textFieldPanel.add(tfPassword);
-		textFieldPanel.add(lPassword2);
-		textFieldPanel.add(tfPassword2);
+		textFieldPanel.add(lPassConf);
+		textFieldPanel.add(tfPassConf);
 
 	}
 
@@ -377,7 +368,6 @@ public class RegistryPanel extends JPanel implements ActionListener {
 			Frame.getInstance().repaint();
 			Frame.getInstance().setLocationRelativeTo(null);
 		}
-
 	}
 
 	public void register() {
@@ -394,8 +384,8 @@ public class RegistryPanel extends JPanel implements ActionListener {
 				Arrays.equals(tfPassword.getPassword(), "Example: 1234".toCharArray()) ? null
 						: tfPassword.getPassword();
 		final char[] passconf =
-				Arrays.equals(tfPassword2.getPassword(), "Example: 1234".toCharArray()) ? null
-						: tfPassword2.getPassword();
+				Arrays.equals(tfPassConf.getPassword(), "Example: 1234".toCharArray()) ? null
+						: tfPassConf.getPassword();
 
 		if (Controller.checkStatus()) {
 			try {
