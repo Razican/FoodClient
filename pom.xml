@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>foodfinder</groupId>
   <artifactId>food-client</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>1.0.0</version>
   <name>Food Finder client</name>
   <description>The client application for the Food Finder</description>
   <dependencies>
@@ -72,7 +72,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>
-        <version>2.5.1</version>
+        <version>2.5.2</version>
         <configuration>
           <archive>
             <manifest>
@@ -102,4 +102,5 @@
       </plugin>
     </plugins>
   </build>
+  <url>https://www.razican.com/foodweb/</url>
 </project>

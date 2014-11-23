@@ -42,14 +42,11 @@ import foodfinder.client.gui.components.SearchTableModel;
 
 public class SearchPanel extends JPanel implements ActionListener {
 
-	// Dimension(560, 680)
-
 	private static final long serialVersionUID = 1L;
 	private JPanel headerPanel;
 	private JPanel fieldPanel;
 	private JPanel searchButtonPanel;
 	private JPanel fieldContainer;
-	private JPanel container;
 	private JButton blogout;
 	private JLabel lHeader;
 	private JLabel connectionStatus;
@@ -60,29 +57,29 @@ public class SearchPanel extends JPanel implements ActionListener {
 	private JTextField tfName;
 	private JTextField tfBrand;
 	private JComboBox<String> cbType;
-	private JLabel lPrice1;
-	private JTextField tfPrice2;
-	private JLabel lPrice3;
-	private JTextField tfPrice4;
-	private JLabel lPrice4;
+	private JLabel lPriceBetween;
+	private JTextField tfPriceMin;
+	private JLabel lPriceAnd;
+	private JTextField tfPriceMax;
+	private JLabel lPriceMax;
 	private JButton bSearch;
 	private JPanel pricePanel;
 	private JPanel informationPanel;
-	private JPanel informationPanel2;
-	private JLabel lImageInfo;
-	private JLabel lNameInfo;
-	private JLabel lTypeInfo;
-	private JLabel lBrandInfo;
-	private JLabel lPriceInfo;
-	private JLabel lDesc;
-	private JLabel lDescInfo;
-	private JLabel lName1;
-	private JLabel lType1;
-	private JLabel lBrand1;
-	private JLabel lPrice11;
+	private JPanel informationPanelText;
+	private JLabel lInfoImage;
+	private JLabel lInfoName;
+	private JLabel lInfoType;
+	private JLabel lInfoBrand;
+	private JLabel lInfoPrice;
+	private JLabel lInfoDesc;
+	private JLabel lInfoDescText;
+	private JLabel lInfoNameText;
+	private JLabel lInfoTypeText;
+	private JLabel lInfoBrandText;
+	private JLabel lInfoPriceText;
 	private JPanel tableInfoPanel;
 	private JTable resultsTable;
-	private DefaultTableModel modeloTabla;
+	private DefaultTableModel tableModel;
 	private Object[] headers;
 	private Object[][] data;
 	private JScrollPane tablePanel;
@@ -92,7 +89,6 @@ public class SearchPanel extends JPanel implements ActionListener {
 	private List<SearchResult> results;
 
 	public SearchPanel() {
-
 		InitializeVariables();
 		statusThread.start();
 
@@ -101,13 +97,12 @@ public class SearchPanel extends JPanel implements ActionListener {
 		placeFieldObjects();
 		placeInformationObjects();
 		placeTableInfoComponents();
-		container.setLayout(new FlowLayout());
-		container.add(headerPanel);
-		container.add(fieldContainer);
-		container.add(tableInfoPanel);
-		container.add(lSupermarketMap);
-		container.setPreferredSize(new Dimension(560, 680));
-		this.add(container);
+		setLayout(new FlowLayout());
+		add(headerPanel);
+		add(fieldContainer);
+		add(tableInfoPanel);
+		add(lSupermarketMap);
+		setPreferredSize(new Dimension(560, 680));
 
 		Frame.getInstance().addWindowListener(new WindowAdapter() {
 
@@ -148,7 +143,6 @@ public class SearchPanel extends JPanel implements ActionListener {
 		fieldPanel = new JPanel();
 		fieldContainer = new JPanel();
 		searchButtonPanel = new JPanel();
-		container = new JPanel();
 		bSearch = new JButton();
 		bSearch.setLayout(new SpringLayout());
 		final JLabel searchImage =
@@ -167,7 +161,6 @@ public class SearchPanel extends JPanel implements ActionListener {
 				if (tfName.getText().equals("")) {
 					tfName.setText("Example: Washer");
 				}
-
 			}
 
 			@Override
@@ -186,7 +179,6 @@ public class SearchPanel extends JPanel implements ActionListener {
 				if (tfBrand.getText().equals("")) {
 					tfBrand.setText("Example: Ariel");
 				}
-
 			}
 
 			@Override
@@ -194,7 +186,6 @@ public class SearchPanel extends JPanel implements ActionListener {
 				if (tfBrand.getText().equals("Example: Ariel")) {
 					tfBrand.setText("");
 				}
-
 			}
 		});
 		lType = new JLabel("Type:");
@@ -202,71 +193,67 @@ public class SearchPanel extends JPanel implements ActionListener {
 		cbType = new JComboBox<String>(types);
 		pricePanel = new JPanel();
 		lPrice = new JLabel("Price:");
-		lPrice1 = new JLabel(" between ");
-		tfPrice2 = new JTextField(5);
-		tfPrice2.setText("0.00");
-		tfPrice2.addFocusListener(new FocusAdapter() {
+		lPriceBetween = new JLabel(" between ");
+		tfPriceMin = new JTextField(5);
+		tfPriceMin.setText("0.00");
+		tfPriceMin.addFocusListener(new FocusAdapter() {
 
 			@Override
 			public void focusLost(final FocusEvent e) {
-				if (tfPrice2.getText().equals("")) {
-					tfPrice2.setText("0.00");
+				if (tfPriceMin.getText().equals("")) {
+					tfPriceMin.setText("0.00");
 				}
-
 			}
 
 			@Override
 			public void focusGained(final FocusEvent e) {
-				if (tfPrice2.getText().equals("0.00")) {
-					tfPrice2.setText("");
+				if (tfPriceMin.getText().equals("0.00")) {
+					tfPriceMin.setText("");
 				}
-
 			}
 		});
-		lPrice3 = new JLabel("€  and ");
-		tfPrice4 = new JTextField(5);
-		tfPrice4.setText("99.00");
-		tfPrice4.addFocusListener(new FocusAdapter() {
+		lPriceAnd = new JLabel("€  and ");
+		tfPriceMax = new JTextField(5);
+		tfPriceMax.setText("99.00");
+		tfPriceMax.addFocusListener(new FocusAdapter() {
 
 			@Override
 			public void focusLost(final FocusEvent e) {
-				if (tfPrice4.getText().equals("")) {
-					tfPrice4.setText("99.00");
+				if (tfPriceMax.getText().equals("")) {
+					tfPriceMax.setText("99.00");
 				}
-
 			}
 
 			@Override
 			public void focusGained(final FocusEvent e) {
-				if (tfPrice4.getText().equals("99.00")) {
-					tfPrice4.setText("");
+				if (tfPriceMax.getText().equals("99.00")) {
+					tfPriceMax.setText("");
 				}
-
 			}
 		});
-		lPrice4 = new JLabel("€");
+		lPriceMax = new JLabel("€");
 		map = new Map(getClass().getResource("/map.png"));
 		lSupermarketMap = new JLabel(map);
-		lImageInfo = new JLabel();
+		lInfoImage = new JLabel();
 
-		lDesc = new JLabel("Desc:");
-		lName1 = new JLabel("Name:");
-		lType1 = new JLabel("Type:");
-		lBrand1 = new JLabel("Brand:");
-		lPrice11 = new JLabel("Price");
+		lInfoDesc = new JLabel("Desc:");
+		lInfoNameText = new JLabel("Name:");
+		lInfoTypeText = new JLabel("Type:");
+		lInfoBrandText = new JLabel("Brand:");
+		lInfoPriceText = new JLabel("Price");
 
-		lNameInfo = new JLabel();
-		lTypeInfo = new JLabel();
-		lBrandInfo = new JLabel();
-		lPriceInfo = new JLabel();
-		lDescInfo = new JLabel();
+		lInfoName = new JLabel();
+		lInfoType = new JLabel();
+		lInfoBrand = new JLabel();
+		lInfoPrice = new JLabel();
+		lInfoDescText = new JLabel();
 		showProduct(null);
 
 		tableInfoPanel = new JPanel();
 		headers = new Object[] { "Name", "Type", "Brand", "Price" };
 		data = null;
-		modeloTabla = new SearchTableModel(data, headers);
-		resultsTable = new JTable(modeloTabla);
+		tableModel = new SearchTableModel(data, headers);
+		resultsTable = new JTable(tableModel);
 		resultsTable.setEnabled(true);
 		resultsTable.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		final ListSelectionModel selectionModel = resultsTable.getSelectionModel();
@@ -304,40 +291,37 @@ public class SearchPanel extends JPanel implements ActionListener {
 		fieldContainer.add(fieldPanel);
 		searchButtonPanel.add(bSearch);
 		fieldContainer.add(searchButtonPanel);
-
 	}
 
 	public void placePriceObjects() {
 		pricePanel.setLayout(new FlowLayout());
-		pricePanel.add(lPrice1);
-		pricePanel.add(tfPrice2);
-		pricePanel.add(lPrice3);
-		pricePanel.add(tfPrice4);
-		pricePanel.add(lPrice4);
-
+		pricePanel.add(lPriceBetween);
+		pricePanel.add(tfPriceMin);
+		pricePanel.add(lPriceAnd);
+		pricePanel.add(tfPriceMax);
+		pricePanel.add(lPriceMax);
 	}
 
 	public void placeInformationObjects() {
 		informationPanel = new JPanel();
-		informationPanel2 = new JPanel();
-		informationPanel2.setLayout(new SpringLayout());
-		informationPanel2.add(lName1);
-		informationPanel2.add(lNameInfo);
-		informationPanel2.add(lType1);
-		informationPanel2.add(lTypeInfo);
-		informationPanel2.add(lBrand1);
-		informationPanel2.add(lBrandInfo);
-		informationPanel2.add(lPrice11);
-		informationPanel2.add(lPriceInfo);
-		informationPanel2.add(lDesc);
-		informationPanel2.add(lDescInfo);
-		SpringUtilities.makeCompactGrid(informationPanel2, 5, 2, 6, 6, 6, 6);
+		informationPanelText = new JPanel();
+		informationPanelText.setLayout(new SpringLayout());
+		informationPanelText.add(lInfoNameText);
+		informationPanelText.add(lInfoName);
+		informationPanelText.add(lInfoTypeText);
+		informationPanelText.add(lInfoType);
+		informationPanelText.add(lInfoBrandText);
+		informationPanelText.add(lInfoBrand);
+		informationPanelText.add(lInfoPriceText);
+		informationPanelText.add(lInfoPrice);
+		informationPanelText.add(lInfoDesc);
+		informationPanelText.add(lInfoDescText);
+		SpringUtilities.makeCompactGrid(informationPanelText, 5, 2, 6, 6, 6, 6);
 		informationPanel.setLayout(new SpringLayout());
-		informationPanel.add(lImageInfo);
-		informationPanel2.setPreferredSize(new Dimension(180,225));
-		informationPanel.add(informationPanel2);
+		informationPanel.add(lInfoImage);
+		informationPanelText.setPreferredSize(new Dimension(180, 225));
+		informationPanel.add(informationPanelText);
 		SpringUtilities.makeCompactGrid(informationPanel, 2, 1, 6, 6, 6, 6);
-
 	}
 
 	public void placeTableInfoComponents() {
@@ -352,7 +336,6 @@ public class SearchPanel extends JPanel implements ActionListener {
 		tableInfoPanel.add(informationPanel);
 		SpringUtilities.makeCompactGrid(tableInfoPanel, 1, 2, 6, 6, 6, 6);
 		tableInfoPanel.setPreferredSize(new Dimension(490, 295));
-
 	}
 
 	@Override
@@ -369,24 +352,21 @@ public class SearchPanel extends JPanel implements ActionListener {
 			Frame.getInstance().setLocationRelativeTo(null);
 			Frame.getInstance().pack();
 			Frame.getInstance().repaint();
-
-			
 		}
 		if (e.getSource() == bSearch) {
 			search();
 		}
-
 	}
 
 	public void search() {
-		modeloTabla.setRowCount(0);
+		tableModel.setRowCount(0);
 		showProduct(null);
 
 		final String name = tfName.getText().equals("Example: Washer") ? "" : tfName.getText();
 		final int type = cbType.getSelectedIndex();
 		final String brand = tfBrand.getText().equals("Example: Ariel") ? "" : tfBrand.getText();
-		final double price_min = Double.parseDouble(tfPrice2.getText());
-		final double price_max = Double.parseDouble(tfPrice4.getText());
+		final double price_min = Double.parseDouble(tfPriceMin.getText());
+		final double price_max = Double.parseDouble(tfPriceMax.getText());
 
 		if (Controller.checkStatus()) {
 			try {
@@ -410,7 +390,7 @@ public class SearchPanel extends JPanel implements ActionListener {
 				data[i][2] = r.getBrand();
 				data[i++][3] = String.valueOf(r.getPrice()) + "€";
 			}
-			modeloTabla.setDataVector(data, headers);
+			tableModel.setDataVector(data, headers);
 		} else {
 			JOptionPane.showMessageDialog(null, "Nothing found for the search criteria.", "Error",
 					JOptionPane.ERROR_MESSAGE,
@@ -420,22 +400,22 @@ public class SearchPanel extends JPanel implements ActionListener {
 
 	protected void showProduct(final SearchResult result) {
 		if (result == null) {
-			lNameInfo.setText("_______");
-			lTypeInfo.setText("_______");
-			lBrandInfo.setText("_______");
-			lPriceInfo.setText("_______");
-			lDescInfo.setText("______");
-			lImageInfo.setIcon(new ImageIcon(getClass().getResource("/missing.png")));
+			lInfoName.setText("_______");
+			lInfoType.setText("_______");
+			lInfoBrand.setText("_______");
+			lInfoPrice.setText("_______");
+			lInfoDescText.setText("______");
+			lInfoImage.setIcon(new ImageIcon(getClass().getResource("/missing.png")));
 
 			map.deleteMark();
 			lSupermarketMap.repaint();
 		} else {
-			lNameInfo.setText(result.getName());
-			lTypeInfo.setText(result.getType());
-			lBrandInfo.setText(result.getBrand());
-			lPriceInfo.setText(String.valueOf(result.getPrice())+"€");
-			lDescInfo.setText("<html>" + result.getDescription() + "<html>");
-			lImageInfo.setIcon(new ImageIcon(getClass().getResource(
+			lInfoName.setText(result.getName());
+			lInfoType.setText(result.getType());
+			lInfoBrand.setText(result.getBrand());
+			lInfoPrice.setText(String.valueOf(result.getPrice()) + "€");
+			lInfoDescText.setText("<html>" + result.getDescription() + "<html>");
+			lInfoImage.setIcon(new ImageIcon(getClass().getResource(
 					"/products/" + result.getId() + ".jpg")));
 
 			map.setMark(result.getHall(), result.getShelf());
